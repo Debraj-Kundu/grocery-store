@@ -7,7 +7,7 @@ using System.Text;
 
 namespace FinalTest.BuisnessLayer.Domain
 {
-    public class Product : DomainBase
+    public class ProductDomain : DomainBase
     {
         [Required]
         [MaxLength(100), StringLength(100)]
@@ -26,7 +26,7 @@ namespace FinalTest.BuisnessLayer.Domain
         public decimal Discount { get; set; }
 
         [Required]
-        public Category Category { get; set; }
+        public CategoryDomain Category { get; set; }
 
         [Required]
         public int AvailableQuantity { get; set; }

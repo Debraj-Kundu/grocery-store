@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FinalTest.BuisnessLayer.Domain
 {
-    public class Customer : DomainBase
+    public class CustomerDomain : DomainBase
     {
         [Required]
         [MaxLength(50), StringLength(50)]

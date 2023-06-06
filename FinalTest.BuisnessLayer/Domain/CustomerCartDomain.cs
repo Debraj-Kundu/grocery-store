@@ -6,10 +6,10 @@ using System.Text;
 
 namespace FinalTest.BuisnessLayer.Domain
 {
-    public class Order : DomainBase
+    public class CustomerCartDomain : DomainBase
     {
-        public Customer Customer { get; set; }
-        public Product Product { get; set; }
-        public DateTime OrderDate { get; set; }
+        public CustomerDomain Customer { get; set; }
+        public ProductDomain Product { get; set; }
+        public int Quantity { get; set; }
     }
 }

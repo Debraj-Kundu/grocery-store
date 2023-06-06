@@ -1,3 +1,5 @@
+using AutoMapper;
+using FinalTest.BuisnessLayer.Mapper;
 using FinalTest.DataLayer.Configuration;
 using FinalTest.DataLayer.DataContext;
 using Microsoft.AspNetCore.Builder;
@@ -18,9 +20,15 @@ namespace DebrajKundu_3203000_FinalTest
 {
     public class Startup
     {
+        private MapperConfiguration MapperConfiguration { get; set; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            MapperConfiguration = new MapperConfiguration(cfg =>
+            {
+                cfg.AddProfile(new MappingProfile());
+            });
         }
 
         public IConfiguration Configuration { get; }
@@ -30,6 +38,8 @@ namespace DebrajKundu_3203000_FinalTest
         {
             //DbContext and repository configurations of Data Layer
             services.RegisterDataContext(Configuration.GetConnectionString("DefaultConnection"));
+
+            services.AddSingleton(sp => MapperConfiguration.CreateMapper());
 
             services.AddControllers();
         }

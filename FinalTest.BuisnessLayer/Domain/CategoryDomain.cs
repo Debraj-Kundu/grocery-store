@@ -6,7 +6,7 @@ using System.Text;
 
 namespace FinalTest.BuisnessLayer.Domain
 {
-    public class Category : DomainBase
+    public class CategoryDomain : DomainBase
     {
         [MaxLength(100)]
         public string Name { get; set; }

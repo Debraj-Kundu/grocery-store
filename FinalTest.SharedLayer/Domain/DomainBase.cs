@@ -12,7 +12,6 @@ namespace FinalTest.SharedLayer.Domain
         #region Ctor
         public DomainBase()
         {
-            this.CreatedOnDate = DateTimeOffset.Now;
             this.ModifiedOnDate = DateTimeOffset.Now;
         }
         #endregion
