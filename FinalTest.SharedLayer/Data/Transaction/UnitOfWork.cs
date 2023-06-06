@@ -21,10 +21,10 @@ namespace FinalTest.SharedLayer.Data.Transaction
         /// Initializes a new instance of the <see cref="UnitOfWork{TContext}"/> class.
         /// </summary>
         /// <param name="context">The context.</param>
-        protected UnitOfWork(DbContext context, IExceptionManager exceptionManager)
+        protected UnitOfWork(DbContext context)//, IExceptionManager exceptionManager
         {
             DbContext = context;
-            _exceptionManager = exceptionManager;
+            //_exceptionManager = exceptionManager;
         }
 
         /// <summary>

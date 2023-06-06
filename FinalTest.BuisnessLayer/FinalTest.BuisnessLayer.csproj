@@ -4,4 +4,16 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Mapper\" />
+    <Folder Include="Configuration\" />
+    <Folder Include="ProductAppServices\Interface\" />
+    <Folder Include="ProductAppServices\Implementation\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FinalTest.DataLayer\FinalTest.DataLayer.csproj" />
+    <ProjectReference Include="..\FinalTest.SharedLayer\FinalTest.SharedLayer.csproj" />
+  </ItemGroup>
+
 </Project>

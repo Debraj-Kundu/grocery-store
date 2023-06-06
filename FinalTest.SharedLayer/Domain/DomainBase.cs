@@ -47,7 +47,7 @@ namespace FinalTest.SharedLayer.Domain
         /// <value>
         /// The created by user identifier.
         /// </value>
-        public int CreatedByUserID { get; private set; }
+        //public int CreatedByUserID { get; private set; }
 
         /// <summary>
         /// Gets the modified by user identifier.
@@ -55,7 +55,7 @@ namespace FinalTest.SharedLayer.Domain
         /// <value>
         /// The modified by user identifier.
         /// </value>
-        public int ModifiedByUserID { get; set; }
+        //public int ModifiedByUserID { get; set; }
 
         /// <summary>
         /// Gets or sets the state of the entity.
@@ -77,7 +77,7 @@ namespace FinalTest.SharedLayer.Domain
         /// Gets or sets the IsActive.
         /// </summary>
         /// <value>The IsActive.</value>
-        public bool IsActive { get; set; }
+        //public bool IsActive { get; set; }
 
         /// <summary>
         /// Determines whether the specified object is valid.

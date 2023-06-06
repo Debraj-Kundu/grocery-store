@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FinalTest.DataLayer.Migrations
 {
     [DbContext(typeof(ProductDomainDbContext))]
-    [Migration("20230606063124_Init")]
+    [Migration("20230606110237_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -28,20 +28,11 @@ namespace FinalTest.DataLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CreatedByUserID")
-                        .HasColumnType("int");
-
                     b.Property<DateTimeOffset>("CreatedOnDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedByUserID")
-                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("ModifiedOnDate")
                         .HasColumnType("datetimeoffset");
@@ -64,26 +55,17 @@ namespace FinalTest.DataLayer.Migrations
                     b.Property<string>("ConfirmPassword")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreatedByUserID")
-                        .HasColumnType("int");
-
                     b.Property<DateTimeOffset>("CreatedOnDate")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedByUserID")
-                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("ModifiedOnDate")
                         .HasColumnType("datetimeoffset");
@@ -109,23 +91,14 @@ namespace FinalTest.DataLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CreatedByUserID")
-                        .HasColumnType("int");
-
                     b.Property<DateTimeOffset>("CreatedOnDate")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedByUserID")
-                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("ModifiedOnDate")
                         .HasColumnType("datetimeoffset");
@@ -152,23 +125,14 @@ namespace FinalTest.DataLayer.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("CreatedByUserID")
-                        .HasColumnType("int");
-
                     b.Property<DateTimeOffset>("CreatedOnDate")
                         .HasColumnType("datetimeoffset");
 
                     b.Property<int?>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedByUserID")
-                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("ModifiedOnDate")
                         .HasColumnType("datetimeoffset");
@@ -201,9 +165,6 @@ namespace FinalTest.DataLayer.Migrations
                     b.Property<int>("CategoryId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CreatedByUserID")
-                        .HasColumnType("int");
-
                     b.Property<DateTimeOffset>("CreatedOnDate")
                         .HasColumnType("datetimeoffset");
 
@@ -217,14 +178,8 @@ namespace FinalTest.DataLayer.Migrations
                     b.Property<byte[]>("Image")
                         .HasColumnType("varbinary(max)");
 
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<int>("ModifiedByUserID")
-                        .HasColumnType("int");
 
                     b.Property<DateTimeOffset>("ModifiedOnDate")
                         .HasColumnType("datetimeoffset");
