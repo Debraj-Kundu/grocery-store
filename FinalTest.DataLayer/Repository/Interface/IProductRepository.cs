@@ -1,4 +1,5 @@
 ﻿using FinalTest.DataLayer.Entity;
+using FinalTest.SharedLayer.Core.ValueObjects;
 using FinalTest.SharedLayer.Data.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -10,9 +11,9 @@ namespace FinalTest.DataLayer.Repository.Interface
 {
     public interface IProductRepository : IRepository<Product>
     {
-        public Task<IEnumerable<Product>> GetByCategoryAsync(int categoryId);
-        public Task<IEnumerable<Product>> GetByNameAsync(string name);
-        public Task<IEnumerable<Product>> GetByDescriptionAsync(string desc);
-        public Task<Product> GetByIdAsync(int id);
+        public Task<OperationResult<IEnumerable<Product>>> GetByCategoryAsync(int categoryId);
+        public Task<OperationResult<IEnumerable<Product>>> GetByNameAsync(string name);
+        public Task<OperationResult<IEnumerable<Product>>> GetByDescriptionAsync(string desc);
+        public Task<OperationResult<Product>> GetByIdAsync(int id);
     }
 }

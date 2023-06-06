@@ -1,6 +1,7 @@
 ﻿using FinalTest.DataLayer.DataContext;
 using FinalTest.DataLayer.Entity;
 using FinalTest.DataLayer.Repository.Interface;
+using FinalTest.SharedLayer.Core.ValueObjects;
 using FinalTest.SharedLayer.Data.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -20,9 +21,11 @@ namespace FinalTest.DataLayer.Repository.Implementation
             Context = context;
         }
 
-        public override Task<IEnumerable<Product>> GetAllAsync()
+        public override async Task<OperationResult<IEnumerable<Product>>> GetAllAsync()
         {
-            return base.GetAllAsync();
+            var result = await base.GetAllAsync();
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<IEnumerable<Product>>(result.Data, result.IsSuccess, message);
         }
         public override Task AddAsync(Product entity)
         {
@@ -37,24 +40,32 @@ namespace FinalTest.DataLayer.Repository.Implementation
             base.UpdateAsync(entity);
         }
 
-        public async Task<IEnumerable<Product>> GetByCategoryAsync(int categoryId)
+        public async Task<OperationResult<IEnumerable<Product>>> GetByCategoryAsync(int categoryId)
         {
-            return await Context.Products.Where(e => e.Category.Equals(categoryId)).ToListAsync();
-        }
-        
-        public async Task<IEnumerable<Product>> GetByNameAsync(string name)
-        {
-            return await Context.Products.Where(e => e.Name.Equals(name)).ToListAsync();
+            var result = await Context.Products.Where(e => e.Category.Equals(categoryId)).ToListAsync();
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<IEnumerable<Product>>(result, true, message);
         }
 
-        public async Task<IEnumerable<Product>> GetByDescriptionAsync(string desc)
+        public async Task<OperationResult<IEnumerable<Product>>> GetByNameAsync(string name)
         {
-            return await Context.Products.Where(e => e.Description.Equals(desc)).ToListAsync();
+            var result = await Context.Products.Where(e => e.Name.Equals(name)).ToListAsync();
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<IEnumerable<Product>>(result, true, message);
         }
 
-        public async Task<Product> GetByIdAsync(int id)
+        public async Task<OperationResult<IEnumerable<Product>>> GetByDescriptionAsync(string desc)
         {
-            return await Context.Products.FindAsync(id);
+            var result = await Context.Products.Where(e => e.Description.Equals(desc)).ToListAsync();
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<IEnumerable<Product>>(result, true, message);
+        }
+
+        public async Task<OperationResult<Product>> GetByIdAsync(int id)
+        {
+            var result = await Context.Products.FindAsync(id);
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<Product>(result, true, message);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace FinalTest.SharedLayer.Data.Transaction
     public interface IUnitOfWork : IDisposable
     {
         int Save();
-        OperationResult Commit();
+        Task<OperationResult> Commit();
         void Rollback();
         IDbContextTransaction BeginTransaction();
         Task<int> SaveAsync();

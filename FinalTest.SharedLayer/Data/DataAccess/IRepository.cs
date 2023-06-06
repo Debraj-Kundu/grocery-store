@@ -1,4 +1,5 @@
-﻿using FinalTest.SharedLayer.Domain;
+﻿using FinalTest.SharedLayer.Core.ValueObjects;
+using FinalTest.SharedLayer.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace FinalTest.SharedLayer.Data.DataAccess
 {
     public interface IRepository<TEntity> where TEntity : class
     {
-        Task<IEnumerable<TEntity>> GetAllAsync();
+        Task<OperationResult<IEnumerable<TEntity>>> GetAllAsync();
         Task AddAsync(TEntity entity);
         void UpdateAsync(TEntity entity);
         void DeleteAsync(TEntity entity);

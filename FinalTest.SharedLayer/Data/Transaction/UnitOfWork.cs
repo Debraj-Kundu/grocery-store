@@ -83,14 +83,14 @@ namespace FinalTest.SharedLayer.Data.Transaction
             return Context.SaveChangesAsync();
         }
         private readonly IExceptionManager _exceptionManager;
-        public OperationResult Commit()
+        public async Task<OperationResult> Commit()
         {
             bool result = false;
             Message mainMessage;
             IEnumerable<Message> associatedMessages = Enumerable.Empty<Message>();
             try
             {
-                int changeCount = Context.SaveChanges();
+                int changeCount = await Context.SaveChangesAsync();
                 if (changeCount > 0)
                 {
                     result = true;

@@ -1,4 +1,5 @@
-﻿using FinalTest.SharedLayer.Domain;
+﻿using FinalTest.SharedLayer.Core.ValueObjects;
+using FinalTest.SharedLayer.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -30,9 +31,11 @@ namespace FinalTest.SharedLayer.Data.DataAccess
             dbContext.Set<TEntity>().Remove(entity);
         }
 
-        public virtual async Task<IEnumerable<TEntity>> GetAllAsync()
+        public virtual async Task<OperationResult<IEnumerable<TEntity>>> GetAllAsync()
         {
-            return await dbContext.Set<TEntity>().ToListAsync();
+            var result = await dbContext.Set<TEntity>().ToListAsync();
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<IEnumerable<TEntity>>(result, true, message);
         }
 
         public virtual void UpdateAsync(TEntity entity)

@@ -26,15 +26,15 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
         {
             IEnumerable<ProductDomain> result = new List<ProductDomain>();
             var products = await UnitOfWork.ProductRepository.GetAllAsync();
-            if(products?.Any() == true)
+            if(products.Data?.Any() == true)
             {
-                result = Mapper.Map<IEnumerable<ProductDomain>>(products);
+                result = Mapper.Map<IEnumerable<ProductDomain>>(products.Data);
             }
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<IEnumerable<ProductDomain>>(result, true, message);
         }
 
-        public async Task<ProductDomain> CreateProduct(ProductDomain item)
+        public async Task<OperationResult<ProductDomain>> CreateProduct(ProductDomain item)
         {
             Product product = Mapper.Map<ProductDomain, Product>(item);
             product.CreatedOnDate = DateTimeOffset.Now;
@@ -45,9 +45,9 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
             
             OperationResult result;
 
-            UnitOfWork.Commit();
+            result = await UnitOfWork.Commit();
 
-            return item;
+            return new OperationResult<ProductDomain>(item, result.IsSuccess, result.MainMessage, result.AssociatedMessages.ToList<Message>());
         }
     }
 }
