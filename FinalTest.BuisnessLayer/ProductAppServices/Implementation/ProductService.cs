@@ -59,5 +59,37 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<ProductDomain>(result, true, message);
         }
+
+        //public async Task<OperationResult<IEnumerable<ProductDomain>>> GetProductsByName(string name)
+        //{
+        //    var product = await UnitOfWork.ProductRepository.GetByNameAsync(name);
+        //    var result = Mapper.Map<IEnumerable<ProductDomain>>(product.Data);
+
+        //    Message message = new Message(string.Empty, "Return Successfully");
+        //    return new OperationResult<IEnumerable<ProductDomain>>(result, true, message);
+        //}
+
+        //public async Task<OperationResult<IEnumerable<ProductDomain>>> GetProductsByDescription(string desc)
+        //{
+        //    var product = await UnitOfWork.ProductRepository.GetByDescriptionAsync(desc);
+        //    var result = Mapper.Map<IEnumerable<ProductDomain>>(product.Data);
+
+        //    Message message = new Message(string.Empty, "Return Successfully");
+        //    return new OperationResult<IEnumerable<ProductDomain>>(result, true, message);
+        //}
+
+        public async Task<OperationResult<IEnumerable<ProductDomain>>> GetProductByParam(string name)
+        {
+            var product = await UnitOfWork.ProductRepository.GetByNameAsync(name);
+            var result = Mapper.Map<IEnumerable<ProductDomain>>(product.Data);
+
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<IEnumerable<ProductDomain>>(result, true, message);
+        }
+
+        public Task<OperationResult<IEnumerable<ProductDomain>>> GetProductByDescription(string desc)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

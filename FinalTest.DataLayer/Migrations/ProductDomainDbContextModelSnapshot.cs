@@ -92,7 +92,7 @@ namespace FinalTest.DataLayer.Migrations
                     b.Property<DateTimeOffset>("CreatedOnDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -101,7 +101,7 @@ namespace FinalTest.DataLayer.Migrations
                     b.Property<DateTimeOffset>("ModifiedOnDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.Property<int>("Quantity")
@@ -126,7 +126,7 @@ namespace FinalTest.DataLayer.Migrations
                     b.Property<DateTimeOffset>("CreatedOnDate")
                         .HasColumnType("datetimeoffset");
 
-                    b.Property<int?>("CustomerId")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
@@ -138,7 +138,7 @@ namespace FinalTest.DataLayer.Migrations
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ProductId")
+                    b.Property<int>("ProductId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -203,22 +203,30 @@ namespace FinalTest.DataLayer.Migrations
                 {
                     b.HasOne("FinalTest.DataLayer.Entity.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FinalTest.DataLayer.Entity.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FinalTest.DataLayer.Entity.Order", b =>
                 {
                     b.HasOne("FinalTest.DataLayer.Entity.Customer", "Customer")
                         .WithMany()
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("CustomerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("FinalTest.DataLayer.Entity.Product", "Product")
                         .WithMany()
-                        .HasForeignKey("ProductId");
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FinalTest.DataLayer.Entity.Product", b =>

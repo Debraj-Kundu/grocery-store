@@ -37,7 +37,7 @@ namespace FinalTest.WebAPI.Controllers
         }
 
         // GET api/<ProductController>/5
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<ActionResult<ProductDto>> Get(int id)
         {
             var result = await ProductService.GetProductById(id);
@@ -47,13 +47,22 @@ namespace FinalTest.WebAPI.Controllers
             return Ok(product);
         }
 
+        [HttpGet("{name}")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> Get(string name)
+        {
+            var result = await ProductService.GetProductByParam(name);
+            if (result.IsSuccess == false || result.Data == null)
+                return NotFound();
+            var product = Mapper.Map<IEnumerable<ProductDto>>(result.Data);
+            return Ok(product);
+        }
+
+
         // POST api/<ProductController>
         [HttpPost]
         public async Task<ActionResult<ProductDto>> Post(ProductDto product)
         {
-            var res = await CategoryService.GetCategoryByName("Biscuit");
             ProductDomain productToCreate = Mapper.Map<ProductDomain>(product);
-            //productToCreate.Category = res.Data;
             var result = await ProductService.CreateProduct(productToCreate);
             if(result.IsSuccess)
                 return Created(nameof(Post), product);
@@ -71,5 +80,13 @@ namespace FinalTest.WebAPI.Controllers
         public void Delete(int id)
         {
         }
+
+        //[HttpGet("/api/[controller]/[action]")]
+        //public async Task<ActionResult<CategoryDto>> GetAllCategory()
+        //{
+        //    var result = await CategoryService.GetCategoryByName("Biscuit");
+        //    var products = Mapper.Map<CategoryDto>(result.Data);
+        //    return Ok(products);
+        //}
     }
 }

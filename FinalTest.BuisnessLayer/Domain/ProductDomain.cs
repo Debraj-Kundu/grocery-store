@@ -25,7 +25,8 @@ namespace FinalTest.BuisnessLayer.Domain
         [Column(TypeName = "decimal(18,4)")]
         public decimal Discount { get; set; }
 
-        [Required]
+        public int CategoryId { get; set; }
+
         public CategoryDomain Category { get; set; }
 
         [Required]

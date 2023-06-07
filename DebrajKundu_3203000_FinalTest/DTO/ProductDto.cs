@@ -26,7 +26,7 @@ namespace FinalTest.WebAPI.DTO
         [Column(TypeName = "decimal(18,4)")]
         public decimal Discount { get; set; }
 
-        [Required]
+        public int CategoryId { get; set; }
         public CategoryDto Category { get; set; }
 
         [Required]

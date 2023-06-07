@@ -21,8 +21,8 @@ namespace FinalTest.DataLayer.Entity
         [Column(TypeName = "decimal(18,4)")]
         [Required]
         public decimal Discount { get; set; }
-        [Required]
-        public Category Category { get; set; }
+        public int CategoryId { get; set; }
+        public virtual Category Category { get; set; }
         [Required]
         public int AvailableQuantity { get; set; }
         //[Required]

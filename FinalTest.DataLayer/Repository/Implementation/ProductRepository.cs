@@ -49,7 +49,7 @@ namespace FinalTest.DataLayer.Repository.Implementation
 
         public async Task<OperationResult<IEnumerable<Product>>> GetByNameAsync(string name)
         {
-            var result = await Context.Products.Where(e => e.Name.Equals(name)).ToListAsync();
+            var result = await Context.Products.Where(e => e.Name.Contains(name) || e.Description.Contains(name)).ToListAsync();
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<IEnumerable<Product>>(result, true, message);
         }
