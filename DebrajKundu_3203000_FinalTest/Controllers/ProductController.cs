@@ -1,5 +1,8 @@
-﻿using FinalTest.DataLayer.Entity;
+﻿using AutoMapper;
+using FinalTest.BuisnessLayer.ProductAppServices.Interface;
+using FinalTest.DataLayer.Entity;
 using FinalTest.DataLayer.Repository.Interface;
+using FinalTest.WebAPI.DTO;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,17 +16,21 @@ namespace FinalTest.WebAPI.Controllers
     [ApiController]
     public class ProductController : ControllerBase
     {
-        public IProductRepository ProductRepository { get; }
+        public IProductService ProductService { get; }
+        public IMapper Mapper { get; }
 
-        public ProductController(IProductRepository productRepository)
+        public ProductController(IProductService productService, IMapper mapper)
         {
-            ProductRepository = productRepository;
+            ProductService = productService;
+            Mapper = mapper;
         }
         // GET: api/<ProductController>
         [HttpGet]
-        public async Task<IEnumerable<Product>> Get()
+        public async Task<IEnumerable<ProductDto>> Get()
         {
-            return await ProductRepository.GetAllAsync();
+            var result = await ProductService.GetAllProducts();
+            var products = Mapper.Map<IEnumerable<ProductDto>>(result.Data);
+            return products;
         }
 
         // GET api/<ProductController>/5

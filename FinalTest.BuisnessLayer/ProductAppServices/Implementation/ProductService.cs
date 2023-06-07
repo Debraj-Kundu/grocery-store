@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using FinalTest.BuisnessLayer.Domain;
+using FinalTest.BuisnessLayer.ProductAppServices.Interface;
 using FinalTest.DataLayer.Entity;
 using FinalTest.DataLayer.UoW;
 using FinalTest.SharedLayer.Core.ValueObjects;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
 {
-    public class ProductService
+    public class ProductService : IProductService
     {
         public IProductUnitOfWork UnitOfWork { get; }
         public IMapper Mapper { get; }
@@ -26,7 +27,7 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
         {
             IEnumerable<ProductDomain> result = new List<ProductDomain>();
             var products = await UnitOfWork.ProductRepository.GetAllAsync();
-            if(products.Data?.Any() == true)
+            if (products.Data?.Any() == true)
             {
                 result = Mapper.Map<IEnumerable<ProductDomain>>(products.Data);
             }
@@ -42,7 +43,7 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
             await UnitOfWork.ProductRepository.AddAsync(product);
 
             item.Id = product.Id;
-            
+
             OperationResult result;
 
             result = await UnitOfWork.Commit();

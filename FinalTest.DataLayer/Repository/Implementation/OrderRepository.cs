@@ -1,6 +1,7 @@
 ﻿using FinalTest.DataLayer.DataContext;
 using FinalTest.DataLayer.Entity;
 using FinalTest.DataLayer.Repository.Interface;
+using FinalTest.SharedLayer.Core.ValueObjects;
 using FinalTest.SharedLayer.Data.DataAccess;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,11 @@ namespace FinalTest.DataLayer.Repository.Implementation
             base.DeleteAsync(entity);
         }
 
-        public override Task<IEnumerable<Order>> GetAllAsync()
+        public override async Task<OperationResult<IEnumerable<Order>>> GetAllAsync()
         {
-            return base.GetAllAsync();
+            var result = await base.GetAllAsync();
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<IEnumerable<Order>>(result.Data, result.IsSuccess, message);
         }
 
         public override void UpdateAsync(Order entity)

@@ -1,7 +1,9 @@
 using AutoMapper;
+using FinalTest.BuisnessLayer.Configuration;
 using FinalTest.BuisnessLayer.Mapper;
 using FinalTest.DataLayer.Configuration;
 using FinalTest.DataLayer.DataContext;
+using FinalTest.WebAPI.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -28,6 +30,7 @@ namespace DebrajKundu_3203000_FinalTest
             MapperConfiguration = new MapperConfiguration(cfg =>
             {
                 cfg.AddProfile(new MappingProfile());
+                cfg.AddProfile(new ApiMappingProfile());
             });
         }
 
@@ -40,6 +43,8 @@ namespace DebrajKundu_3203000_FinalTest
             services.RegisterDataContext(Configuration.GetConnectionString("DefaultConnection"));
 
             services.AddSingleton(sp => MapperConfiguration.CreateMapper());
+
+            services.RegisterServices();
 
             services.AddControllers();
         }
