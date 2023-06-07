@@ -50,5 +50,14 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
 
             return new OperationResult<ProductDomain>(item, result.IsSuccess, result.MainMessage, result.AssociatedMessages.ToList<Message>());
         }
+
+        public async Task<OperationResult<ProductDomain>> GetProductById(int id)
+        {
+            var product = await UnitOfWork.ProductRepository.GetByIdAsync(id);
+            ProductDomain result = Mapper.Map<ProductDomain>(product.Data);
+            
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<ProductDomain>(result, true, message);
+        }
     }
 }

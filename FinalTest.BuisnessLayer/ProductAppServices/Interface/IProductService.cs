@@ -9,5 +9,6 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Interface
     {
         Task<OperationResult<ProductDomain>> CreateProduct(ProductDomain item);
         Task<OperationResult<IEnumerable<ProductDomain>>> GetAllProducts();
+        Task<OperationResult<ProductDomain>> GetProductById(int id);
     }
 }

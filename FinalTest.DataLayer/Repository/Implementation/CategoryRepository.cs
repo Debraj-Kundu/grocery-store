@@ -43,9 +43,11 @@ namespace FinalTest.DataLayer.Repository.Implementation
             base.UpdateAsync(entity);
         }
 
-        public async Task<Category> GetByNameAsync(string name)
+        public async Task<OperationResult<Category>> GetByNameAsync(string name)
         {
-            return await Context.Categories.Where(e => e.Name.Equals(name)).FirstOrDefaultAsync();
+            var result = await Context.Categories.Where(e => e.Name.Equals(name)).FirstOrDefaultAsync();
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<Category>(result, true, message);
         }
     }
 }

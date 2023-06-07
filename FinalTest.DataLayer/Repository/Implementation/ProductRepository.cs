@@ -27,9 +27,9 @@ namespace FinalTest.DataLayer.Repository.Implementation
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<IEnumerable<Product>>(result.Data, result.IsSuccess, message);
         }
-        public override Task AddAsync(Product entity)
+        public override async Task AddAsync(Product entity)
         {
-            return base.AddAsync(entity);
+            await base.AddAsync(entity);
         }
         public override void DeleteAsync(Product entity)
         {

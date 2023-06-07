@@ -13,6 +13,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,11 +43,13 @@ namespace DebrajKundu_3203000_FinalTest
             //DbContext and repository configurations of Data Layer
             services.RegisterDataContext(Configuration.GetConnectionString("DefaultConnection"));
 
-            services.AddSingleton(sp => MapperConfiguration.CreateMapper());
+            services.AddScoped(sp => MapperConfiguration.CreateMapper());
 
             services.RegisterServices();
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

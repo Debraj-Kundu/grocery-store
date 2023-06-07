@@ -15,7 +15,11 @@ namespace FinalTest.DataLayer.Configuration
     {
         public static IServiceCollection RegisterDataContext(this IServiceCollection services, string connectionString)
         {
-            services.AddDbContext<ProductDomainDbContext>(options => options.UseSqlServer(connectionString));
+            services.AddDbContext<ProductDomainDbContext>(options =>
+            {
+                options.UseSqlServer(connectionString);
+                options.UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
+            }, ServiceLifetime.Scoped);
 
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<ICustomerCartRepository, CustomerCartRepository>();
@@ -23,7 +27,7 @@ namespace FinalTest.DataLayer.Configuration
             services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             services.AddScoped<IProductUnitOfWork, ProductUnitOfWork>();
-            
+
             return services;
         }
     }
