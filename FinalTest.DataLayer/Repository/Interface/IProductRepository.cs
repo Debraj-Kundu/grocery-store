@@ -11,9 +11,9 @@ namespace FinalTest.DataLayer.Repository.Interface
 {
     public interface IProductRepository : IRepository<Product>
     {
-        public Task<OperationResult<IEnumerable<Product>>> GetByCategoryAsync(int categoryId);
-        public Task<OperationResult<IEnumerable<Product>>> GetByNameAsync(string name);
-        public Task<OperationResult<IEnumerable<Product>>> GetByDescriptionAsync(string desc);
-        public Task<OperationResult<Product>> GetByIdAsync(int id);
+        Task<OperationResult<IEnumerable<Product>>> GetByCategoryAsync(int categoryId);
+        Task<OperationResult<IEnumerable<Product>>> GetByNameAsync(string name);
+        Task<OperationResult<IEnumerable<Product>>> GetByDescriptionAsync(string desc);
+        Task<OperationResult<Product>> GetByIdAsync(int id);
     }
 }

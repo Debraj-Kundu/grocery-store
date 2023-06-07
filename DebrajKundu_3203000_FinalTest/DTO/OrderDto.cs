@@ -10,6 +10,9 @@ namespace FinalTest.WebAPI.DTO
     public class OrderDto : DtoBase
     {
         public CustomerDto Customer { get; set; }
+        public int CustomerId { get; set; }
+
+        public int ProductId { get; set; }
         public ProductDto Product { get; set; }
         public DateTime OrderDate { get; set; }
     }

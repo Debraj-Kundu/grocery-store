@@ -3,8 +3,10 @@ using FinalTest.DataLayer.Entity;
 using FinalTest.DataLayer.Repository.Interface;
 using FinalTest.SharedLayer.Core.ValueObjects;
 using FinalTest.SharedLayer.Data.DataAccess;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,13 +14,15 @@ namespace FinalTest.DataLayer.Repository.Implementation
 {
     public class CustomerCartRepository : Repository<CustomerCart>, ICustomerCartRepository
     {
+        public ProductDomainDbContext Context { get; }
+
         public CustomerCartRepository(ProductDomainDbContext context) : base(context)
         {
-
+            Context = context;
         }
-        public override Task AddAsync(CustomerCart entity)
+        public override async Task AddAsync(CustomerCart entity)
         {
-            return base.AddAsync(entity);
+            await base.AddAsync(entity);
         }
 
         public override void DeleteAsync(CustomerCart entity)
@@ -36,6 +40,13 @@ namespace FinalTest.DataLayer.Repository.Implementation
         public override void UpdateAsync(CustomerCart entity)
         {
             base.UpdateAsync(entity);
+        }
+
+        public async Task<OperationResult<IEnumerable<CustomerCart>>> GetByCustomerAsync(int customerId)
+        {
+            var result = await Context.CartItems.Where(e => e.CustomerId.Equals(customerId)).ToListAsync();
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<IEnumerable<CustomerCart>> (result, true, message);
         }
     }
 }

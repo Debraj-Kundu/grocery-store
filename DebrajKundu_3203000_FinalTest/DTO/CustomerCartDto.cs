@@ -9,7 +9,9 @@ namespace FinalTest.WebAPI.DTO
 {
     public class CustomerCartDto : DtoBase
     {
+        public int CustomerId { get; set; }
         public CustomerDto Customer { get; set; }
+        public int ProductId { get; set; }
         public ProductDto Product { get; set; }
         public int Quantity { get; set; }
     }

@@ -47,6 +47,7 @@ namespace FinalTest.WebAPI.Controllers
             return Ok(product);
         }
 
+        // GET api/<ProductController>/abc
         [HttpGet("{name}")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> Get(string name)
         {
