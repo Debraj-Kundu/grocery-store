@@ -7,10 +7,11 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Interface
 {
     public interface IProductService
     {
-        Task<OperationResult<ProductDomain>> CreateProduct(ProductDomain item);
-        Task<OperationResult<IEnumerable<ProductDomain>>> GetAllProducts();
         Task<OperationResult<ProductDomain>> GetProductById(int id);
+        Task<OperationResult<IEnumerable<ProductDomain>>> GetAllProducts();
+        Task<OperationResult<ProductDomain>> CreateProduct(ProductDomain item);
         Task<OperationResult<IEnumerable<ProductDomain>>> GetProductByParam(string name);
         Task<OperationResult<IEnumerable<ProductDomain>>> GetProductByDescription(string desc);
+        Task<OperationResult<IEnumerable<ProductDomain>>> GetProductByCategory(int categoryId);
     }
 }

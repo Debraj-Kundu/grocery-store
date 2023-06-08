@@ -58,6 +58,16 @@ namespace FinalTest.WebAPI.Controllers
             return Ok(product);
         }
 
+        [HttpGet("/api/[controller]/[action]/{categoryId}")]
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetByCategory(int categoryId)
+        {
+            var result = await ProductService.GetProductByCategory(categoryId);
+            if (result.IsSuccess == false || result.Data == null)
+                return NotFound();
+            var product = Mapper.Map<IEnumerable<ProductDto>>(result.Data);
+            return Ok(product);
+        }
+
 
         // POST api/<ProductController>
         [HttpPost]

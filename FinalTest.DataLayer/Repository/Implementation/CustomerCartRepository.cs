@@ -48,5 +48,12 @@ namespace FinalTest.DataLayer.Repository.Implementation
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<IEnumerable<CustomerCart>> (result, true, message);
         }
+
+        public async Task<OperationResult<CustomerCart>> GetByIdAsync(int id)
+        {
+            var result = await Context.CartItems.FindAsync(id);
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<CustomerCart>(result, true, message);
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace FinalTest.DataLayer.Repository.Interface
     public interface ICustomerCartRepository : IRepository<CustomerCart>
     {
         Task<OperationResult<IEnumerable<CustomerCart>>> GetByCustomerAsync(int customerId);
+        Task<OperationResult<CustomerCart>> GetByIdAsync(int id);
 
     }
 }

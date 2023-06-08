@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using FinalTest.BuisnessLayer.Domain;
 using FinalTest.BuisnessLayer.ProductAppServices.Interface;
 using FinalTest.WebAPI.DTO;
 using Microsoft.AspNetCore.Mvc;
@@ -32,16 +33,25 @@ namespace FinalTest.WebAPI.Controllers
         }
 
         // GET api/<CartController>/5
-        [HttpGet]
-        public string Get()
+        [HttpGet("/api/[controller]/[action]/{id}")]
+        public async Task<ActionResult<CustomerCartDto>> GetById(int id)
         {
-            return "value";
+            var result = await CartService.GetCartItemById(id);
+            if (result.IsSuccess == false || result.Data == null)
+                return NotFound();
+            var product = Mapper.Map<CustomerCartDto>(result.Data);
+            return Ok(product);
         }
 
         // POST api/<CartController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<ActionResult<ProductDto>> Post(CustomerCartDto product)
         {
+            CustomerCartDomain cartProduct = Mapper.Map<CustomerCartDomain>(product);
+            var result = await CartService.AddCartProduct(cartProduct);
+            if (result.IsSuccess)
+                return Created(nameof(Post), product);
+            return BadRequest();
         }
 
         // PUT api/<CartController>/5
