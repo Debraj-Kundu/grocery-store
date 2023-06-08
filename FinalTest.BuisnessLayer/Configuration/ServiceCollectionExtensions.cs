@@ -11,9 +11,10 @@ namespace FinalTest.BuisnessLayer.Configuration
     {
         public static IServiceCollection RegisterServices(this IServiceCollection services)
         {
+            services.AddScoped<ICartService, CartService>();
+            services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICartService, CartService>();
 
             return services;
         }

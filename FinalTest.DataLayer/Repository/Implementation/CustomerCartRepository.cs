@@ -37,9 +37,9 @@ namespace FinalTest.DataLayer.Repository.Implementation
             return new OperationResult<IEnumerable<CustomerCart>>(result.Data, result.IsSuccess, message);
         }
 
-        public override void UpdateAsync(CustomerCart entity)
+        public override async Task UpdateAsync(CustomerCart entity)
         {
-            base.UpdateAsync(entity);
+            await base.UpdateAsync(entity);
         }
 
         public async Task<OperationResult<IEnumerable<CustomerCart>>> GetByCustomerAsync(int customerId)

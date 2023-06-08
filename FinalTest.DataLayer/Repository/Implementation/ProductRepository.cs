@@ -35,9 +35,12 @@ namespace FinalTest.DataLayer.Repository.Implementation
         {
             base.DeleteAsync(entity);
         }
-        public override void UpdateAsync(Product entity)
+        public override async Task UpdateAsync(Product entity)
         {
-            base.UpdateAsync(entity);
+            var productToUpdate = await Context.Products.FindAsync(entity.Id);
+            productToUpdate.AvailableQuantity = entity.AvailableQuantity;
+            productToUpdate.ModifiedOnDate = entity.ModifiedOnDate;
+            await base.UpdateAsync(productToUpdate);
         }
 
         public async Task<OperationResult<IEnumerable<Product>>> GetByCategoryAsync(int categoryId)

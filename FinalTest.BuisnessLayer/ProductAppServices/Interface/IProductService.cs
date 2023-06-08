@@ -7,6 +7,7 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Interface
 {
     public interface IProductService
     {
+        Task UpdateProduct(int productId, ProductDomain product);
         Task<OperationResult<ProductDomain>> GetProductById(int id);
         Task<OperationResult<IEnumerable<ProductDomain>>> GetAllProducts();
         Task<OperationResult<ProductDomain>> CreateProduct(ProductDomain item);

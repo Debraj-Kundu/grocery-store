@@ -38,9 +38,9 @@ namespace FinalTest.SharedLayer.Data.DataAccess
             return new OperationResult<IEnumerable<TEntity>>(result, true, message);
         }
 
-        public virtual void UpdateAsync(TEntity entity)
+        public virtual async Task UpdateAsync(TEntity entity)
         {
-            
+            dbContext.Set<TEntity>().Update(entity);
         }
     }
 }

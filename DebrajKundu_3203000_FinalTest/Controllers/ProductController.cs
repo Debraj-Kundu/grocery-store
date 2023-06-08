@@ -82,8 +82,10 @@ namespace FinalTest.WebAPI.Controllers
 
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public async Task Put(int id, ProductDto product)
         {
+            var productDomain = Mapper.Map<ProductDomain>(product);
+            await ProductService.UpdateProduct(id, productDomain);
         }
 
         // DELETE api/<ProductController>/5

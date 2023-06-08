@@ -83,5 +83,19 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<IEnumerable<ProductDomain>>(result, true, message);
         }
+
+        public async Task UpdateProduct(int productId, ProductDomain product)
+        {
+            var productEntity = Mapper.Map<Product>(product);
+            productEntity.ModifiedOnDate = DateTimeOffset.Now;
+         
+            await UnitOfWork.ProductRepository.UpdateAsync(productEntity);
+
+            OperationResult result;
+
+            result = await UnitOfWork.Commit();
+
+            //return new OperationResult<ProductDomain>(product, result.IsSuccess, result.MainMessage, result.AssociatedMessages.ToList<Message>());
+        }
     }
 }

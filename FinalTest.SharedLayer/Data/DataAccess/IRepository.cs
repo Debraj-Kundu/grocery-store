@@ -13,7 +13,7 @@ namespace FinalTest.SharedLayer.Data.DataAccess
     {
         Task<OperationResult<IEnumerable<TEntity>>> GetAllAsync();
         Task AddAsync(TEntity entity);
-        void UpdateAsync(TEntity entity);
+        Task UpdateAsync(TEntity entity);
         void DeleteAsync(TEntity entity);
     }
 }

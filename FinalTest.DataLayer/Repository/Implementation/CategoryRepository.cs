@@ -38,9 +38,9 @@ namespace FinalTest.DataLayer.Repository.Implementation
             return new OperationResult<IEnumerable<Category>>(result.Data, result.IsSuccess, message);
         }
 
-        public override void UpdateAsync(Category entity)
+        public override async Task UpdateAsync(Category entity)
         {
-            base.UpdateAsync(entity);
+            await base.UpdateAsync(entity);
         }
 
         public async Task<OperationResult<Category>> GetByNameAsync(string name)
