@@ -12,6 +12,6 @@ namespace FinalTest.DataLayer.UoW
         IProductRepository ProductRepository { get; }
         ICustomerCartRepository CustomerCartRepository { get; }
         ICategoryRepository CategoryRepository { get; }
-
+        ICustomerRepository CustomerRepository { get; }
     }
 }

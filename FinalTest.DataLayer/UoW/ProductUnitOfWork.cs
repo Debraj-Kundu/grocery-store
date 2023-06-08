@@ -13,12 +13,13 @@ namespace FinalTest.DataLayer.UoW
     {
 
 
-        public ProductUnitOfWork(ProductDomainDbContext context, IOrderRepository orderRepository, IProductRepository productRepository, ICustomerCartRepository customerCartRepository, ICategoryRepository categoryRepository) : base(context)
+        public ProductUnitOfWork(ProductDomainDbContext context, IOrderRepository orderRepository, IProductRepository productRepository, ICustomerCartRepository customerCartRepository, ICategoryRepository categoryRepository, ICustomerRepository customerRepository) : base(context)
         {
             OrderRepository = orderRepository;
             ProductRepository = productRepository;
             CustomerCartRepository = customerCartRepository;
             CategoryRepository = categoryRepository;
+            CustomerRepository = customerRepository;
         }
 
         public IOrderRepository OrderRepository { get; }
@@ -27,5 +28,6 @@ namespace FinalTest.DataLayer.UoW
 
         public ICustomerCartRepository CustomerCartRepository { get; }
         public ICategoryRepository CategoryRepository { get; }
+        public ICustomerRepository CustomerRepository { get; }
     }
 }

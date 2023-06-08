@@ -15,6 +15,7 @@ namespace FinalTest.BuisnessLayer.Configuration
             services.AddScoped<IOrderService, OrderService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ICustomerService, CustomerService>();
 
             return services;
         }

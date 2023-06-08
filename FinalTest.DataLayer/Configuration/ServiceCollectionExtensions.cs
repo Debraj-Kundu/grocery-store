@@ -22,9 +22,10 @@ namespace FinalTest.DataLayer.Configuration
             }, ServiceLifetime.Scoped);
 
             services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<ICustomerCartRepository, CustomerCartRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ICustomerRepository, CustomerRepository>();
+            services.AddScoped<ICustomerCartRepository, CustomerCartRepository>();
 
             services.AddScoped<IProductUnitOfWork, ProductUnitOfWork>();
 
