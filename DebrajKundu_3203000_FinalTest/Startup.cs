@@ -3,7 +3,9 @@ using FinalTest.BuisnessLayer.Configuration;
 using FinalTest.BuisnessLayer.Mapper;
 using FinalTest.DataLayer.Configuration;
 using FinalTest.DataLayer.DataContext;
+using FinalTest.WebAPI.DTO;
 using FinalTest.WebAPI.Mapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -13,10 +15,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DebrajKundu_3203000_FinalTest
@@ -47,6 +51,31 @@ namespace DebrajKundu_3203000_FinalTest
 
             services.RegisterServices();
 
+            var _jwtsetting = Configuration.GetSection("JWTSetting");
+            services.Configure<JWTSetting>(_jwtsetting);
+
+            var authkey = Configuration.GetValue<string>("JWTSetting:securitykey");
+
+            services.AddAuthentication(item =>
+            {
+                item.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                item.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(item =>
+            {
+
+                item.RequireHttpsMetadata = true;
+                item.SaveToken = true;
+                item.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(authkey)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    //ValidateLifetime = true,
+                    //ClockSkew = TimeSpan.Zero
+                };
+            });
+
             services.AddControllers().AddNewtonsoftJson(s => {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
@@ -63,6 +92,8 @@ namespace DebrajKundu_3203000_FinalTest
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 

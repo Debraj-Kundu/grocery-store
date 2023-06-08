@@ -7,7 +7,8 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Interface
 {
     public interface ICustomerService
     {
-        Task<OperationResult<CustomerDomain>> CreateCustomer(CustomerDomain item);
         Task<OperationResult<IEnumerable<CustomerDomain>>> GetAllCustomers();
+        Task<OperationResult<CustomerDomain>> CreateCustomer(CustomerDomain item);
+        Task<OperationResult<CustomerDomain>> GetCustomerWithDetails(string email, string password);
     }
 }

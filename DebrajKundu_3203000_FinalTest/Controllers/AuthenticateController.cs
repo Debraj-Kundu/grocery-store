@@ -2,11 +2,17 @@
 using FinalTest.BuisnessLayer.Domain;
 using FinalTest.BuisnessLayer.ProductAppServices.Interface;
 using FinalTest.WebAPI.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace FinalTest.WebAPI.Controllers
@@ -17,20 +23,44 @@ namespace FinalTest.WebAPI.Controllers
     {
         public ICustomerService CustomerService { get; }
         public IMapper Mapper { get; }
+        public JWTSetting JwtSetting { get; }
 
-        public AuthenticateController(ICustomerService customerService, IMapper mapper)
+        public AuthenticateController(ICustomerService customerService, IMapper mapper, IOptions<JWTSetting> options)
         {
             CustomerService = customerService;
             Mapper = mapper;
+            JwtSetting = options.Value;
         }
 
 
-        [HttpGet("auth")]
-        public IActionResult Authenticate()
+        [HttpPost("auth")]
+        public async Task<IActionResult> Authenticate(CustomerLogin customer)
         {
-            return Ok();
-        }
+            var result = await CustomerService.GetCustomerWithDetails(customer.Email, customer.Password);
+            if (result.Data == null)
+                return Unauthorized();
 
+            var tokenhandler = new JwtSecurityTokenHandler();
+            var tokenkey = Encoding.UTF8.GetBytes(JwtSetting.securitykey);
+            var tokenDescriptor = new SecurityTokenDescriptor
+            {
+                Subject = new ClaimsIdentity(
+                    new Claim[]
+                    {
+                        new Claim(ClaimTypes.Name, result.Data.Id.ToString())
+                    }
+                ),
+                Expires = DateTime.Now.AddMinutes(20),
+                SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenkey), SecurityAlgorithms.HmacSha256)
+            };
+            var token = tokenhandler.CreateToken(tokenDescriptor);
+            string finaltoken = tokenhandler.WriteToken(token);
+
+            //tokenResponse.JWTToken = finaltoken;
+
+            return Ok(finaltoken);
+        }
+        [Authorize]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> Get()
         {
             var result = await CustomerService.GetAllCustomers();

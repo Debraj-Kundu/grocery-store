@@ -49,5 +49,14 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
 
             return new OperationResult<CustomerDomain>(item, result.IsSuccess, result.MainMessage, result.AssociatedMessages.ToList<Message>());
         }
+
+        public async Task<OperationResult<CustomerDomain>> GetCustomerWithDetails(string email, string password)
+        {
+            var product = await UnitOfWork.CustomerRepository.CheckForUser(email, password);
+            var result = Mapper.Map<CustomerDomain>(product.Data);
+
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<CustomerDomain>(result, true, message);
+        }
     }
 }
