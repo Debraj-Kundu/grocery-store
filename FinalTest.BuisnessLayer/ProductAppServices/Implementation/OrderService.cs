@@ -37,17 +37,23 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
         public async Task<OperationResult<OrderDomain>> AddOrder(OrderDomain product)
         {
             var orderProduct = Mapper.Map<Order>(product);
+            orderProduct.OrderDate = DateTime.Now;
             orderProduct.CreatedOnDate = DateTimeOffset.Now;
 
-            await UnitOfWork.OrderRepository.AddAsync(orderProduct);
 
             OperationResult result;
 
-            result = await UnitOfWork.Commit();
+            //result = await UnitOfWork.Commit();
 
             using (var transaction = UnitOfWork.BeginTransaction())
             {
-                UnitOfWork.ProductRepository.UpdateAsync(new Product());
+                await UnitOfWork.OrderRepository.AddAsync(orderProduct);
+                var productToUpdate = await UnitOfWork.ProductRepository.GetByIdAsync(product.ProductId);
+                if (product.Quantity <= productToUpdate.Data.AvailableQuantity)
+                {
+                    productToUpdate.Data.AvailableQuantity -= product.Quantity;
+                    await UnitOfWork.ProductRepository.UpdateAsync(productToUpdate.Data);
+                }
 
                 result = await UnitOfWork.Commit();
 
