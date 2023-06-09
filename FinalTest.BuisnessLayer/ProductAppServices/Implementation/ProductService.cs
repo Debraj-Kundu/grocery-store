@@ -91,11 +91,22 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
          
             await UnitOfWork.ProductRepository.UpdateAsync(productEntity);
 
-            OperationResult result;
+            await UnitOfWork.Commit();
 
-            result = await UnitOfWork.Commit();
+        }
 
-            //return new OperationResult<ProductDomain>(product, result.IsSuccess, result.MainMessage, result.AssociatedMessages.ToList<Message>());
+        public async Task<OperationResult<ProductDomain>> RemoveProduct(int productId)
+        {
+            var product = await UnitOfWork.ProductRepository.GetByIdAsync(productId);
+            if(product.Data == null)
+            {
+                Message errMsg = new Message(string.Empty, "Not Found");
+                return new OperationResult<ProductDomain>(null, false, errMsg);
+            }
+            UnitOfWork.ProductRepository.DeleteAsync(product.Data);
+            Message message = new Message(string.Empty, "Deleted Successfully");
+            await UnitOfWork.Commit();
+            return new OperationResult<ProductDomain>(null, true, message);
         }
     }
 }

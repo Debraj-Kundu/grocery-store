@@ -9,6 +9,7 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Interface
     {
         Task UpdateProduct(int productId, ProductDomain product);
         Task<OperationResult<ProductDomain>> GetProductById(int id);
+        Task<OperationResult<ProductDomain>> RemoveProduct(int productId);
         Task<OperationResult<IEnumerable<ProductDomain>>> GetAllProducts();
         Task<OperationResult<ProductDomain>> CreateProduct(ProductDomain item);
         Task<OperationResult<IEnumerable<ProductDomain>>> GetProductByParam(string name);

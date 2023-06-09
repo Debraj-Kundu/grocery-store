@@ -2,15 +2,11 @@ using AutoMapper;
 using FinalTest.BuisnessLayer.Configuration;
 using FinalTest.BuisnessLayer.Mapper;
 using FinalTest.DataLayer.Configuration;
-using FinalTest.DataLayer.DataContext;
 using FinalTest.WebAPI.DTO;
 using FinalTest.WebAPI.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -76,7 +72,8 @@ namespace DebrajKundu_3203000_FinalTest
                 };
             });
 
-            services.AddControllers().AddNewtonsoftJson(s => {
+            services.AddControllers().AddNewtonsoftJson(s =>
+            {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
         }
@@ -96,6 +93,14 @@ namespace DebrajKundu_3203000_FinalTest
             app.UseAuthentication();
 
             app.UseAuthorization();
+
+            app.UseCors(builder =>
+            {
+                builder
+                .AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            });
 
             app.UseEndpoints(endpoints =>
             {

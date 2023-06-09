@@ -59,6 +59,7 @@ namespace FinalTest.WebAPI.Controllers
             return Ok(product);
         }
 
+        // GET api/<ProductController>/<ActionMethod>/5
         [HttpGet("/api/[controller]/[action]/{categoryId}")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetByCategory(int categoryId)
         {
@@ -75,27 +76,39 @@ namespace FinalTest.WebAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductDto>> Post(ProductDto product)
         {
-            ProductDomain productToCreate = Mapper.Map<ProductDomain>(product);
-            var result = await ProductService.CreateProduct(productToCreate);
-            if(result.IsSuccess)
-                return Created(nameof(Post), product);
+            if(ModelState.IsValid)
+            { 
+                ProductDomain productToCreate = Mapper.Map<ProductDomain>(product);
+                var result = await ProductService.CreateProduct(productToCreate);
+                if(result.IsSuccess)
+                    return Created(nameof(Post), product);
+            }
             return BadRequest();
         }
 
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task Put(int id, ProductDto product)
+        public async Task<ActionResult> Put(int id, ProductDto product)
         {
-            var productDomain = Mapper.Map<ProductDomain>(product);
-            await ProductService.UpdateProduct(id, productDomain);
+            if(ModelState.IsValid)
+            {
+                var productDomain = Mapper.Map<ProductDomain>(product);
+                await ProductService.UpdateProduct(id, productDomain);
+                return Created(nameof(Post), product);
+            }
+            return BadRequest();
         }
 
         // DELETE api/<ProductController>/5
         [HttpDelete("{id}")]
         [Authorize(Roles = "Admin")]
-        public void Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
+            var result = await ProductService.RemoveProduct(id);
+            if (result.IsSuccess)
+                return Ok();
+            return NotFound();
         }
     }
 }
