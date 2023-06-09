@@ -2,10 +2,12 @@
 using FinalTest.BuisnessLayer.Domain;
 using FinalTest.BuisnessLayer.ProductAppServices.Interface;
 using FinalTest.WebAPI.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 namespace FinalTest.WebAPI.Controllers
@@ -45,8 +47,10 @@ namespace FinalTest.WebAPI.Controllers
 
         // POST api/<CartController>
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<ProductDto>> Post(CustomerCartDto product)
         {
+            product.CustomerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             CustomerCartDomain cartProduct = Mapper.Map<CustomerCartDomain>(product);
             var result = await CartService.AddCartProduct(cartProduct);
             if (result.IsSuccess)

@@ -20,13 +20,13 @@ namespace FinalTest.WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthenticateController : ControllerBase
+    public class UserAccountController : ControllerBase
     {
         public ICustomerService CustomerService { get; }
         public IMapper Mapper { get; }
         public JWTSetting JwtSetting { get; }
 
-        public AuthenticateController(ICustomerService customerService, IMapper mapper, IOptions<JWTSetting> options)
+        public UserAccountController(ICustomerService customerService, IMapper mapper, IOptions<JWTSetting> options)
         {
             CustomerService = customerService;
             Mapper = mapper;
@@ -34,7 +34,7 @@ namespace FinalTest.WebAPI.Controllers
         }
 
 
-        [HttpPost("auth")]
+        [HttpPost("login")]
         public async Task<IActionResult> Authenticate(CustomerLogin customer)
         {
             var result = await CustomerService.GetCustomerWithDetails(customer.Email, CommonMethods.Encrypt(customer.Password));
@@ -43,23 +43,20 @@ namespace FinalTest.WebAPI.Controllers
 
             var tokenhandler = new JwtSecurityTokenHandler();
             var tokenkey = Encoding.UTF8.GetBytes(JwtSetting.securitykey);
+            var userClaims = new Claim[]{
+                                new Claim(ClaimTypes.NameIdentifier, result.Data.Id.ToString()),
+                                new Claim(ClaimTypes.Email, result.Data.Email),
+                                new Claim(ClaimTypes.Role, result.Data.Role)
+                            };
+            var userIdentity = new ClaimsIdentity(userClaims);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(
-                    new Claim[]
-                    {
-                        new Claim(ClaimTypes.NameIdentifier, result.Data.Id.ToString()),
-                        new Claim(ClaimTypes.Email, result.Data.Email),
-                        new Claim(ClaimTypes.Role, result.Data.Role)
-                    }
-                ),
+                Subject = userIdentity,
                 Expires = DateTime.Now.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenkey), SecurityAlgorithms.HmacSha256)
             };
             var token = tokenhandler.CreateToken(tokenDescriptor);
             string finaltoken = tokenhandler.WriteToken(token);
-
-            //tokenResponse.JWTToken = finaltoken;
 
             return Ok(finaltoken);
         }

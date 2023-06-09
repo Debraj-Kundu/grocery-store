@@ -2,10 +2,12 @@
 using FinalTest.BuisnessLayer.Domain;
 using FinalTest.BuisnessLayer.ProductAppServices.Interface;
 using FinalTest.WebAPI.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 
@@ -42,8 +44,10 @@ namespace FinalTest.WebAPI.Controllers
 
         // POST api/<OrderController>
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<ProductDto>> Post(OrderDto product)
         {
+            product.CustomerId = int.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
             OrderDomain corderProduct = Mapper.Map<OrderDomain>(product);
             var result = await OrderService.AddOrder(corderProduct);
             if (result.IsSuccess)
