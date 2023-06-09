@@ -2,6 +2,7 @@
 using FinalTest.BuisnessLayer.Domain;
 using FinalTest.BuisnessLayer.ProductAppServices.Interface;
 using FinalTest.WebAPI.DTO;
+using FinalTest.WebAPI.Util;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +37,7 @@ namespace FinalTest.WebAPI.Controllers
         [HttpPost("auth")]
         public async Task<IActionResult> Authenticate(CustomerLogin customer)
         {
-            var result = await CustomerService.GetCustomerWithDetails(customer.Email, customer.Password);
+            var result = await CustomerService.GetCustomerWithDetails(customer.Email, CommonMethods.Encrypt(customer.Password));
             if (result.Data == null)
                 return Unauthorized();
 
@@ -47,8 +48,9 @@ namespace FinalTest.WebAPI.Controllers
                 Subject = new ClaimsIdentity(
                     new Claim[]
                     {
+                        new Claim(ClaimTypes.NameIdentifier, result.Data.Id.ToString()),
                         new Claim(ClaimTypes.Email, result.Data.Email),
-                        new Claim(ClaimTypes.Role, result.Data.Role)//role
+                        new Claim(ClaimTypes.Role, result.Data.Role)
                     }
                 ),
                 Expires = DateTime.Now.AddHours(1),
@@ -61,7 +63,7 @@ namespace FinalTest.WebAPI.Controllers
 
             return Ok(finaltoken);
         }
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> Get()
         {
             var result = await CustomerService.GetAllCustomers();
@@ -72,6 +74,7 @@ namespace FinalTest.WebAPI.Controllers
         [HttpPost]
         public async Task<ActionResult<CustomerDto>> Post(CustomerDto customer)
         {
+            customer.Password = CommonMethods.Encrypt(customer.Password);
             CustomerDomain customerToCreate = Mapper.Map<CustomerDomain>(customer);
             var result = await CustomerService.CreateCustomer(customerToCreate);
             if (result.IsSuccess)
