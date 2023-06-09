@@ -30,5 +30,6 @@ namespace FinalTest.WebAPI.DTO
         public string ConfirmPassword { get; set; }
 
         public bool IsAdmin { get; set; }
+        public string Role { get; set; }
     }
 }

@@ -47,10 +47,11 @@ namespace FinalTest.WebAPI.Controllers
                 Subject = new ClaimsIdentity(
                     new Claim[]
                     {
-                        new Claim(ClaimTypes.Name, result.Data.Id.ToString())
+                        new Claim(ClaimTypes.Email, result.Data.Email),
+                        new Claim(ClaimTypes.Role, result.Data.Role)//role
                     }
                 ),
-                Expires = DateTime.Now.AddMinutes(20),
+                Expires = DateTime.Now.AddHours(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenkey), SecurityAlgorithms.HmacSha256)
             };
             var token = tokenhandler.CreateToken(tokenDescriptor);
@@ -60,7 +61,7 @@ namespace FinalTest.WebAPI.Controllers
 
             return Ok(finaltoken);
         }
-        [Authorize]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> Get()
         {
             var result = await CustomerService.GetAllCustomers();

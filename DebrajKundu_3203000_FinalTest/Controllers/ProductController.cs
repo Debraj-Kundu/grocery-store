@@ -4,6 +4,7 @@ using FinalTest.BuisnessLayer.ProductAppServices.Interface;
 using FinalTest.DataLayer.Entity;
 using FinalTest.DataLayer.Repository.Interface;
 using FinalTest.WebAPI.DTO;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -71,6 +72,7 @@ namespace FinalTest.WebAPI.Controllers
 
         // POST api/<ProductController>
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductDto>> Post(ProductDto product)
         {
             ProductDomain productToCreate = Mapper.Map<ProductDomain>(product);
@@ -82,6 +84,7 @@ namespace FinalTest.WebAPI.Controllers
 
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task Put(int id, ProductDto product)
         {
             var productDomain = Mapper.Map<ProductDomain>(product);
@@ -90,16 +93,9 @@ namespace FinalTest.WebAPI.Controllers
 
         // DELETE api/<ProductController>/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public void Delete(int id)
         {
         }
-
-        //[HttpGet("/api/[controller]/[action]")]
-        //public async Task<ActionResult<CategoryDto>> GetAllCategory()
-        //{
-        //    var result = await CategoryService.GetCategoryByName("Biscuit");
-        //    var products = Mapper.Map<CategoryDto>(result.Data);
-        //    return Ok(products);
-        //}
     }
 }
