@@ -1,0 +1,87 @@
+<!-- <p>login works!</p>
+<div *ngFor="let item of products$ | async;">
+    <li>{{item | json}}</li>
+</div> -->
+
+<div class="container d-flex justify-content-center">
+  <form class="login-form" [formGroup]="loginForm">
+    <mat-card>
+      <mat-card-header class="login-form-header">
+        <h2>Login</h2>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-error *ngIf="false"> Invalid credentials </mat-error>
+        <div>
+          <mat-form-field class="form-body">
+            <mat-label>Name</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="Name"
+              autocomplete="autocomplete_off_randString"
+            />
+            <mat-error *ngIf="false"> You must enter a name </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-body">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="text"
+              formControlName="Email"
+              autocomplete="autocomplete_off_randString"
+            />
+            <mat-error *ngIf="false"> You must enter a email </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-body">
+            <mat-label>Phone number</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="PhoneNumber"
+              autocomplete="autocomplete_off_randString"
+            />
+            <mat-error *ngIf="false"> You must enter a phone number </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-body">
+            <mat-label>Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="Password"
+              autocomplete="autocomplete_off_randString"
+            />
+            <mat-error *ngIf="false"> You must enter a password </mat-error>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field class="form-body">
+            <mat-label>Confirm Password</mat-label>
+            <input
+              matInput
+              type="password"
+              formControlName="ConfirmPassword"
+              autocomplete="autocomplete_off_randString"
+            />
+            <mat-error *ngIf="false"> You must enter a password </mat-error>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <div>
+        <mat-card-footer>
+          <div class="d-flex justify-content-evenly" style="margin: 2px">
+            <button mat-raised-button color="primary" type="submit">
+              Search
+            </button>
+            <button mat-raised-button color="warn" type="button">Clear</button>
+          </div>
+        </mat-card-footer>
+      </div>
+    </mat-card>
+  </form>
+</div>
