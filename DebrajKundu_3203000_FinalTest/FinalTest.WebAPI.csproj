@@ -21,7 +21,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FinalTest.BuisnessLayer\FinalTest.BuisnessLayer.csproj" />
-    <ProjectReference Include="..\FinalTest.DataLayer\FinalTest.DataLayer.csproj" />
     <ProjectReference Include="..\FinalTest.SharedLayer\FinalTest.SharedLayer.csproj" />
   </ItemGroup>
 

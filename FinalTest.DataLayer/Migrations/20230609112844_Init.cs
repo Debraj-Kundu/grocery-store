@@ -16,7 +16,7 @@ namespace FinalTest.DataLayer.Migrations
                     CreatedOnDate = table.Column<DateTimeOffset>(nullable: false),
                     ModifiedOnDate = table.Column<DateTimeOffset>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -32,12 +32,13 @@ namespace FinalTest.DataLayer.Migrations
                     CreatedOnDate = table.Column<DateTimeOffset>(nullable: false),
                     ModifiedOnDate = table.Column<DateTimeOffset>(nullable: false),
                     IsDeleted = table.Column<bool>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    PhoneNumber = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    ConfirmPassword = table.Column<string>(nullable: true),
-                    IsAdmin = table.Column<bool>(nullable: false)
+                    Name = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: false),
+                    PhoneNumber = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    ConfirmPassword = table.Column<string>(nullable: false),
+                    IsAdmin = table.Column<bool>(nullable: false),
+                    Role = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -114,7 +115,8 @@ namespace FinalTest.DataLayer.Migrations
                     IsDeleted = table.Column<bool>(nullable: false),
                     CustomerId = table.Column<int>(nullable: false),
                     ProductId = table.Column<int>(nullable: false),
-                    OrderDate = table.Column<DateTime>(nullable: false)
+                    OrderDate = table.Column<DateTime>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -144,6 +146,12 @@ namespace FinalTest.DataLayer.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Customers_Email_PhoneNumber",
+                table: "Customers",
+                columns: new[] { "Email", "PhoneNumber" },
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Orders_CustomerId",
                 table: "Orders",
                 column: "CustomerId");
@@ -157,6 +165,12 @@ namespace FinalTest.DataLayer.Migrations
                 name: "IX_Products_CategoryId",
                 table: "Products",
                 column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_Name",
+                table: "Products",
+                column: "Name",
+                unique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

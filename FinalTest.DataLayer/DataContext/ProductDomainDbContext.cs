@@ -18,5 +18,14 @@ namespace FinalTest.DataLayer.DataContext
         {
 
         }
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<Customer>()
+                .HasIndex(c => new { c.Email, c.PhoneNumber })
+                .IsUnique(true);
+            builder.Entity<Product>()
+                .HasIndex(p => p.Name)
+                .IsUnique(true);
+        }
     }
 }

@@ -1,7 +1,6 @@
 using AutoMapper;
 using FinalTest.BuisnessLayer.Configuration;
 using FinalTest.BuisnessLayer.Mapper;
-using FinalTest.DataLayer.Configuration;
 using FinalTest.WebAPI.DTO;
 using FinalTest.WebAPI.Mapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -40,12 +39,11 @@ namespace DebrajKundu_3203000_FinalTest
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //DbContext and repository configurations of Data Layer
-            services.RegisterDataContext(Configuration.GetConnectionString("DefaultConnection"));
+            
 
             services.AddScoped(sp => MapperConfiguration.CreateMapper());
 
-            services.RegisterServices();
+            services.RegisterServices(Configuration.GetConnectionString("DefaultConnection"));
 
             var _jwtsetting = Configuration.GetSection("JWTSetting");
             services.Configure<JWTSetting>(_jwtsetting);
