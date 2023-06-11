@@ -16,7 +16,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import { User } from 'src/app/Shared/Interface/User.interface';
 import { Login } from 'src/app/Shared/Interface/Login.interface';
 import { Router } from '@angular/router';
 
@@ -63,8 +62,8 @@ export class LoginComponent implements OnInit {
       this.loginService.login(this.userLogin).subscribe({
         next: (res) => {
           this.loginForm.reset();
-          console.log('haa ');
-          this.loginService.storeToken(res);
+          console.log(res.token);
+          this.loginService.storeToken(res.token);
           this.router.navigate(['register']);
         },
         error: (err) => {

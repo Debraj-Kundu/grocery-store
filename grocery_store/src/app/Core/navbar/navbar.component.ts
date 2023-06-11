@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { LoginService } from 'src/app/Shared/Service/login.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,4 +9,11 @@ import { Component } from '@angular/core';
 })
 export class NavbarComponent {
 
+  constructor(private loginService:LoginService){
+
+  }
+
+  logout(){
+    this.loginService.logout();
+  }
 }

@@ -6,6 +6,11 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './Core/navbar/navbar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+
+const matModules =  [
+  MatButtonModule
+];
 
 @NgModule({
   declarations: [
@@ -16,7 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    ...matModules
   ],
   providers: [],
   bootstrap: [AppComponent]

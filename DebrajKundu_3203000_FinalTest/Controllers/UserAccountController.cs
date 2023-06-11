@@ -58,7 +58,7 @@ namespace FinalTest.WebAPI.Controllers
             var token = tokenhandler.CreateToken(tokenDescriptor);
             string finaltoken = tokenhandler.WriteToken(token);
 
-            return Ok(finaltoken);
+            return Ok(new { token = finaltoken });
         }
         [Authorize]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> Get()

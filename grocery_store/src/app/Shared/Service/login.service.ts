@@ -27,5 +27,7 @@ export class LoginService {
     return !!this.getToken();
   }
 
-  logout() {}
+  logout() {
+    localStorage.clear();
+  }
 }
