@@ -1,0 +1,86 @@
+
+{{registerForm.value | json}}
+
+<div class="container d-flex justify-content-center">
+    <form [formGroup]="registerForm" (ngSubmit)="register()">
+      <mat-card>
+        <mat-card-header>
+          <h2>Register</h2>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-error *ngIf="false"> Invalid credentials </mat-error>
+          <div>
+            <mat-form-field>
+              <mat-label>Name</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="Name"
+                autocomplete="autocomplete_off_randString"
+              />
+              <mat-error *ngIf="false"> You must enter a name </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input
+                matInput
+                type="text"
+                formControlName="Email"
+                autocomplete="autocomplete_off_randString"
+              />
+              <mat-error *ngIf="false"> You must enter a email </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Phone number</mat-label>
+              <input
+                matInput
+                type="number"
+                formControlName="PhoneNumber"
+                autocomplete="autocomplete_off_randString"
+              />
+              <mat-error *ngIf="false"> You must enter a phone number </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Password</mat-label>
+              <input
+                matInput
+                type="password"
+                formControlName="Password"
+                autocomplete="autocomplete_off_randString"
+              />
+              <mat-error *ngIf="false"> You must enter a password </mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <mat-form-field>
+              <mat-label>Confirm Password</mat-label>
+              <input
+                matInput
+                type="password"
+                formControlName="ConfirmPassword"
+                autocomplete="autocomplete_off_randString"
+              />
+              <mat-error *ngIf="false"> You must enter a password </mat-error>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <div>
+          <mat-card-footer>
+            <div class="d-flex justify-content-evenly" style="margin: 2px">
+              <button mat-raised-button color="primary" type="submit">
+                Register
+              </button>
+              <button mat-raised-button color="warn" type="button">Clear</button>
+            </div>
+          </mat-card-footer>
+        </div>
+      </mat-card>
+    </form>
+  </div>
+  

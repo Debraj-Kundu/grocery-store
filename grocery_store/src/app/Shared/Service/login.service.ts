@@ -2,24 +2,30 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Product } from '../Interface/Product.interface';
+import { Login } from '../Interface/Login.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
   constructor(private http: HttpClient) {}
-  apiurl = 'https://localhost:44333/api/product/';
+  apiurl = 'https://localhost:44333/api/UserAccount/login';
 
-
-  login() {
-    
+  login(loginUser: Login):Observable<any> {
+    return this.http.post<any>(`${this.apiurl}`, loginUser);
   }
 
-  logout() {
-    
+  storeToken(token: string) {
+    localStorage.setItem('token', token);
   }
 
-  getProd() : Observable<Product[]>{
-    return this.http.get<Product[]>(this.apiurl);
+  getToken() {
+    return localStorage.getItem('token');
   }
+
+  isLoggedIn(): boolean {
+    return !!this.getToken();
+  }
+
+  logout() {}
 }

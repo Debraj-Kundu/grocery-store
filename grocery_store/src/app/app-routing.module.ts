@@ -11,7 +11,12 @@ const routes: Routes = [
     path: '',
     redirectTo: '/login',
     pathMatch: 'full',
-  }
+  },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./Core/register/register.component').then((c) => c.RegisterComponent),
+  },
 ];
 
 @NgModule({

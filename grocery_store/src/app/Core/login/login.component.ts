@@ -16,6 +16,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { User } from 'src/app/Shared/Interface/User.interface';
+import { Login } from 'src/app/Shared/Interface/Login.interface';
+import { Router } from '@angular/router';
 
 const matModules = [
   MatFormFieldModule,
@@ -35,19 +38,39 @@ const matModules = [
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
-  products$ = this.loginService.getProd();
-  
-  constructor(private fb: FormBuilder, private loginService: LoginService) {}
-  
+  userLogin: Login = {
+    Email: '',
+    Password: '',
+  };
+
+  constructor(
+    private fb: FormBuilder,
+    private loginService: LoginService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      Name: new FormControl('', { validators: [Validators.required] }),
       Email: new FormControl('', { validators: [Validators.required] }),
-      PhoneNumber: new FormControl('', { validators: [Validators.required] }),
       Password: new FormControl('', { validators: [Validators.required] }),
-      ConfirmPassword: new FormControl('', { validators: [Validators.required] }),
     });
   }
 
-
+  Login() {
+    if (this.loginForm.valid) {
+      this.userLogin.Email = this.loginForm.value.Email;
+      this.userLogin.Password = this.loginForm.value.Password;
+      this.loginService.login(this.userLogin).subscribe({
+        next: (res) => {
+          this.loginForm.reset();
+          console.log('haa ');
+          this.loginService.storeToken(res);
+          this.router.navigate(['register']);
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
+  }
 }
