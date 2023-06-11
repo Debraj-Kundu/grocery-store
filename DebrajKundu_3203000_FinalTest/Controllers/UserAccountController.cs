@@ -45,6 +45,7 @@ namespace FinalTest.WebAPI.Controllers
             var tokenkey = Encoding.UTF8.GetBytes(JwtSetting.securitykey);
             var userClaims = new Claim[]{
                                 new Claim(ClaimTypes.NameIdentifier, result.Data.Id.ToString()),
+                                new Claim(ClaimTypes.Name, result.Data.Name),
                                 new Claim(ClaimTypes.Email, result.Data.Email),
                                 new Claim(ClaimTypes.Role, result.Data.Role)
                             };

@@ -26,6 +26,7 @@ namespace FinalTest.WebAPI.Controllers
         }
 
         // GET: api/<CartController>
+        [Authorize]
         [HttpGet("{customerId:int}")]
         public async Task<ActionResult<IEnumerable<CustomerCartDto>>> Get(int customerId)
         {

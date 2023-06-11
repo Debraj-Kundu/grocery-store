@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
           this.loginForm.reset();
           console.log(res.token);
           this.loginService.storeToken(res.token);
-          this.router.navigate(['register']);
+          this.router.navigate(['home']);
         },
         error: (err) => {
           console.log(err);
