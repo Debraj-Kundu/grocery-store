@@ -2,6 +2,14 @@
     <ul>{{item | json}}</ul>
 </div> -->
 
+<mat-form-field>
+  <mat-label>Category</mat-label>
+  <mat-select>
+    <mat-option *ngFor="let food of categoryList" [value]="food">
+      {{food}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
 <div class="container mat-elevation-z8">
   <table mat-table [dataSource]="tableData$ | async">
     <ng-container matColumnDef="name">

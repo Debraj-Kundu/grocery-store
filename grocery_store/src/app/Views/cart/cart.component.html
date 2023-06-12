@@ -1,2 +1,10 @@
 <p>cart works!</p>
-{{cartList$ | async | json}}
+{{ cartList$ | async | json }}
+<div *ngFor="let item of cartList$ | async" class="container">
+  <mat-card>
+    <mat-card-content>
+        {{item.productId}}
+        {{item.quantity}}
+    </mat-card-content>
+  </mat-card>
+</div>

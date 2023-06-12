@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductService } from 'src/app/Shared/Service/product.service';
 import { Product } from 'src/app/Shared/Interface/Product.interface';
@@ -9,6 +9,8 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginService } from 'src/app/Shared/Service/login.service';
 import { UserStoreService } from 'src/app/Shared/Service/user-store.service';
 
@@ -18,6 +20,8 @@ const matModules = [
   MatPaginatorModule,
   MatIconModule,
   MatDialogModule,
+  MatSelectModule,
+  MatFormFieldModule,
 ];
 
 @Component({
@@ -27,14 +31,16 @@ const matModules = [
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private loginService: LoginService,
     private userStore: UserStoreService
   ) {}
+  
 
   productsList: Observable<Product[]> = this.productService.getAllProducts();
+  categoryList: string[] = ['Biscuit', 'Juice', 'Chips', 'Candy', 'Chocolate'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -56,5 +62,9 @@ export class HomeComponent implements OnInit {
       this.userRole = val || roleFormToken;
     });
     if (this.userRole === 'Admin') this.displayColumns.push('actions');
+  }
+
+  ngOnDestroy(): void {
+    
   }
 }
