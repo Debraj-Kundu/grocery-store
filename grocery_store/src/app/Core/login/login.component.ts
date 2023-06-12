@@ -18,6 +18,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { Login } from 'src/app/Shared/Interface/Login.interface';
 import { Router } from '@angular/router';
+import { UserStoreService } from 'src/app/Shared/Service/user-store.service';
 
 const matModules = [
   MatFormFieldModule,
@@ -45,7 +46,8 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private loginService: LoginService,
-    private router: Router
+    private router: Router,
+    private userStore: UserStoreService
   ) {}
 
   ngOnInit(): void {
@@ -59,11 +61,17 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.valid) {
       this.userLogin.Email = this.loginForm.value.Email;
       this.userLogin.Password = this.loginForm.value.Password;
+
       this.loginService.login(this.userLogin).subscribe({
         next: (res) => {
           this.loginForm.reset();
           console.log(res.token);
           this.loginService.storeToken(res.token);
+
+          const tokenPayload = this.loginService.decodeToken();
+          this.userStore.setfullnameForStore(tokenPayload.unique_name);
+          this.userStore.setRoleForStore(tokenPayload.role);
+
           this.router.navigate(['home']);
         },
         error: (err) => {

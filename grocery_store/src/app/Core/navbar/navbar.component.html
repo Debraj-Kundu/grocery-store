@@ -1,2 +1,56 @@
-<p>navbar works!</p>
-<button mat-raised-button color="warn" (click)="logout()">Logout</button>
+<mat-toolbar
+  color="primary"
+  class="mat-elevation-z8 d-flex justify-content-between"
+>
+  <div class="d-flex align-items-center">
+    <div>
+      <button
+        (click)="drawer.toggle()"
+        mat-icon-button
+        class="example-icon d-block d-md-block"
+        aria-label="Example icon-button with menu icon"
+      >
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+    <div class="logo" [routerLink]="['/home']">Grocery Store</div>
+    <div class="d-none d-md-block">
+      <ng-container *ngIf="isLoggedIn == true">
+        <button mat-button [routerLink]="['/cart']">View Cart</button>
+        <button mat-button [routerLink]="['/order']">My Orders</button>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="d-none d-md-block">
+    <ng-container *ngIf="isLoggedIn == true">
+      <button mat-button>Hello {{ username }}</button>
+      <button mat-raised-button color="warn" (click)="logout()">Logout</button>
+    </ng-container>
+    <ng-container *ngIf="isLoggedIn == false">
+      <button mat-raised-button color="accent" [routerLink]="['/login']">
+        SignIn
+      </button>
+    </ng-container>
+  </div>
+</mat-toolbar>
+
+<mat-drawer-container  autosize>
+  <mat-drawer class="mat-elevation-z8" #drawer mode="side">
+    <mat-nav-list>
+      <ng-container *ngIf="isLoggedIn == true">
+        <mat-list-item>
+          <button mat-button [routerLink]="['/cart']">View Cart</button>
+        </mat-list-item>
+        <mat-list-item>
+          <button mat-button [routerLink]="['/order']">My Orders</button>
+        </mat-list-item>
+      </ng-container>
+    </mat-nav-list>
+  </mat-drawer>
+  <mat-drawer-content>
+    <div style="text-align: center; min-height: 89vh">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-drawer-content>
+</mat-drawer-container>
