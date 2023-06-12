@@ -25,8 +25,12 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
         public async Task<OperationResult<IEnumerable<CustomerCartDomain>>> GetCartByCustomer(int customerId)
         {
             var cart = await UnitOfWork.CustomerCartRepository.GetByCustomerAsync(customerId);
-            var result = Mapper.Map<IEnumerable<CustomerCartDomain>>(cart.Data);
-
+            var result = Mapper.Map<IEnumerable<CustomerCartDomain>>(cart.Data).ToList();
+            foreach (var item in result)
+            {
+                var prod = await UnitOfWork.ProductRepository.GetByIdAsync(item.ProductId);
+                item.Product = Mapper.Map<ProductDomain>(prod.Data);
+            }
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<IEnumerable<CustomerCartDomain>>(result, true, message);
         }

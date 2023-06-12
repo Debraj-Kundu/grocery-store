@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { CartService } from 'src/app/Shared/Service/cart.service';
 
 import {MatCardModule} from '@angular/material/card';
+import { Cart } from 'src/app/Shared/Interface/Cart.interface';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-cart',
@@ -14,5 +16,5 @@ import {MatCardModule} from '@angular/material/card';
 export class CartComponent {
   constructor(private cartService: CartService) {}
 
-  cartList$ = this.cartService.getCart();
+  cartList$:Observable<Cart[]> = this.cartService.getCart();
 }

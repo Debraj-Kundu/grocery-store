@@ -1,10 +1,12 @@
-<p>cart works!</p>
-{{ cartList$ | async | json }}
 <div *ngFor="let item of cartList$ | async" class="container">
+  {{ item | json }}
   <mat-card>
     <mat-card-content>
-        {{item.productId}}
-        {{item.quantity}}
+      {{ item.product.name }}
+      Quantity: {{ item.quantity }}
+      Bill: {{(item.product.price * item.quantity) | currency:'INR'}}
     </mat-card-content>
   </mat-card>
 </div>
+
+<button mat-raised-button color="primary">Place Order</button>

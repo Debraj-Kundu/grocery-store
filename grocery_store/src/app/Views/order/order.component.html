@@ -1,1 +1,13 @@
 <p>order works!</p>
+
+<div *ngFor="let item of orderList$ | async" class="container">
+  {{ item | json }}
+  <mat-card>
+    <mat-card-content>
+      {{ item.product.name }}
+      Quantity: {{ item.quantity }} Bill:
+      {{ item.product.price * item.quantity | currency : "INR" }}
+      {{item.orderDate | date}}
+    </mat-card-content>
+  </mat-card>
+</div>

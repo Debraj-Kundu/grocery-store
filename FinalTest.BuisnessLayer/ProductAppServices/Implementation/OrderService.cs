@@ -28,7 +28,12 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
             var products = await UnitOfWork.OrderRepository.GetAllByCustomerIdAsync(customerId);
             if (products.Data?.Any() == true)
             {
-                result = Mapper.Map<IEnumerable<OrderDomain>>(products.Data);
+                result = Mapper.Map<IEnumerable<OrderDomain>>(products.Data).ToList();
+                foreach (var item in result)
+                {
+                    var prod = await UnitOfWork.ProductRepository.GetByIdAsync(item.ProductId);
+                    item.Product = Mapper.Map<ProductDomain>(prod.Data);
+                }
             }
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<IEnumerable<OrderDomain>>(result, true, message);

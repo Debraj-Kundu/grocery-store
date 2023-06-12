@@ -71,6 +71,7 @@ export class LoginComponent implements OnInit {
           const tokenPayload = this.loginService.decodeToken();
           this.userStore.setfullnameForStore(tokenPayload.unique_name);
           this.userStore.setRoleForStore(tokenPayload.role);
+          this.userStore.setIdForStore(tokenPayload.nameid);
 
           this.router.navigate(['home']);
         },

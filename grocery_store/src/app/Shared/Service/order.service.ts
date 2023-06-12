@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Cart } from '../Interface/Cart.interface';
+import { Order } from '../Interface/Order.interface';
 import { LoginService } from './login.service';
 import { UserStoreService } from './user-store.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CartService {
+export class OrderService {
   id!: string;
   constructor(
     private http: HttpClient,
     private loginService: LoginService,
     private userStore: UserStoreService
   ) {}
-  apiurl = 'https://localhost:44333/api/cart';
+  apiurl = 'https://localhost:44333/api/order';
 
   private getUserId() {
     const nameFormToken = this.loginService.getIdFromToken();
@@ -24,8 +24,8 @@ export class CartService {
     });
   }
 
-  getCart(): Observable<Cart[]> {
+  getOrder(): Observable<Order[]> {
     this.getUserId();
-    return this.http.get<Cart[]>(`${this.apiurl}/${this.id}`);
+    return this.http.get<Order[]>(`${this.apiurl}/${this.id}`);
   }
 }
