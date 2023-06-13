@@ -15,6 +15,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 
+import { ToastrModule } from 'ngx-toastr';
+
 const matModules = [
   MatButtonModule,
   MatToolbarModule,
@@ -22,7 +24,7 @@ const matModules = [
   MatIconModule,
   MatMenuModule,
   MatSidenavModule,
-  MatListModule
+  MatListModule,
 ];
 
 @NgModule({
@@ -32,6 +34,12 @@ const matModules = [
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      closeButton: true,
+      preventDuplicates: true,
+      positionClass: 'toast-bottom-right',
+      timeOut: 3000
+    }),
     ...matModules,
   ],
   providers: [

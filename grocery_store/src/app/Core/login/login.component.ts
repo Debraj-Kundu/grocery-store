@@ -19,6 +19,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { Login } from 'src/app/Shared/Interface/Login.interface';
 import { Router } from '@angular/router';
 import { UserStoreService } from 'src/app/Shared/Service/user-store.service';
+import { ToastService } from 'src/app/Shared/Service/toast.service';
 
 const matModules = [
   MatFormFieldModule,
@@ -47,7 +48,8 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private loginService: LoginService,
     private router: Router,
-    private userStore: UserStoreService
+    private userStore: UserStoreService,
+    private toast:ToastService
   ) {}
 
   ngOnInit(): void {
@@ -72,11 +74,12 @@ export class LoginComponent implements OnInit {
           this.userStore.setfullnameForStore(tokenPayload.unique_name);
           this.userStore.setRoleForStore(tokenPayload.role);
           this.userStore.setIdForStore(tokenPayload.nameid);
-
+          this.toast.successToast('Login Successful!');
           this.router.navigate(['home']);
         },
         error: (err) => {
           console.log(err);
+          this.toast.errorToast('Login Failed!');
         },
       });
     }
