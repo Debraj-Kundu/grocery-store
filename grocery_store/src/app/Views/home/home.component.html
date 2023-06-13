@@ -14,7 +14,7 @@
     </mat-option>
   </mat-select>
 </mat-form-field>
-<form [formGroup]="searchBox" >
+<form [formGroup]="searchBox">
   <input
     matInput
     type="text"
@@ -69,6 +69,7 @@
               aria-label="Example home icon"
               fontIcon="delete"
               color="accent"
+              (click)="deleteProduct(element.id)"
             >
             </mat-icon>
           </a>

@@ -119,5 +119,16 @@ export class HomeComponent implements OnInit, OnDestroy {
       })
     );
   }
+  deleteProduct(id: string) {
+    this.productService.deleteProduct(id).subscribe((res) => {
+      this.tableData$ = this.productsList$.pipe(
+        map((item) => {
+          const dataSource = this.dataSource;
+          dataSource.data = item;
+          return dataSource;
+        })
+      );
+    });
+  }
   ngOnDestroy(): void {}
 }

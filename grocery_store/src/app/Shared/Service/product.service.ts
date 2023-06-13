@@ -16,5 +16,7 @@ export class ProductService {
   getProductById(id: string | null):Observable<Product>{
     return this.http.get<Product>(`${this.apiurl}/${id}`);
   }
-  // getProductByCategory()
+  deleteProduct(id: string){
+    return this.http.delete(`${this.apiurl}/${id}`);
+  }
 }
