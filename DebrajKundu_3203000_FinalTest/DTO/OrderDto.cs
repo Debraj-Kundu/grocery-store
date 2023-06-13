@@ -16,6 +16,7 @@ namespace FinalTest.WebAPI.DTO
         public ProductDto Product { get; set; }
         public DateTime OrderDate { get; set; }
         public int Quantity { get; set; }
+        public int CartId { get; set; }
 
     }
 }

@@ -28,4 +28,8 @@ export class OrderService {
     this.getUserId();
     return this.http.get<Order[]>(`${this.apiurl}/${this.id}`);
   }
+
+  postOrder(order:any){
+    return this.http.post(this.apiurl, order);
+  }
 }

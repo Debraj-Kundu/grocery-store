@@ -54,17 +54,19 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
             {
                 await UnitOfWork.OrderRepository.AddAsync(orderProduct);
                 var productToUpdate = await UnitOfWork.ProductRepository.GetByIdAsync(product.ProductId);
+                var cartItemToDelete = await UnitOfWork.CustomerCartRepository.GetByIdAsync(product.CartId);
                 if (product.Quantity <= productToUpdate.Data.AvailableQuantity)
                 {
                     productToUpdate.Data.AvailableQuantity -= product.Quantity;
                     await UnitOfWork.ProductRepository.UpdateAsync(productToUpdate.Data);
+                    UnitOfWork.CustomerCartRepository.DeleteAsync(cartItemToDelete.Data);
                 }
 
                 result = await UnitOfWork.Commit();
 
                 await transaction.CommitAsync();
             }
-            
+
             product.Id = orderProduct.Id;
 
             return new OperationResult<OrderDomain>(product, result.IsSuccess, result.MainMessage, result.AssociatedMessages.ToList<Message>());

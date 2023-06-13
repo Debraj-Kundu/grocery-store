@@ -1,6 +1,6 @@
 <div *ngFor="let item of cartList$ | async" class="container">
   {{ item | json }}
-  <mat-card>
+  <mat-card (click)="setId(item.product.id, item.id, item.quantity)">
     <mat-card-content>
       {{ item.product.name }}
       Quantity: {{ item.quantity }}
@@ -8,5 +8,7 @@
     </mat-card-content>
   </mat-card>
 </div>
-
-<button mat-raised-button color="primary">Place Order</button>
+prodid: {{selectedProdId}}
+cartid: {{selectedCartId}}
+quant: {{quantity}}
+<button mat-raised-button color="primary" (click)="placeOrder()">Place Order</button>

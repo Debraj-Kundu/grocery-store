@@ -34,6 +34,7 @@ namespace FinalTest.WebAPI.Controllers
         }
 
         // GET api/<OrderController>/5
+        [Authorize]
         [HttpGet("{customerId:int}")]
         public async Task<ActionResult<IEnumerable<OrderDto>>> Get(int customerId)
         {

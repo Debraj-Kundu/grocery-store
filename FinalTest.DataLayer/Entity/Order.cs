@@ -16,5 +16,6 @@ namespace FinalTest.DataLayer.Entity
         public DateTime OrderDate { get; set; }
         [Required]
         public int Quantity { get; set; }
+        public int CartId { get; set; }
     }
 }

@@ -8,5 +8,6 @@ export interface Order{
     product: Product,
     quantity: number,
     id: string,
-    orderDate: Date
+    orderDate: Date,
+    cartId:string
 };

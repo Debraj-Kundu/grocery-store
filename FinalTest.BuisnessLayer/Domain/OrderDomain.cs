@@ -14,5 +14,7 @@ namespace FinalTest.BuisnessLayer.Domain
         public ProductDomain Product { get; set; }
         public DateTime OrderDate { get; set; }
         public int Quantity { get; set; }
+        public int CartId { get; set; }
+
     }
 }
