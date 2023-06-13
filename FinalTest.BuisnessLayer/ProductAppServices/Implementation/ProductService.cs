@@ -29,7 +29,12 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
             var products = await UnitOfWork.ProductRepository.GetAllAsync();
             if (products.Data?.Any() == true)
             {
-                result = Mapper.Map<IEnumerable<ProductDomain>>(products.Data);
+                result = Mapper.Map<IEnumerable<ProductDomain>>(products.Data).ToList();
+                foreach (var item in result)
+                {
+                    var category = await UnitOfWork.CategoryRepository.GetByIdAsync(item.CategoryId);
+                    item.Category = Mapper.Map<CategoryDomain>(category.Data);
+                }
             }
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<IEnumerable<ProductDomain>>(result, true, message);

@@ -16,4 +16,5 @@ export class ProductService {
   getProductById(id: string | null):Observable<Product>{
     return this.http.get<Product>(`${this.apiurl}/${id}`);
   }
+  // getProductByCategory()
 }

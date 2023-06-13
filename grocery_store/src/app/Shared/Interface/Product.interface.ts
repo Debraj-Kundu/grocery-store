@@ -3,7 +3,7 @@ export interface Product{
     description: string,
     price: number,
     discount: number,
-    categoryId: string,
+    categoryId: number,
     category: string,
     availableQuantity: number,
     image: string,

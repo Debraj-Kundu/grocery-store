@@ -49,5 +49,12 @@ namespace FinalTest.DataLayer.Repository.Implementation
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<Category>(result, true, message);
         }
+
+        public async Task<OperationResult<Category>> GetByIdAsync(int categoryId)
+        {
+            var result = await Context.Categories.FindAsync(categoryId);
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<Category>(result, true, message);
+        }
     }
 }

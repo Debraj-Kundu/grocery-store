@@ -14,6 +14,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginService } from 'src/app/Shared/Service/login.service';
 import { UserStoreService } from 'src/app/Shared/Service/user-store.service';
 import { RouterModule } from '@angular/router';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { ToastService } from 'src/app/Shared/Service/toast.service';
+import { CategoryService } from 'src/app/Shared/Service/category.service';
 
 const matModules = [
   MatButtonModule,
@@ -28,7 +38,13 @@ const matModules = [
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterModule, ...matModules],
+  imports: [
+    CommonModule,
+    RouterModule,
+    ReactiveFormsModule,
+    FormsModule,
+    ...matModules,
+  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
@@ -36,18 +52,29 @@ export class HomeComponent implements OnInit, OnDestroy {
   constructor(
     private productService: ProductService,
     private loginService: LoginService,
-    private userStore: UserStoreService
+    private userStore: UserStoreService,
+    private categoryService: CategoryService,
+    private toast: ToastService
   ) {}
-  
 
-  productsList: Observable<Product[]> = this.productService.getAllProducts();
-  categoryList: string[] = ['Biscuit', 'Juice', 'Chips', 'Candy', 'Chocolate'];
+  productsList$: Observable<Product[]> = this.productService.getAllProducts();
+  categoryList$ = this.categoryService.getAllCategories();
+  // [
+  //   { value: 1, name: 'Biscuit' },
+  //   { value: 2, name: 'Juice' },
+  //   { value: 3, name: 'Chips' },
+  //   { value: 4, name: 'Chocolate' },
+  //   { value: 5, name: 'Bread' },
+  // ];
+
+  selected!: any;
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   displayColumns: string[] = ['name', 'description', 'price', 'image'];
   private dataSource = new MatTableDataSource<Product>();
-  tableData$: Observable<any> = this.productsList.pipe(
+
+  tableData$: Observable<any> = this.productsList$.pipe(
     map((item) => {
       const dataSource = this.dataSource;
       dataSource.data = item;
@@ -65,7 +92,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     if (this.userRole === 'Admin') this.displayColumns.push('actions');
   }
 
-  ngOnDestroy(): void {
-    
+  valueChange(value: any) {
+    this.toast.successToast(value.name);
+    this.tableData$ = this.productsList$.pipe(
+      map((item) => {
+        const dataSource = this.dataSource;
+        dataSource.data = item.filter(
+          (prod) => prod.categoryId === this.selected?.id
+        );
+        return dataSource;
+      })
+    );
   }
+  ngOnDestroy(): void {}
 }

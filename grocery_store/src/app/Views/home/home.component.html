@@ -1,15 +1,16 @@
-<!-- <div *ngFor="let item of productsList | async">
+<div *ngFor="let item of productsList$ | async">
     <ul>{{item | json}}</ul>
-</div> -->
+</div>
 
 <mat-form-field>
   <mat-label>Category</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let food of categoryList" [value]="food">
-      {{ food }}
+  <mat-select [(value)]="selected" (valueChange)="valueChange(selected)">
+    <mat-option *ngFor="let food of categoryList$ | async" [value]="food">
+      {{ food.name }}
     </mat-option>
   </mat-select>
 </mat-form-field>
+{{selected?.id}}
 <div class="container mat-elevation-z8">
   <table mat-table [dataSource]="tableData$ | async">
     <ng-container matColumnDef="name">

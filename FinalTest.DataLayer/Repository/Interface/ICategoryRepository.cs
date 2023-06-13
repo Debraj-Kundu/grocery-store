@@ -11,5 +11,6 @@ namespace FinalTest.DataLayer.Repository.Interface
     public interface ICategoryRepository : IRepository<Category>
     {
         Task<OperationResult<Category>> GetByNameAsync(string name);
+        Task<OperationResult<Category>> GetByIdAsync(int categoryId);
     }
 }
