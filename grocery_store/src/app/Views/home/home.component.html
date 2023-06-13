@@ -6,7 +6,7 @@
   <mat-label>Category</mat-label>
   <mat-select>
     <mat-option *ngFor="let food of categoryList" [value]="food">
-      {{food}}
+      {{ food }}
     </mat-option>
   </mat-select>
 </mat-form-field>
@@ -14,23 +14,25 @@
   <table mat-table [dataSource]="tableData$ | async">
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef>Product</th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      <td mat-cell *matCellDef="let element" [routerLink]="['/', element.id]">
+        {{ element.name }}
+      </td>
     </ng-container>
     <ng-container matColumnDef="description">
       <th mat-header-cell *matHeaderCellDef>Description</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" [routerLink]="['/', element.id]">
         {{ element.description }}
       </td>
     </ng-container>
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef>Price</th>
-      <td mat-cell *matCellDef="let element">
+      <td mat-cell *matCellDef="let element" [routerLink]="['/', element.id]">
         {{ element.price | currency : "INR" }}
       </td>
     </ng-container>
     <ng-container matColumnDef="image">
       <th mat-header-cell *matHeaderCellDef>Image</th>
-      <td mat-cell *matCellDef="let element">{{ element.image }}</td>
+      <td mat-cell *matCellDef="let element" [routerLink]="['/', element.id]">{{ element.image }}</td>
     </ng-container>
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Action</th>

@@ -36,6 +36,11 @@ const routes: Routes = [
     loadComponent: () =>
       import('./Views/order/order.component').then((c) => c.OrderComponent),
   },
+  {
+    path: ':id',
+    loadComponent: () =>
+      import('./Views/product/product.component').then((c) => c.ProductComponent),
+  },
 ];
 
 @NgModule({

@@ -1,0 +1,17 @@
+<p>product works!</p>
+{{product$ | async | json}}
+<div>
+    <mat-card>
+        <mat-card-content>
+          {{ (product$ | async)?.name }}
+          price: {{ ((quantity * ((product$ | async)?.price || 0))) | currency:'INR' }}
+          discount: {{ (product$ | async)?.discount }}
+          Image: {{ (product$ | async)?.image }}
+          Quantity: {{quantity}}
+          <button (click)="increase()">+</button>
+          <button (click)="decrease()">-</button>
+          <button type="submit" (click)="addToCart()">add to cart</button>
+          {{dekho}}
+        </mat-card-content>
+      </mat-card>
+</div>

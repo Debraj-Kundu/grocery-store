@@ -13,6 +13,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { LoginService } from 'src/app/Shared/Service/login.service';
 import { UserStoreService } from 'src/app/Shared/Service/user-store.service';
+import { RouterModule } from '@angular/router';
 
 const matModules = [
   MatButtonModule,
@@ -27,7 +28,7 @@ const matModules = [
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, ...matModules],
+  imports: [CommonModule, RouterModule, ...matModules],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
