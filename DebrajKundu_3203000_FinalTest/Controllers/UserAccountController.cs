@@ -53,7 +53,7 @@ namespace FinalTest.WebAPI.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = userIdentity,
-                Expires = DateTime.Now.AddHours(1),
+                Expires = DateTime.Now.AddDays(1),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(tokenkey), SecurityAlgorithms.HmacSha256)
             };
             var token = tokenhandler.CreateToken(tokenDescriptor);

@@ -20,7 +20,6 @@ import {
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  Validators,
 } from '@angular/forms';
 import { ToastService } from 'src/app/Shared/Service/toast.service';
 import { CategoryService } from 'src/app/Shared/Service/category.service';
@@ -54,20 +53,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private userStore: UserStoreService,
     private categoryService: CategoryService,
-    private toast: ToastService
+    private toast: ToastService,
+    private fb: FormBuilder
   ) {}
 
   productsList$: Observable<Product[]> = this.productService.getAllProducts();
   categoryList$ = this.categoryService.getAllCategories();
-  // [
-  //   { value: 1, name: 'Biscuit' },
-  //   { value: 2, name: 'Juice' },
-  //   { value: 3, name: 'Chips' },
-  //   { value: 4, name: 'Chocolate' },
-  //   { value: 5, name: 'Bread' },
-  // ];
 
   selected!: any;
+  searchBox!: FormGroup;
+  searchText = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
@@ -85,6 +80,9 @@ export class HomeComponent implements OnInit, OnDestroy {
   userRole: string = '';
 
   ngOnInit(): void {
+    this.searchBox = this.fb.group({
+      search: new FormControl(''),
+    });
     const roleFormToken = this.loginService.getRoleFromToken();
     this.userStore.getRoleFormStore().subscribe((val) => {
       this.userRole = val || roleFormToken;
@@ -99,6 +97,23 @@ export class HomeComponent implements OnInit, OnDestroy {
         const dataSource = this.dataSource;
         dataSource.data = item.filter(
           (prod) => prod.categoryId === this.selected?.id
+        );
+        return dataSource;
+      })
+    );
+  }
+  filterByName() {
+    this.tableData$ = this.productsList$.pipe(
+      map((item) => {
+        const dataSource = this.dataSource;
+        dataSource.data = item.filter(
+          (prod) =>
+            prod.name
+              .toLocaleLowerCase()
+              .includes(this.searchBox.value.search.toLocaleLowerCase()) ||
+            prod.description
+              .toLocaleLowerCase()
+              .includes(this.searchBox.value.search.toLocaleLowerCase())
         );
         return dataSource;
       })

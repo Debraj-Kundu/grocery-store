@@ -2,7 +2,6 @@
 <div *ngFor="let item of products$ | async;">
     <li>{{item | json}}</li>
 </div> -->
-
 <div class="container d-flex justify-content-center">
   <form [formGroup]="loginForm" (ngSubmit)="Login()">
     <mat-card>
@@ -10,7 +9,6 @@
         <h2>Login</h2>
       </mat-card-header>
       <mat-card-content>
-        <mat-error *ngIf="false"> Invalid credentials </mat-error>
         <div>
           <mat-form-field>
             <mat-label>Email</mat-label>
@@ -20,7 +18,12 @@
               formControlName="Email"
               autocomplete="autocomplete_off_randString"
             />
-            <mat-error *ngIf="false"> You must enter a email </mat-error>
+            <mat-error *ngIf="loginForm.get('Email')?.hasError('required')">
+              You must enter a email
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('Email')?.hasError('pattern')">
+              You must enter a valid email
+            </mat-error>
           </mat-form-field>
         </div>
         <div>
@@ -32,17 +35,32 @@
               formControlName="Password"
               autocomplete="autocomplete_off_randString"
             />
-            <mat-error *ngIf="false"> You must enter a password </mat-error>
+            <mat-error *ngIf="loginForm.get('Password')?.hasError('required')">
+              You must enter a password
+            </mat-error>
           </mat-form-field>
         </div>
       </mat-card-content>
       <div>
         <mat-card-footer>
           <div class="d-flex justify-content-evenly" style="margin: 2px">
-            <button mat-raised-button color="primary" type="submit">
+            <button
+              [disabled]="loginForm.invalid"
+              mat-raised-button
+              color="primary"
+              type="submit"
+            >
               Login
             </button>
-            <button mat-raised-button color="warn" type="button">Clear</button>
+            <button
+              [disabled]="loginForm.pristine"
+              mat-raised-button
+              color="warn"
+              type="button"
+              (click)="ClearForm()"
+            >
+              Clear
+            </button>
           </div>
         </mat-card-footer>
       </div>

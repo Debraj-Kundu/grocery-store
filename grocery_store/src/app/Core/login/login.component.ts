@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      Email: new FormControl('', { validators: [Validators.required] }),
+      Email: new FormControl('', { validators: [Validators.required, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$")] }),
       Password: new FormControl('', { validators: [Validators.required] }),
     });
   }
@@ -83,5 +83,8 @@ export class LoginComponent implements OnInit {
         },
       });
     }
+  }
+  ClearForm(){
+    this.loginForm.reset();
   }
 }
