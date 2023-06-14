@@ -12,10 +12,6 @@ export class RegisterService {
   constructor(private http: HttpClient) {}
 
   postUser(user: any) {
-    let header = new HttpHeaders();
-    header.set('Access-Control-Allow-Origin', '*');
-    return this.http.post(this.apiurl, user, {
-      headers: header,
-    });
+    return this.http.post<any>(`${this.apiurl}`, user);
   }
 }

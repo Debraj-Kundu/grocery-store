@@ -88,10 +88,6 @@ namespace DebrajKundu_3203000_FinalTest
 
             app.UseRouting();
 
-            app.UseAuthentication();
-
-            app.UseAuthorization();
-
             app.UseCors(builder =>
             {
                 builder
@@ -99,6 +95,12 @@ namespace DebrajKundu_3203000_FinalTest
                 .AllowAnyMethod()
                 .AllowAnyHeader();
             });
+
+            app.UseAuthentication();
+
+            app.UseAuthorization();
+
+            
 
             app.UseEndpoints(endpoints =>
             {

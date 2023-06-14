@@ -74,11 +74,12 @@ namespace FinalTest.WebAPI.Controllers
         public async Task<ActionResult<CustomerDto>> Post(CustomerDto customer)
         {
             customer.Password = CommonMethods.Encrypt(customer.Password);
+            customer.Role = "User";
             CustomerDomain customerToCreate = Mapper.Map<CustomerDomain>(customer);
             var result = await CustomerService.CreateCustomer(customerToCreate);
             if (result.IsSuccess)
                 return Created(nameof(Post), customer);
-            return BadRequest();
+            return BadRequest(new { msg = "wrong Input" });
         }
     }
 }
