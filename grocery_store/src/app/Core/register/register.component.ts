@@ -10,6 +10,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { User } from 'src/app/Shared/Interface/User.interface';
 import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from 'src/app/Shared/Service/login.service';
+import { RegisterService } from 'src/app/Shared/Service/register.service';
 
 const matModules = [
   MatFormFieldModule,
@@ -35,10 +36,12 @@ export class RegisterComponent implements OnInit {
     Email: '',
     PhoneNumber: '',
     Password: '',
-    ConfirmPassword: ''
+    ConfirmPassword: '',
+    IsAdmin: false,
+    Role: 'User'
   };
   
-  constructor(private fb: FormBuilder, private loginService: LoginService) {}
+  constructor(private fb: FormBuilder, private registerService: RegisterService) {}
   
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -57,6 +60,8 @@ export class RegisterComponent implements OnInit {
       this.userInfo.PhoneNumber = this.registerForm.value.PhoneNumber;
       this.userInfo.Password = this.registerForm.value.Password;
       this.userInfo.ConfirmPassword = this.registerForm.value.ConfirmPassword;
+
+      this.registerService.postUser(this.userInfo).subscribe();
     }
   }
 }

@@ -19,7 +19,8 @@ export class TokenInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     const jwtToken = this.loginService.getToken();
-
+    if(jwtToken == null)
+      return next.handle(request);
     if (jwtToken) {
       request = request.clone({
         setHeaders: { Authorization: `Bearer ${jwtToken}` },

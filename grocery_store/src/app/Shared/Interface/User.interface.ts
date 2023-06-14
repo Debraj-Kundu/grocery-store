@@ -4,5 +4,7 @@ export interface User {
     Email: string
     PhoneNumber: string
     Password: string
-    ConfirmPassword: string
+    ConfirmPassword: string,
+    IsAdmin: boolean,
+    Role: string
 }

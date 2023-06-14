@@ -62,6 +62,7 @@ namespace FinalTest.WebAPI.Controllers
             return Ok(new { token = finaltoken });
         }
         [Authorize]
+        [HttpGet]
         public async Task<ActionResult<IEnumerable<CustomerDto>>> Get()
         {
             var result = await CustomerService.GetAllCustomers();
@@ -69,7 +70,7 @@ namespace FinalTest.WebAPI.Controllers
             return Ok(products);
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<ActionResult<CustomerDto>> Post(CustomerDto customer)
         {
             customer.Password = CommonMethods.Encrypt(customer.Password);
