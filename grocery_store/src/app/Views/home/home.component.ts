@@ -11,6 +11,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSort, MatSortModule } from '@angular/material/sort';
+
 import { LoginService } from 'src/app/Shared/Service/login.service';
 import { UserStoreService } from 'src/app/Shared/Service/user-store.service';
 import { RouterModule } from '@angular/router';
@@ -32,6 +34,7 @@ const matModules = [
   MatDialogModule,
   MatSelectModule,
   MatFormFieldModule,
+  MatSortModule
 ];
 
 @Component({
@@ -65,6 +68,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   searchText = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   displayColumns: string[] = ['name', 'description', 'price', 'image'];
   private dataSource = new MatTableDataSource<Product>();
@@ -73,6 +77,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     map((item) => {
       const dataSource = this.dataSource;
       dataSource.data = item;
+      dataSource.paginator = this.paginator;
+      dataSource.sort = this.sort;
       return dataSource;
     })
   );
@@ -98,6 +104,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         dataSource.data = item.filter(
           (prod) => prod.categoryId === this.selected?.id
         );
+        dataSource.paginator = this.paginator;
+        dataSource.sort = this.sort;
         return dataSource;
       })
     );
@@ -115,6 +123,8 @@ export class HomeComponent implements OnInit, OnDestroy {
               .toLocaleLowerCase()
               .includes(this.searchBox.value.search.toLocaleLowerCase())
         );
+        dataSource.paginator = this.paginator;
+        dataSource.sort = this.sort;
         return dataSource;
       })
     );
@@ -125,6 +135,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         map((item) => {
           const dataSource = this.dataSource;
           dataSource.data = item;
+          dataSource.paginator = this.paginator;
+          dataSource.sort = this.sort;
           return dataSource;
         })
       );
