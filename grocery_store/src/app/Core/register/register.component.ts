@@ -40,6 +40,7 @@ const matModules = [
 export class RegisterComponent implements OnInit {
   registerForm!: FormGroup;
   userInfo: User = {
+    id: 0,
     Name: '',
     Email: '',
     PhoneNumber: '',

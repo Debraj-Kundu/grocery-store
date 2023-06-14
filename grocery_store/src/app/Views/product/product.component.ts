@@ -5,9 +5,8 @@ import { LoginService } from 'src/app/Shared/Service/login.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, map } from 'rxjs';
 import { Product } from 'src/app/Shared/Interface/Product.interface';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 import { CartService } from 'src/app/Shared/Service/cart.service';
-
 
 @Component({
   selector: 'app-product',
@@ -22,29 +21,33 @@ export class ProductComponent implements OnInit {
     private loginService: LoginService,
     private route: ActivatedRoute,
     private cartService: CartService,
-    private router:Router
+    private router: Router
   ) {}
 
   id: string | null = '';
-  quantity:number=1;
+  quantity: number = 1;
   product$!: Observable<Product>;
-  dekho!:string;
-  
+  dekho!: string;
+
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     this.product$ = this.productService.getProductById(this.id);
   }
-  increase(){
+  increase() {
     this.quantity += 1;
   }
-  decrease(){
-    this.quantity = Math.max(0, this.quantity-1);
+  decrease() {
+    this.quantity = Math.max(0, this.quantity - 1);
   }
-  addToCart(){
-    let productId='';
-    this.product$.pipe(map(res => res.id)).subscribe(res=>{
-      productId = res
-      this.cartService.postCart({productId, quantity: this.quantity}).subscribe();
-    })
+  addToCart() {
+    let productId = 0;
+    this.product$.pipe(map((res) => res.id)).subscribe((res) => {
+      productId = res;
+      this.cartService
+        .postCart({ productId, quantity: this.quantity })
+        .subscribe((res) => {
+          this.router.navigate(['/cart']);
+        });
+    });
   }
 }

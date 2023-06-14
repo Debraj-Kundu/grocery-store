@@ -8,8 +8,8 @@ export interface Product{
     availableQuantity: number,
     image: string,
     specification: string,
-    id: string,
-    createdOnDate: string,
-    modifiedOnDate: string,
+    id: number,
+    createdOnDate: Date,
+    modifiedOnDate: Date,
     entityState: string
 }

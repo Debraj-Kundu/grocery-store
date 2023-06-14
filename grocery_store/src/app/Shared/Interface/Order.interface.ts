@@ -7,7 +7,7 @@ export interface Order{
     productId: string,
     product: Product,
     quantity: number,
-    id: string,
+    id: number,
     orderDate: Date,
     cartId:string
 };

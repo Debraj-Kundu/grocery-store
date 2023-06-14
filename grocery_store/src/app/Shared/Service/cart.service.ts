@@ -31,7 +31,7 @@ export class CartService {
   postCart(cart: any) {
     return this.http.post(this.apiurl, cart);
   }
-  deleteCartItem(id: string) {
+  deleteCartItem(id: number) {
     return this.http.delete(`${this.apiurl}/${id}`);
   }
 }

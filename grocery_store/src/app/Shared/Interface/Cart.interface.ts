@@ -7,5 +7,5 @@ export interface Cart{
     productId: string,
     product: Product,
     quantity: number,
-    id: string,
+    id: number,
 };

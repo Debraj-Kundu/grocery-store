@@ -21,13 +21,13 @@ export class CartComponent {
     private orderService: OrderService
   ) {}
 
-  selectedProdId: string = '';
-  selectedCartId: string = '';
+  selectedProdId: number = 0;
+  selectedCartId: number = 0;
   quantity: number = -1;
 
   cartList$: Observable<Cart[]> = this.cartService.getCart();
 
-  setId(prodId: string, cartId: string, quantity: number) {
+  setId(prodId: number, cartId: number, quantity: number) {
     this.selectedProdId = prodId;
     this.selectedCartId = cartId;
     this.quantity = quantity;
@@ -40,10 +40,12 @@ export class CartComponent {
         quantity: this.quantity,
         CartId: this.selectedCartId,
       })
-      .subscribe();
+      .subscribe((res) => {
+        this.cartList$ = this.cartService.getCart();
+      });
   }
 
-  deleteCart(id: string) {
+  deleteCart(id: number) {
     this.cartService.deleteCartItem(id).subscribe((res) => {
       this.cartList$ = this.cartService.getCart();
     });
