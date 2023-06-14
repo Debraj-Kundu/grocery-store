@@ -58,5 +58,19 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<CustomerCartDomain>(result, true, message);
         }
+
+        public async Task<OperationResult<CustomerCartDomain>> RemoveCartItem(int cartId)
+        {
+            var cartItem = await UnitOfWork.CustomerCartRepository.GetByIdAsync(cartId);
+            if (cartItem.Data == null)
+            {
+                Message errMsg = new Message(string.Empty, "Not Found");
+                return new OperationResult<CustomerCartDomain>(null, false, errMsg);
+            }
+            UnitOfWork.CustomerCartRepository.DeleteAsync(cartItem.Data);
+            Message message = new Message(string.Empty, "Deleted Successfully");
+            await UnitOfWork.Commit();
+            return new OperationResult<CustomerCartDomain>(null, true, message);
+        }
     }
 }

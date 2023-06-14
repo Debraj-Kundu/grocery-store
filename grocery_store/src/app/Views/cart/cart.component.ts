@@ -6,11 +6,12 @@ import { MatCardModule } from '@angular/material/card';
 import { Cart } from 'src/app/Shared/Interface/Cart.interface';
 import { Observable } from 'rxjs';
 import { OrderService } from 'src/app/Shared/Service/order.service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-cart',
   standalone: true,
-  imports: [CommonModule, MatCardModule],
+  imports: [CommonModule, MatCardModule, MatIconModule],
   templateUrl: './cart.component.html',
   styleUrls: ['./cart.component.css'],
 })
@@ -33,10 +34,18 @@ export class CartComponent {
   }
 
   placeOrder() {
-    this.orderService.postOrder({
-      productId: this.selectedProdId,
-      quantity: this.quantity,
-      CartId: this.selectedCartId,
-    }).subscribe();
+    this.orderService
+      .postOrder({
+        productId: this.selectedProdId,
+        quantity: this.quantity,
+        CartId: this.selectedCartId,
+      })
+      .subscribe();
+  }
+
+  deleteCart(id: string) {
+    this.cartService.deleteCartItem(id).subscribe((res) => {
+      this.cartList$ = this.cartService.getCart();
+    });
   }
 }

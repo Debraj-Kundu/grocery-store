@@ -40,7 +40,7 @@ const routes: Routes = [
 
   },
   {
-    path: ':id',
+    path: 'product/:id',
     loadComponent: () =>
       import('./Views/product/product.component').then(
         (c) => c.ProductComponent
@@ -56,6 +56,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
 
+  },
+  {
+    path: 'add',
+    loadComponent: () =>
+      import('./Views/add-product/add-product.component').then(
+        (c) => c.AddProductComponent
+      ),
+    canActivate: [AuthGuard],
   },
 ];
 

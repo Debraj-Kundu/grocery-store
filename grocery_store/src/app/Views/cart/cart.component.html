@@ -5,6 +5,16 @@
       {{ item.product.name }}
       Quantity: {{ item.quantity }}
       Bill: {{(item.product.price * item.quantity) | currency:'INR'}}
+      <a class="delete-btn">
+        <mat-icon
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="delete"
+          color="accent"
+          (click)="deleteCart(item.id)"
+        >
+        </mat-icon>
+      </a>
     </mat-card-content>
   </mat-card>
 </div>

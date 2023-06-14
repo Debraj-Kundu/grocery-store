@@ -67,8 +67,13 @@ namespace FinalTest.WebAPI.Controllers
 
         // DELETE api/<CartController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        [Authorize]
+        public async Task<ActionResult> Delete(int id)
         {
+            var result = await CartService.RemoveCartItem(id);
+            if (result.IsSuccess)
+                return Ok();
+            return NotFound();
         }
     }
 }

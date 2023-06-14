@@ -28,7 +28,10 @@ export class CartService {
     this.getUserId();
     return this.http.get<Cart[]>(`${this.apiurl}/${this.id}`);
   }
-  postCart(cart:any){
+  postCart(cart: any) {
     return this.http.post(this.apiurl, cart);
+  }
+  deleteCartItem(id: string) {
+    return this.http.delete(`${this.apiurl}/${id}`);
   }
 }

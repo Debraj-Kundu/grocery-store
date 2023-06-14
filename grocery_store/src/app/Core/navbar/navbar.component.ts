@@ -12,6 +12,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   username!: string;
 
   isLoggedIn: boolean = false;
+  userRole: string = '';
 
   constructor(
     private loginService: LoginService,
@@ -24,6 +25,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.userStore.getfullnameFormStore().subscribe((val) => {
       this.username = val || nameFormToken;
       this.isLoggedIn = this.loginService.isLoggedIn();
+    });
+    const roleFormToken = this.loginService.getRoleFromToken();
+    this.userStore.getRoleFormStore().subscribe((val) => {
+      this.userRole = val || roleFormToken;
     });
   }
 

@@ -8,6 +8,7 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Interface
     public interface ICartService
     {
         Task<OperationResult<CustomerCartDomain>> GetCartItemById(int id);
+        Task<OperationResult<CustomerCartDomain>> RemoveCartItem(int cartId);
         Task<OperationResult<CustomerCartDomain>> AddCartProduct(CustomerCartDomain product);
         Task<OperationResult<IEnumerable<CustomerCartDomain>>> GetCartByCustomer(int customerId);
     }
