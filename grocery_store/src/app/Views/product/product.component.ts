@@ -7,11 +7,13 @@ import { Observable, map } from 'rxjs';
 import { Product } from 'src/app/Shared/Interface/Product.interface';
 import { MatCardModule } from '@angular/material/card';
 import { CartService } from 'src/app/Shared/Service/cart.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, MatCardModule],
+  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })

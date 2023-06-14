@@ -1,17 +1,71 @@
 <p>product works!</p>
-{{product$ | async | json}}
-<div>
-    <mat-card>
-        <mat-card-content>
-          {{ (product$ | async)?.name }}
-          price: {{ ((quantity * ((product$ | async)?.price || 0))) | currency:'INR' }}
-          discount: {{ (product$ | async)?.discount }}
-          Image: {{ (product$ | async)?.image }}
-          Quantity: {{quantity}}
-          <button (click)="increase()">+</button>
-          <button (click)="decrease()">-</button>
-          <button type="submit" (click)="addToCart()">add to cart</button>
-          {{dekho}}
-        </mat-card-content>
-      </mat-card>
-</div>
+{{ product$ | async | json }}
+<!-- <div class="container">
+  <mat-card class="mat-elevation-z8">
+    <mat-card-content>
+      {{ (product$ | async)?.name }}
+      price:
+      {{ quantity * ((product$ | async)?.price || 0) | currency : "INR" }}
+      discount: {{ (product$ | async)?.discount }} Image:
+      {{ (product$ | async)?.image }} Quantity: {{ quantity }}
+      <button (click)="increase()">+</button>
+      <button (click)="decrease()">-</button>
+      <button type="submit" (click)="addToCart()">add to cart</button>
+      {{ dekho }}
+    </mat-card-content>
+  </mat-card>
+</div> -->
+
+<!-- --------------------------------- -->
+
+<mat-card class="container mat-elevation-z8">
+  <mat-card-content>
+    <div class="d-flex">
+      <img
+        src="https://images.heb.com/is/image/HEBGrocery/001876588"
+        width="300"
+        height="300"
+      />
+
+      <div
+        style="border: 2px solid black"
+        class="d-flex flex-column justify-content-evenly"
+      >
+        <h1>{{ (product$ | async)?.name }}</h1>
+
+        <p>
+          {{ (product$ | async)?.description }}
+        </p>
+
+        <div>
+          <span>{{ (product$ | async)?.price | currency : "INR" }}</span>
+
+          <span>{{ (product$ | async)?.discount }}</span>
+
+          <del>{{ (product$ | async)?.price | currency : "INR" }}</del>
+        </div>
+
+        <div>
+          <span>
+            <div class="btn-wrapper">
+              <button mat-button class="plusminus" (click)="increase()">
+                <mat-icon>add</mat-icon>
+              </button>
+
+              <span class="num">{{ quantity }}</span>
+
+              <button mat-button class="plusminus" (click)="decrease()">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+          </span>
+          <span>
+            <button mat-fab color="primary" type="submit" (click)="addToCart()">
+              <mat-icon>shopping_cart</mat-icon>
+            </button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

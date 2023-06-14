@@ -41,7 +41,7 @@
     <ng-container matColumnDef="price">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Price</th>
       <td mat-cell *matCellDef="let element" [routerLink]="['/product', element.id]">
-        {{ element.price | currency : "INR" }}
+        {{ element.price | currency:'INR' }}
       </td>
     </ng-container>
     <ng-container matColumnDef="image">
