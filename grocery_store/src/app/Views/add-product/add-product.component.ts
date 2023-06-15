@@ -52,12 +52,15 @@ export class AddProductComponent implements OnInit {
     categoryId: 0,
     category: '',
     availableQuantity: 0,
-    image: new File([], ''),
+    productImage: '',
+    imageFile: new File([], ''),
     specification: '',
     id: 0,
     // createdOnDate: new Date(),
     // modifiedOnDate: new Date(),
   };
+
+  imageFile!: File;
   productForm!: FormGroup;
 
   ngOnInit(): void {
@@ -78,9 +81,23 @@ export class AddProductComponent implements OnInit {
 
   addProduct() {
     if (this.productForm.valid) {
-      this.product = { ...this.productForm.value };
-      this.productService.postProduct(this.product).subscribe();
+      const formData: Product = Object.assign(this.productForm.value);
+      formData.imageFile = this.imageFile;
+      console.log(this.productForm.value);
+      this.productService.postProduct(formData).subscribe({
+        next: (res) => {
+          this.toast.successToast('Product added successfully!');
+        },
+        error: (res) => {
+          this.toast.errorToast('Error occured retry!');
+        },
+      });
     }
+  }
+
+  onChange(event: any) {
+    this.imageFile = event.target.files[0];
+    console.log(event.target.files[0]);
   }
 
   ClearForm() {

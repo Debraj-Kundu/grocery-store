@@ -19,10 +19,18 @@ export class ProductService {
   deleteProduct(id: string) {
     return this.http.delete(`${this.apiurl}/${id}`);
   }
-  postProduct(product: any) {
-    const httpOptions = {
-      headers: new HttpHeaders({'Content-Type': 'application/json'})
-    }
-    return this.http.post(this.apiurl, product, httpOptions);
+  postProduct(product: Product) {
+    let formData = new FormData();
+    formData.append("name", product.name);
+    formData.append("description", product.description);
+    formData.append("price", ''+product.price);
+    formData.append("discount", ''+product.discount);
+    formData.append("categoryId", ''+product.categoryId);
+    formData.append("availableQuantity", ''+product.availableQuantity);
+    formData.append("productImage", product.productImage);
+    formData.append("imageFile", product.imageFile??"");
+    formData.append("specification", product.specification);
+
+    return this.http.post(this.apiurl, formData);
   }
 }
