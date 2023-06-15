@@ -1,5 +1,6 @@
 ﻿using FinalTest.SharedLayer.Domain;
 using FinalTest.SharedLayer.Service;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,7 +34,9 @@ namespace FinalTest.WebAPI.DTO
         public int AvailableQuantity { get; set; }
 
         //[Required]
-        public byte[] Image { get; set; }
+        public string ProductImage { get; set; }
+
+        public IFormFile ImageFile { get; set; }
 
         [MaxLength(100), StringLength(100)]
         public string Specification { get; set; }

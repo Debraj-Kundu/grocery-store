@@ -33,7 +33,7 @@ namespace FinalTest.BuisnessLayer.Domain
         public int AvailableQuantity { get; set; }
 
         //[Required]
-        public byte[] Image { get; set; }
+        public string ProductImage { get; set; }
 
         [MaxLength(100), StringLength(100)]
         public string Specification { get; set; }

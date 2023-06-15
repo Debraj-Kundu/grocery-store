@@ -4,6 +4,7 @@ using FinalTest.BuisnessLayer.ProductAppServices.Interface;
 using FinalTest.DataLayer.Entity;
 using FinalTest.DataLayer.Repository.Interface;
 using FinalTest.WebAPI.DTO;
+using FinalTest.WebAPI.Service;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -22,12 +23,14 @@ namespace FinalTest.WebAPI.Controllers
         public IProductService ProductService { get; }
         public ICategoryService CategoryService { get; }
         public IMapper Mapper { get; }
+        public IFileService FileService { get; }
 
-        public ProductController(IProductService productService, ICategoryService categoryService, IMapper mapper)
+        public ProductController(IProductService productService, ICategoryService categoryService, IMapper mapper, IFileService fileService)
         {
             ProductService = productService;
             CategoryService = categoryService;
             Mapper = mapper;
+            FileService = fileService;
         }
         // GET: api/<ProductController>
         [HttpGet]
@@ -75,10 +78,18 @@ namespace FinalTest.WebAPI.Controllers
         // POST api/<ProductController>
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<ProductDto>> Post(ProductDto product)
+        public async Task<ActionResult<ProductDto>> Post([FromForm]ProductDto product)
         {
             if(ModelState.IsValid)
             { 
+                if(product.ImageFile != null)
+                {
+                    var fileResult = FileService.SaveImage(product.ImageFile);
+                    if(fileResult.Item1 == 1)
+                    {
+                        product.ProductImage = fileResult.Item2;
+                    }
+                }
                 ProductDomain productToCreate = Mapper.Map<ProductDomain>(product);
                 var result = await ProductService.CreateProduct(productToCreate);
                 if(result.IsSuccess)

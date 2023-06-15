@@ -26,7 +26,7 @@ namespace FinalTest.DataLayer.Entity
         [Required]
         public int AvailableQuantity { get; set; }
         //[Required]
-        public byte[] Image { get; set; }
+        public string ProductImage { get; set; }
         public string Specification { get; set; }
     }
 }
