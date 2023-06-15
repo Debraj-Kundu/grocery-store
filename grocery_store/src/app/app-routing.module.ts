@@ -45,8 +45,6 @@ const routes: Routes = [
       import('./Views/product/product.component').then(
         (c) => c.ProductComponent
       ),
-    canActivate: [AuthGuard],
-
   },
   {
     path: 'edit/:id',

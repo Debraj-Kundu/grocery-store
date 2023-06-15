@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { CartService } from 'src/app/Shared/Service/cart.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { UserStoreService } from 'src/app/Shared/Service/user-store.service';
 
 @Component({
   selector: 'app-product',
@@ -23,7 +24,8 @@ export class ProductComponent implements OnInit {
     private loginService: LoginService,
     private route: ActivatedRoute,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private userStore: UserStoreService,
   ) {}
 
   id: string | null = '';
@@ -31,9 +33,15 @@ export class ProductComponent implements OnInit {
   product$!: Observable<Product>;
   dekho!: string;
 
+  isLoggedIn: boolean = false;
+
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     this.product$ = this.productService.getProductById(this.id);
+
+    this.userStore.getfullnameFormStore().subscribe((val) => {
+      this.isLoggedIn = this.loginService.isLoggedIn();
+    });
   }
   increase() {
     this.quantity += 1;

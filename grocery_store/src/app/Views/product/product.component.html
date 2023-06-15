@@ -45,7 +45,7 @@
           <del>{{ (product$ | async)?.price | currency : "INR" }}</del>
         </div>
 
-        <div>
+        <div *ngIf="isLoggedIn == true">
           <span>
             <div class="btn-wrapper">
               <button mat-button class="plusminus" (click)="increase()">

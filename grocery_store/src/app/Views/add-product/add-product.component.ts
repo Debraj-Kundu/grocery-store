@@ -44,13 +44,23 @@ export class AddProductComponent implements OnInit {
   ) {}
 
   id: string | null = '';
-  product$!: Observable<Product>;
+  product: Product = {
+    name: '',
+    description: '',
+    price: 0,
+    discount: 0,
+    categoryId: 0,
+    category: '',
+    availableQuantity: 0,
+    image: new File([], ''),
+    specification: '',
+    id: 0,
+    // createdOnDate: new Date(),
+    // modifiedOnDate: new Date(),
+  };
   productForm!: FormGroup;
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.product$ = this.productService.getProductById(this.id);
-
     this.productForm = this.fb.group({
       name: new FormControl('', { validators: [Validators.required] }),
       description: new FormControl('', { validators: [Validators.required] }),
@@ -60,7 +70,7 @@ export class AddProductComponent implements OnInit {
       availableQuantity: new FormControl('', {
         validators: [Validators.required],
       }),
-      image: new FormControl(''),//, { validators: [Validators.required] }
+      image: new FormControl(''), //, { validators: [Validators.required] }
       specification: new FormControl(''),
       id: new FormControl(this.id),
     });
@@ -68,7 +78,8 @@ export class AddProductComponent implements OnInit {
 
   addProduct() {
     if (this.productForm.valid) {
-      this.productService.postProduct(JSON.stringify(this.productForm.value)).subscribe();
+      this.product = { ...this.productForm.value };
+      this.productService.postProduct(this.product).subscribe();
     }
   }
 

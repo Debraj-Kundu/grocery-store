@@ -6,10 +6,9 @@ export interface Product{
     categoryId: number,
     category: string,
     availableQuantity: number,
-    image: string,
+    image: File,
     specification: string,
     id: number,
-    createdOnDate: Date,
-    modifiedOnDate: Date,
-    entityState: string
+    // createdOnDate: Date,
+    // modifiedOnDate: Date,
 }
