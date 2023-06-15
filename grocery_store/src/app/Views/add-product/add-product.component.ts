@@ -100,7 +100,7 @@ export class AddProductComponent implements OnInit {
     console.log(event.target.files[0]);
   }
 
-  ClearForm() {
+  clearForm() {
     this.productForm.reset();
   }
 }

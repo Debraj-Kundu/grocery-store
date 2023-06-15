@@ -2,15 +2,18 @@
 <!-- {{product$ | async | json}} -->
 
 {{productForm.value | json}}
+{{product$ | async | json}}
+
+<!-- {{productForm.value | json}} -->
 
 <div class="container d-flex justify-content-center">
-    <form [formGroup]="productForm">
-      <mat-card>
-        <mat-card-header>
-          <h2>Edit Product</h2>
-        </mat-card-header>
-        <mat-card-content>
-          <mat-error *ngIf="false"> Invalid credentials </mat-error>
+  <form [formGroup]="productForm" (ngSubmit)="editProduct()">
+    <mat-card>
+      <mat-card-header>
+        <h2>Edit Product</h2>
+      </mat-card-header>
+      <mat-card-content class="d-flex flex-column flex-md-row ">
+        <div class="m-4">
           <div>
             <mat-form-field>
               <mat-label>Name</mat-label>
@@ -20,7 +23,9 @@
                 formControlName="name"
                 autocomplete="autocomplete_off_randString"
               />
-              <mat-error *ngIf="productForm.get('name')?.hasError('required')"> You must enter a name </mat-error>
+              <mat-error *ngIf="productForm.get('name')?.hasError('required')">
+                You must enter a name
+              </mat-error>
             </mat-form-field>
           </div>
           <div>
@@ -32,9 +37,15 @@
                 formControlName="description"
                 autocomplete="autocomplete_off_randString"
               />
-              <mat-error *ngIf="productForm.get('description')?.hasError('required')"> You must enter a description </mat-error>
+              <mat-error
+                *ngIf="productForm.get('description')?.hasError('required')"
+              >
+                You must enter a description
+              </mat-error>
             </mat-form-field>
           </div>
+        </div>
+        <div class="m-4">
           <div>
             <mat-form-field>
               <mat-label>Price</mat-label>
@@ -44,7 +55,9 @@
                 formControlName="price"
                 autocomplete="autocomplete_off_randString"
               />
-              <mat-error *ngIf="productForm.get('price')?.hasError('required')"> You must enter a price </mat-error>
+              <mat-error *ngIf="productForm.get('price')?.hasError('required')">
+                You must enter a price
+              </mat-error>
             </mat-form-field>
           </div>
           <div>
@@ -56,9 +69,15 @@
                 formControlName="discount"
                 autocomplete="autocomplete_off_randString"
               />
-              <mat-error *ngIf="productForm.get('discount')?.hasError('required')"> You must enter a discount </mat-error>
+              <mat-error
+                *ngIf="productForm.get('discount')?.hasError('required')"
+              >
+                You must enter a discount
+              </mat-error>
             </mat-form-field>
           </div>
+        </div>
+        <div class="m-4">
           <div>
             <mat-form-field>
               <mat-label>CategoryId</mat-label>
@@ -68,7 +87,11 @@
                 formControlName="categoryId"
                 autocomplete="autocomplete_off_randString"
               />
-              <mat-error *ngIf="productForm.get('categoryId')?.hasError('required')"> You must enter a category id </mat-error>
+              <mat-error
+                *ngIf="productForm.get('categoryId')?.hasError('required')"
+              >
+                You must enter a category id
+              </mat-error>
             </mat-form-field>
           </div>
           <div>
@@ -80,20 +103,30 @@
                 formControlName="availableQuantity"
                 autocomplete="autocomplete_off_randString"
               />
-              <mat-error *ngIf="productForm.get('availableQuantity')?.hasError('required')"> You must enter a quantity </mat-error>
+              <mat-error
+                *ngIf="
+                  productForm.get('availableQuantity')?.hasError('required')
+                "
+              >
+                You must enter a quantity
+              </mat-error>
             </mat-form-field>
           </div>
+        </div>
+        <div class="m-4">
           <div>
-            <mat-form-field>
-              <mat-label>Image</mat-label>
+              <!-- <mat-label>Image</mat-label> -->
               <input
-                matInput
-                type="text"
-                formControlName="image"
+                class="form-control"
+                type="file"
+                formControlName="imageFile"
                 autocomplete="autocomplete_off_randString"
+                
+                (change)="onChange($event)"
               />
-              <mat-error *ngIf="productForm.get('image')?.hasError('required')"> You must enter a image </mat-error>
-            </mat-form-field>
+              <mat-error *ngIf="productForm.get('image')?.hasError('required')">
+                You must enter a image
+              </mat-error>
           </div>
           <div>
             <mat-form-field>
@@ -104,21 +137,32 @@
                 formControlName="specification"
                 autocomplete="autocomplete_off_randString"
               />
-              <mat-error *ngIf="productForm.get('specification')?.hasError('required')"> You must enter a specification </mat-error>
+              <mat-error
+                *ngIf="productForm.get('specification')?.hasError('required')"
+              >
+                You must enter a specification
+              </mat-error>
             </mat-form-field>
           </div>
-        </mat-card-content>
-        <div>
-          <mat-card-footer>
-            <div class="d-flex justify-content-evenly" style="margin: 2px">
-              <button mat-raised-button color="primary" type="submit">
-                Login
-              </button>
-              <button mat-raised-button color="warn" type="button">Clear</button>
-            </div>
-          </mat-card-footer>
         </div>
-      </mat-card>
-    </form>
-  </div>
-  
+      </mat-card-content>
+      <div>
+        <mat-card-footer>
+          <div class="d-flex justify-content-evenly" style="margin: 2px">
+            <button mat-raised-button color="primary" type="submit">
+              Edit
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="clearForm()"
+              type="button"
+            >
+              Clear
+            </button>
+          </div>
+        </mat-card-footer>
+      </div>
+    </mat-card>
+  </form>
+</div>

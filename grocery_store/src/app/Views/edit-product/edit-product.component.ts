@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/Shared/Service/product.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Product } from 'src/app/Shared/Interface/Product.interface';
 import { ToastService } from 'src/app/Shared/Service/toast.service';
 import {
@@ -42,16 +42,7 @@ export class EditProductComponent implements OnInit {
     private route: ActivatedRoute,
     private toast: ToastService,
     private fb: FormBuilder
-  ) {}
-
-  id: string | null = '';
-  product$!: Observable<Product>;
-  productForm!: FormGroup;
-
-  ngOnInit(): void {
-    this.id = this.route.snapshot.paramMap.get('id');
-    this.product$ = this.productService.getProductById(this.id);
-    
+  ) {
     this.productForm = this.fb.group({
       name: new FormControl('', { validators: [Validators.required] }),
       description: new FormControl('', { validators: [Validators.required] }),
@@ -61,9 +52,56 @@ export class EditProductComponent implements OnInit {
       availableQuantity: new FormControl('', {
         validators: [Validators.required],
       }),
-      image: new FormControl('', { validators: [Validators.required] }),
+      imageFile: new FormControl(''), //, { validators: [Validators.required] }
+      productImage: new FormControl(''),
       specification: new FormControl(''),
       id: new FormControl(this.id),
     });
+  }
+
+  id: string = '';
+  product$!: Observable<Product>;
+  productForm!: FormGroup;
+
+  imageFile!: File;
+
+  ngOnInit(): void {
+    this.LoadFormData();
+  }
+
+  LoadFormData() {
+    this.id = this.route.snapshot.paramMap.get('id') ?? '';
+    this.product$ = this.productService.getProductById(this.id).pipe(
+      tap((prod) => {
+        console.log(prod);
+        this.productForm.patchValue(prod);
+      })
+    );
+  }
+
+  editProduct() {
+    if (this.productForm.valid) {
+      const formData: Product = Object.assign(this.productForm.value);
+      console.log(formData);
+      if(this.imageFile != undefined)
+        formData.imageFile = this.imageFile;
+      this.productService.updateProduct(this.id, formData).subscribe({
+        next: (res) => {
+          this.toast.successToast('Product added successfully!');
+        },
+        error: (res) => {
+          this.toast.errorToast('Error occured retry!');
+        },
+      });
+    }
+  }
+
+  onChange(event: any) {
+    this.imageFile = event.target.files[0];
+    console.log(event.target.files[0]);
+  }
+
+  clearForm() {
+    this.productForm.reset();
   }
 }

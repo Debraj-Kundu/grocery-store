@@ -33,4 +33,8 @@ export class ProductService {
 
     return this.http.post(this.apiurl, formData);
   }
+
+  updateProduct(id: string, product: Product) {
+    return this.http.put(`${this.apiurl}/${id}`, product);
+  }
 }
