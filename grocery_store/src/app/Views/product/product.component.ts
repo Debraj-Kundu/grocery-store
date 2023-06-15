@@ -33,6 +33,8 @@ export class ProductComponent implements OnInit {
   product$!: Observable<Product>;
   dekho!: string;
 
+  imageBaseUrl = "https://localhost:44333/resources/";
+
   isLoggedIn: boolean = false;
 
   ngOnInit(): void {

@@ -60,6 +60,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {}
 
+  imageBaseUrl = "https://localhost:44333/resources/";
+
   productsList$: Observable<Product[]> = this.productService.getAllProducts();
   categoryList$ = this.categoryService.getAllCategories();
 

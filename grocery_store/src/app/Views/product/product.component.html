@@ -22,7 +22,7 @@
   <mat-card-content>
     <div class="d-flex">
       <img
-        src="https://images.heb.com/is/image/HEBGrocery/001876588"
+        [src]="imageBaseUrl+ (product$ | async)?.productImage"
         width="300"
         height="300"
       />
