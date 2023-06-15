@@ -47,5 +47,21 @@ namespace FinalTest.WebAPI.Service
                 return new Tuple<int, string>(0, "Error has occured");
             }
         }
+
+        public void RemoveImage(string fileName)
+        {
+            try
+            {
+                var contentPath = this.environment.ContentRootPath;
+                var path = Path.Combine(contentPath, "Uploads");
+                var fileWithPath = Path.Combine(path, fileName);
+                File.Delete(fileWithPath);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }

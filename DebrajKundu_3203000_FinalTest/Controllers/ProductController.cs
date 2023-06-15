@@ -125,6 +125,8 @@ namespace FinalTest.WebAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Delete(int id)
         {
+            var prodToDelete = await ProductService.GetProductById(id);
+            FileService.RemoveImage(prodToDelete.Data.ProductImage);
             var result = await ProductService.RemoveProduct(id);
             if (result.IsSuccess)
                 return Ok();
