@@ -37,10 +37,7 @@ namespace FinalTest.DataLayer.Repository.Implementation
         }
         public override async Task UpdateAsync(Product entity)
         {
-            var productToUpdate = await Context.Products.FindAsync(entity.Id);
-            productToUpdate.AvailableQuantity = entity.AvailableQuantity;
-            productToUpdate.ModifiedOnDate = entity.ModifiedOnDate;
-            await base.UpdateAsync(productToUpdate);
+            await base.UpdateAsync(entity);
         }
 
         public async Task<OperationResult<IEnumerable<Product>>> GetByCategoryAsync(int categoryId)

@@ -35,6 +35,17 @@ export class ProductService {
   }
 
   updateProduct(id: string, product: Product) {
-    return this.http.put(`${this.apiurl}/${id}`, product);
+    let formData = new FormData();
+    formData.append("id", ''+product.id);
+    formData.append("name", product.name);
+    formData.append("description", product.description);
+    formData.append("price", ''+product.price);
+    formData.append("discount", ''+product.discount);
+    formData.append("categoryId", ''+product.categoryId);
+    formData.append("availableQuantity", ''+product.availableQuantity);
+    formData.append("productImage", product.productImage);
+    formData.append("imageFile", product.imageFile??"");
+    formData.append("specification", product.specification);
+    return this.http.put(`${this.apiurl}/${id}`, formData);
   }
 }

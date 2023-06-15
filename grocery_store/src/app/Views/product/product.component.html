@@ -22,9 +22,9 @@
   <mat-card-content>
     <div class="d-flex">
       <img
-        [src]="imageBaseUrl+ (product$ | async)?.productImage"
-        width="300"
-        height="300"
+      [src]="imageBaseUrl+ (product$ | async)?.productImage"
+      width="300"
+      height="300"
       />
 
       <div
@@ -40,7 +40,7 @@
         <div>
           <span>{{ (product$ | async)?.price | currency : "INR" }}</span>
 
-          <span>{{ (product$ | async)?.discount }}</span>
+          <span>| {{ ((product$ | async)?.discount??0 / 100) | number }}% | </span>
 
           <del>{{ (product$ | async)?.price | currency : "INR" }}</del>
         </div>

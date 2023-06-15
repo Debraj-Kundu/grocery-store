@@ -10,6 +10,4 @@ export interface Product{
     imageFile: File,
     specification: string,
     id: number,
-    // createdOnDate: Date,
-    // modifiedOnDate: Date,
 }

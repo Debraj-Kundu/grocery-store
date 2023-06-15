@@ -101,10 +101,18 @@ namespace FinalTest.WebAPI.Controllers
         // PUT api/<ProductController>/5
         [HttpPut("{id}")]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult> Put(int id, ProductDto product)
+        public async Task<ActionResult> Put(int id, [FromForm]ProductDto product)
         {
             if(ModelState.IsValid)
             {
+                if (product.ImageFile != null)
+                {
+                    var fileResult = FileService.SaveImage(product.ImageFile);
+                    if (fileResult.Item1 == 1)
+                    {
+                        product.ProductImage = fileResult.Item2;
+                    }
+                }
                 var productDomain = Mapper.Map<ProductDomain>(product);
                 await ProductService.UpdateProduct(id, productDomain);
                 return Created(nameof(Post), product);

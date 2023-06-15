@@ -82,14 +82,14 @@ export class EditProductComponent implements OnInit {
   editProduct() {
     if (this.productForm.valid) {
       const formData: Product = Object.assign(this.productForm.value);
+      if (this.imageFile != undefined) formData.imageFile = this.imageFile;
       console.log(formData);
-      if(this.imageFile != undefined)
-        formData.imageFile = this.imageFile;
       this.productService.updateProduct(this.id, formData).subscribe({
         next: (res) => {
-          this.toast.successToast('Product added successfully!');
+          this.toast.successToast('Product updated successfully!');
         },
-        error: (res) => {
+        error: (err) => {
+          console.log(err);
           this.toast.errorToast('Error occured retry!');
         },
       });
