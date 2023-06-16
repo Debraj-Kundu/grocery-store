@@ -12,6 +12,7 @@ namespace FinalTest.BuisnessLayer.Mapper
         public MappingProfile() : base("MappingProfile")
         {
             CreateMap<Order, OrderDomain>().ReverseMap();
+            CreateMap<Review, ReviewDomain>().ReverseMap();
             CreateMap<Product, ProductDomain>().ReverseMap();
             CreateMap<Customer, CustomerDomain>().ReverseMap();
             CreateMap<Category, CategoryDomain>().ReverseMap();
