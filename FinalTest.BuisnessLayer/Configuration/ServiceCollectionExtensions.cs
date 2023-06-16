@@ -17,6 +17,7 @@ namespace FinalTest.BuisnessLayer.Configuration
             services.AddScoped<IReviewService, ReviewService>();
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ITopOrderService, TopOrderService>();
             services.AddScoped<ICustomerService, CustomerService>();
 
             //DbContext and repository configurations of Data Layer

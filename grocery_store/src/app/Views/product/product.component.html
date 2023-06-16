@@ -22,9 +22,9 @@
   <mat-card-content>
     <div class="d-flex">
       <img
-      [src]="imageBaseUrl+ (product$ | async)?.productImage"
-      width="300"
-      height="300"
+        [src]="imageBaseUrl + (product$ | async)?.productImage"
+        width="300"
+        height="300"
       />
 
       <div
@@ -40,7 +40,9 @@
         <div>
           <span>{{ (product$ | async)?.price | currency : "INR" }}</span>
 
-          <span>| {{ ((product$ | async)?.discount??0 / 100) | number }}% | </span>
+          <span
+            >| {{ (product$ | async)?.discount ?? 0 / 100 | number }}% |
+          </span>
 
           <del>{{ (product$ | async)?.price | currency : "INR" }}</del>
         </div>
@@ -69,13 +71,18 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+<mat-card>
+  <form></form>
+</mat-card>
+
 <mat-card>
   <!-- {{reviews$ | async | json}} -->
   <mat-card-content *ngFor="let item of reviews$ | async">
     <div>
-      <h2>{{item.username}}</h2>
-      <p>{{item.comment}}</p>
-      <p>{{item.createdOnDate | date}}</p>
+      <h2>{{ item.username }}</h2>
+      <p>{{ item.comment }}</p>
+      <p>{{ item.createdOnDate | date }}</p>
     </div>
   </mat-card-content>
 </mat-card>

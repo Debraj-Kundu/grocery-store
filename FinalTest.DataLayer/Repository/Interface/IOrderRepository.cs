@@ -11,5 +11,6 @@ namespace FinalTest.DataLayer.Repository.Interface
     public interface IOrderRepository : IRepository<Order>
     {
         Task<OperationResult<IEnumerable<Order>>> GetAllByCustomerIdAsync(int customerId);
+        Task<OperationResult<IEnumerable<TopOrder>>> GetTopOrders(int number, int month, int year);
     }
 }

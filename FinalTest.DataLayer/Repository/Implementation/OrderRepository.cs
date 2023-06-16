@@ -48,5 +48,34 @@ namespace FinalTest.DataLayer.Repository.Implementation
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<IEnumerable<Order>>(result, true, message);
         }
+        public async Task<OperationResult<IEnumerable<TopOrder>>> GetTopOrders(int number, int month, int year)
+        {
+            /*
+              select TOP 5 ProductId, Sum(Quantity) as totalCount from Orders
+              where MONTH(OrderDate) = @month AND YEAR(OrderDate) = @year
+              group by ProductId
+              order by totalCount desc
+             */
+            var orderList = await Context.Orders.ToListAsync();
+            var result = orderList.Where(o => o.OrderDate.Month == month && o.OrderDate.Year == year)
+                         .GroupBy(o => o.ProductId)
+                         .Select(g => new TopOrder { ProductId = g.Key, Quantity = g.Sum(o => o.Quantity) })
+                         .OrderByDescending(x => x.Quantity)
+                         .Take(number);
+            //var resultList = new List<Order>();
+
+            //foreach(var item in result)
+            //{
+            //    resultList = orderList.Where(o => o.ProductId.Equals(item.ProductId)).ToList();
+            //}
+            //(from o in res
+            //          where o.OrderDate.Month == @month && o.OrderDate.Year == @year
+            //          group o by o.ProductId into g
+            //          orderby g.Sum(x => x.Quantity) descending
+            //          select new { ProductId = g.Key, totalCount = g.Sum(x => x.Quantity) }).Take(5);
+
+            Message message = new Message(string.Empty, "Return Successfully");
+            return new OperationResult<IEnumerable<TopOrder>>(result, true, message);
+        }
     }
 }

@@ -17,6 +17,7 @@ namespace FinalTest.WebAPI.Mapper
             CreateMap<ProductDto, ProductDomain>().ReverseMap();
             CreateMap<CustomerDto, CustomerDomain>().ReverseMap();
             CreateMap<CategoryDto, CategoryDomain>().ReverseMap();
+            CreateMap<TopOrderDto, TopOrderDomain>().ReverseMap();
             CreateMap<CustomerCartDto, CustomerCartDomain>().ReverseMap();
         }
     }

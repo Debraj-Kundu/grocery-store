@@ -65,7 +65,7 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
 
 
             var userReviews = Mapper.Map<IEnumerable<ReviewDomain>>(res.Data).ToList();
-            
+
             result.Reviews = userReviews;
 
             Message message = new Message(string.Empty, "Return Successfully");
@@ -100,7 +100,7 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
         {
             var productEntity = Mapper.Map<Product>(product);
             productEntity.ModifiedOnDate = DateTimeOffset.Now;
-         
+
             await UnitOfWork.ProductRepository.UpdateAsync(productEntity);
 
             await UnitOfWork.Commit();
@@ -110,7 +110,7 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
         public async Task<OperationResult<ProductDomain>> RemoveProduct(int productId)
         {
             var product = await UnitOfWork.ProductRepository.GetByIdAsync(productId);
-            if(product.Data == null)
+            if (product.Data == null)
             {
                 Message errMsg = new Message(string.Empty, "Not Found");
                 return new OperationResult<ProductDomain>(null, false, errMsg);
@@ -120,5 +120,6 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
             await UnitOfWork.Commit();
             return new OperationResult<ProductDomain>(null, true, message);
         }
+
     }
 }

@@ -16,6 +16,7 @@ namespace FinalTest.BuisnessLayer.Mapper
             CreateMap<Product, ProductDomain>().ReverseMap();
             CreateMap<Customer, CustomerDomain>().ReverseMap();
             CreateMap<Category, CategoryDomain>().ReverseMap();
+            CreateMap<TopOrder, TopOrderDomain>().ReverseMap();
             CreateMap<CustomerCart, CustomerCartDomain>().ReverseMap();
         }
     }
