@@ -16,6 +16,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 
 import { ToastrModule } from 'ngx-toastr';
+import { JWT_OPTIONS, JwtHelperService } from '@auth0/angular-jwt';
 
 const matModules = [
   MatButtonModule,
@@ -38,7 +39,7 @@ const matModules = [
       closeButton: true,
       preventDuplicates: true,
       positionClass: 'toast-bottom-right',
-      timeOut: 3000
+      timeOut: 3000,
     }),
     ...matModules,
   ],
@@ -48,6 +49,8 @@ const matModules = [
       useClass: TokenInterceptor,
       multi: true,
     },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
+    JwtHelperService,
   ],
   bootstrap: [AppComponent],
 })

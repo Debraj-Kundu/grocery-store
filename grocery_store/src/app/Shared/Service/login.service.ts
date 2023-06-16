@@ -12,7 +12,7 @@ export class LoginService {
 
   private userPayload!: any;
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private jwtHelper: JwtHelperService) {
     this.userPayload = this.decodeToken();
   }
 
@@ -29,7 +29,10 @@ export class LoginService {
   }
 
   isLoggedIn(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    if (token && !this.jwtHelper.isTokenExpired(token)) return true;
+    this.logout();
+    return false;
   }
 
   logout() {
@@ -37,21 +40,17 @@ export class LoginService {
   }
 
   decodeToken() {
-    const jwtHelper = new JwtHelperService();
     const token = this.getToken()!;
-    return jwtHelper.decodeToken(token);
+    return this.jwtHelper.decodeToken(token);
   }
 
-  getFullNameFromToken(){
-    if(this.userPayload)
-      return this.userPayload.unique_name;
+  getFullNameFromToken() {
+    if (this.userPayload) return this.userPayload.unique_name;
   }
-  getRoleFromToken(){
-    if(this.userPayload)
-      return this.userPayload.role;
+  getRoleFromToken() {
+    if (this.userPayload) return this.userPayload.role;
   }
-  getIdFromToken(){
-    if(this.userPayload)
-      return this.userPayload.nameid;
+  getIdFromToken() {
+    if (this.userPayload) return this.userPayload.nameid;
   }
 }
