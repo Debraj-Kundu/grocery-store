@@ -63,6 +63,14 @@ const routes: Routes = [
       ),
     canActivate: [AuthGuard],
   },
+  {
+    path: 'toporder',
+    loadComponent: () =>
+      import('./Views/top-orders/top-orders.component').then(
+        (c) => c.TopOrdersComponent
+      ),
+    canActivate: [AuthGuard],
+  },
 ];
 
 @NgModule({

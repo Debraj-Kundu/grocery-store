@@ -1,0 +1,7 @@
+<p>top-orders works!</p>
+<div *ngFor="let order of topOrders$ | async">
+    <h2>{{order.product.name}}</h2>
+    <h4>{{order.quantity}}</h4>
+</div>
+
+<button (click)="getByDate()">click</button>
