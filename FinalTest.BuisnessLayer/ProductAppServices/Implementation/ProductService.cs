@@ -60,7 +60,23 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
         {
             var product = await UnitOfWork.ProductRepository.GetByIdAsync(id);
             ProductDomain result = Mapper.Map<ProductDomain>(product.Data);
-            
+
+            var res = await UnitOfWork.ReviewRepository.GetByProductAsync(id);
+
+            List<ReviewDomain> userReviews = new List<ReviewDomain>();
+
+            foreach (var item in res.Data)
+            {
+                userReviews.Add(new ReviewDomain()
+                {
+                    ProductId = item.ProductId,
+                    CustomerId = item.CustomerId,
+                    Username = item.Username,
+                    Comment = item.Comment
+                });
+            }
+            result.Reviews = userReviews;
+
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<ProductDomain>(result, true, message);
         }

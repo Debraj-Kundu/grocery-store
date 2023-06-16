@@ -13,6 +13,7 @@ namespace FinalTest.WebAPI.Mapper
         public ApiMappingProfile() : base("ApiMappingProfile")
         {
             CreateMap<OrderDto, OrderDomain>().ReverseMap();
+            CreateMap<ReviewDto, ReviewDomain>().ReverseMap();
             CreateMap<ProductDto, ProductDomain>().ReverseMap();
             CreateMap<CustomerDto, CustomerDomain>().ReverseMap();
             CreateMap<CategoryDto, CategoryDomain>().ReverseMap();

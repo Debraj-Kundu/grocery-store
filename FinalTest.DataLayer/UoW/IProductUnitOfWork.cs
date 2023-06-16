@@ -13,5 +13,7 @@ namespace FinalTest.DataLayer.UoW
         ICustomerCartRepository CustomerCartRepository { get; }
         ICategoryRepository CategoryRepository { get; }
         ICustomerRepository CustomerRepository { get; }
+        IReviewRepository ReviewRepository { get; }
+
     }
 }

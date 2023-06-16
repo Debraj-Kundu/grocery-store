@@ -13,6 +13,7 @@ namespace FinalTest.DataLayer.DataContext
         public DbSet<Order> Orders { get; set; }
         public DbSet<CustomerCart> CartItems { get; set; }
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Review> Reviews { get; set; }
 
         public ProductDomainDbContext(DbContextOptions<ProductDomainDbContext> options) : base(options)
         {

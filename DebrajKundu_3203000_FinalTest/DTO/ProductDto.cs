@@ -40,5 +40,8 @@ namespace FinalTest.WebAPI.DTO
 
         [MaxLength(100), StringLength(100)]
         public string Specification { get; set; }
+
+        public IEnumerable<ReviewDto> Reviews { get; set; }
+
     }
 }

@@ -37,5 +37,7 @@ namespace FinalTest.BuisnessLayer.Domain
 
         [MaxLength(100), StringLength(100)]
         public string Specification { get; set; }
+
+        public IEnumerable<ReviewDomain> Reviews { get; set; }
     }
 }

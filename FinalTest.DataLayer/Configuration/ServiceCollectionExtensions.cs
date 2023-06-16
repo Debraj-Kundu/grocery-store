@@ -26,6 +26,7 @@ namespace FinalTest.DataLayer.Configuration
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<ICustomerCartRepository, CustomerCartRepository>();
+            services.AddScoped<IReviewRepository, ReviewRepository>();
 
             services.AddScoped<IProductUnitOfWork, ProductUnitOfWork>();
 
