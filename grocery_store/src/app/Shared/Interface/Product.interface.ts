@@ -10,4 +10,5 @@ export interface Product{
     imageFile: File,
     specification: string,
     id: number,
+    reviews: []
 }

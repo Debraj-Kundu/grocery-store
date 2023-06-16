@@ -63,18 +63,9 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
 
             var res = await UnitOfWork.ReviewRepository.GetByProductAsync(id);
 
-            List<ReviewDomain> userReviews = new List<ReviewDomain>();
 
-            foreach (var item in res.Data)
-            {
-                userReviews.Add(new ReviewDomain()
-                {
-                    ProductId = item.ProductId,
-                    CustomerId = item.CustomerId,
-                    Username = item.Username,
-                    Comment = item.Comment
-                });
-            }
+            var userReviews = Mapper.Map<IEnumerable<ReviewDomain>>(res.Data).ToList();
+            
             result.Reviews = userReviews;
 
             Message message = new Message(string.Empty, "Return Successfully");

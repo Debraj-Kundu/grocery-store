@@ -69,3 +69,13 @@
     </div>
   </mat-card-content>
 </mat-card>
+<mat-card>
+  <!-- {{reviews$ | async | json}} -->
+  <mat-card-content *ngFor="let item of reviews$ | async">
+    <div>
+      <h2>{{item.username}}</h2>
+      <p>{{item.comment}}</p>
+      <p>{{item.createdOnDate | date}}</p>
+    </div>
+  </mat-card-content>
+</mat-card>

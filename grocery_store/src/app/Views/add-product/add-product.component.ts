@@ -56,6 +56,7 @@ export class AddProductComponent implements OnInit {
     imageFile: new File([], ''),
     specification: '',
     id: 0,
+    reviews: []
     // createdOnDate: new Date(),
     // modifiedOnDate: new Date(),
   };

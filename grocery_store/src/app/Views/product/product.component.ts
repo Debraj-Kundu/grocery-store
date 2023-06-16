@@ -10,6 +10,7 @@ import { CartService } from 'src/app/Shared/Service/cart.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { UserStoreService } from 'src/app/Shared/Service/user-store.service';
+import { Review } from 'src/app/Shared/Interface/Review.interface';
 
 @Component({
   selector: 'app-product',
@@ -25,21 +26,24 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private router: Router,
-    private userStore: UserStoreService,
+    private userStore: UserStoreService
   ) {}
 
   id: string | null = '';
   quantity: number = 1;
   product$!: Observable<Product>;
-  dekho!: string;
+  reviews$!: Observable<Review[]>;
 
-  imageBaseUrl = "https://localhost:44333/resources/";
+  imageBaseUrl = 'https://localhost:44333/resources/';
 
   isLoggedIn: boolean = false;
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
     this.product$ = this.productService.getProductById(this.id);
+    this.reviews$ = this.productService
+      .getProductById(this.id)
+      .pipe(map((list) => list.reviews));
 
     this.userStore.getfullnameFormStore().subscribe((val) => {
       this.isLoggedIn = this.loginService.isLoggedIn();
