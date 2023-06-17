@@ -31,6 +31,8 @@
     <Compile Remove="Migrations\20230609105208_Customer_Product_UK_constraint.Designer.cs" />
     <Compile Remove="Migrations\20230609110837_Init.cs" />
     <Compile Remove="Migrations\20230609110837_Init.Designer.cs" />
+    <Compile Remove="Migrations\20230617184435_Admins.cs" />
+    <Compile Remove="Migrations\20230617184435_Admins.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

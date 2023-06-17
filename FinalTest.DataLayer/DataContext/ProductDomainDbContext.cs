@@ -1,4 +1,5 @@
 ﻿using FinalTest.DataLayer.Entity;
+using FinalTest.SharedLayer.Core.Utils;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,25 @@ namespace FinalTest.DataLayer.DataContext
             builder.Entity<Product>()
                 .HasIndex(p => p.Name)
                 .IsUnique(true);
+            new DbInitializer(builder).Seed();
+        }
+    }
+    class DbInitializer
+    {
+        private readonly ModelBuilder modelBuilder;
+
+        public DbInitializer(ModelBuilder modelBuilder)
+        {
+            this.modelBuilder = modelBuilder;
+        }
+
+        public void Seed()
+        {
+            modelBuilder.Entity<Customer>().HasData(
+                   new Customer() { Id = 6, Name = "Admin1", Email = "admin1@admin.com", PhoneNumber = "1234567894", Password = CommonMethods.Encrypt("Admin@123"), ConfirmPassword = CommonMethods.Encrypt("Admin@123"), IsAdmin = true, Role = "Admin", CreatedOnDate = DateTimeOffset.UtcNow, ModifiedOnDate = DateTimeOffset.UtcNow, IsDeleted = false },
+                   
+                   new Customer() { Id = 7, Name = "Admin2", Email = "admin2@admin.com", PhoneNumber = "1234567895", Password = CommonMethods.Encrypt("Admin@123"), ConfirmPassword = CommonMethods.Encrypt("Admin@123"), IsAdmin = true, Role = "Admin", CreatedOnDate = DateTimeOffset.UtcNow, ModifiedOnDate = DateTimeOffset.UtcNow, IsDeleted = false }
+            );
         }
     }
 }

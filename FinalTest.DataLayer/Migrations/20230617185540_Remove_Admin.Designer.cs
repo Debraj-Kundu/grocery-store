@@ -4,14 +4,16 @@ using FinalTest.DataLayer.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FinalTest.DataLayer.Migrations
 {
     [DbContext(typeof(ProductDomainDbContext))]
-    partial class ProductDomainDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230617185540_Remove_Admin")]
+    partial class Remove_Admin
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,36 +94,6 @@ namespace FinalTest.DataLayer.Migrations
                         .IsUnique();
 
                     b.ToTable("Customers");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 6,
-                            ConfirmPassword = "QWRtaW5AMTIzI3NlY3JldEBwYXNzd29yZCExaGFzaGluZ19rZXkk",
-                            CreatedOnDate = new DateTimeOffset(new DateTime(2023, 6, 17, 18, 56, 21, 919, DateTimeKind.Unspecified).AddTicks(2767), new TimeSpan(0, 0, 0, 0, 0)),
-                            Email = "admin1@admin.com",
-                            IsAdmin = true,
-                            IsDeleted = false,
-                            ModifiedOnDate = new DateTimeOffset(new DateTime(2023, 6, 17, 18, 56, 21, 919, DateTimeKind.Unspecified).AddTicks(2968), new TimeSpan(0, 0, 0, 0, 0)),
-                            Name = "Admin1",
-                            Password = "QWRtaW5AMTIzI3NlY3JldEBwYXNzd29yZCExaGFzaGluZ19rZXkk",
-                            PhoneNumber = "1234567894",
-                            Role = "Admin"
-                        },
-                        new
-                        {
-                            Id = 7,
-                            ConfirmPassword = "QWRtaW5AMTIzI3NlY3JldEBwYXNzd29yZCExaGFzaGluZ19rZXkk",
-                            CreatedOnDate = new DateTimeOffset(new DateTime(2023, 6, 17, 18, 56, 21, 919, DateTimeKind.Unspecified).AddTicks(3188), new TimeSpan(0, 0, 0, 0, 0)),
-                            Email = "admin2@admin.com",
-                            IsAdmin = true,
-                            IsDeleted = false,
-                            ModifiedOnDate = new DateTimeOffset(new DateTime(2023, 6, 17, 18, 56, 21, 919, DateTimeKind.Unspecified).AddTicks(3198), new TimeSpan(0, 0, 0, 0, 0)),
-                            Name = "Admin2",
-                            Password = "QWRtaW5AMTIzI3NlY3JldEBwYXNzd29yZCExaGFzaGluZ19rZXkk",
-                            PhoneNumber = "1234567895",
-                            Role = "Admin"
-                        });
                 });
 
             modelBuilder.Entity("FinalTest.DataLayer.Entity.CustomerCart", b =>
