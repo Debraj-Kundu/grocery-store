@@ -1,7 +1,33 @@
 <p>top-orders works!</p>
 <div *ngFor="let order of topOrders$ | async">
-    <h2>{{order.product.name}}</h2>
-    <h4>{{order.quantity}}</h4>
+  <h2>{{ order.product.name }}</h2>
+  <h4>{{ order.quantity }}</h4>
 </div>
 
-<button (click)="getByDate()">click</button>
+<form [formGroup]="number">
+    <mat-form-field>
+        <mat-label>Number</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="number"
+          autocomplete="autocomplete_off_randString"
+        />
+      </mat-form-field>
+</form>
+
+
+<mat-form-field>
+  <mat-label>Month and Year</mat-label>
+  <input matInput [matDatepicker]="dp" [formControl]="date" />
+  <mat-hint>MM/YYYY</mat-hint>
+  <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+  <mat-datepicker
+    #dp
+    startView="multi-year"
+    (monthSelected)="setMonthAndYear($event, dp)"
+    panelClass="example-month-picker"
+  >
+  </mat-datepicker>
+</mat-form-field>
+
