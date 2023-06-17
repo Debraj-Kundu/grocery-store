@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from 'src/app/Shared/Service/product.service';
-import { Observable, tap } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { Product } from 'src/app/Shared/Interface/Product.interface';
 import { ToastService } from 'src/app/Shared/Service/toast.service';
 import {
@@ -19,6 +19,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { CategoryService } from 'src/app/Shared/Service/category.service';
+import { MatSelectModule } from '@angular/material/select';
+import { Category } from 'src/app/Shared/Interface/Category.interface';
 
 const matModules = [
   MatFormFieldModule,
@@ -27,6 +30,7 @@ const matModules = [
   MatInputModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatSelectModule,
 ];
 
 @Component({
@@ -41,7 +45,8 @@ export class EditProductComponent implements OnInit {
     private productService: ProductService,
     private route: ActivatedRoute,
     private toast: ToastService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private categoryService: CategoryService
   ) {
     this.productForm = this.fb.group({
       name: new FormControl('', { validators: [Validators.required] }),
@@ -63,6 +68,9 @@ export class EditProductComponent implements OnInit {
   product$!: Observable<Product>;
   productForm!: FormGroup;
 
+  categoryList$ = this.categoryService.getAllCategories();
+
+  selected!: any;
   imageFile!: File;
 
   ngOnInit(): void {
@@ -73,15 +81,17 @@ export class EditProductComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
     this.product$ = this.productService.getProductById(this.id).pipe(
       tap((prod) => {
-        console.log(prod);
         this.productForm.patchValue(prod);
+        this.selected = prod.categoryId;
       })
     );
   }
 
   editProduct() {
     if (this.productForm.valid) {
+      this.productForm.value.categoryId = this.selected;
       const formData: Product = Object.assign(this.productForm.value);
+      console.log(formData);
       if (this.imageFile != undefined) formData.imageFile = this.imageFile;
       console.log(formData);
       this.productService.updateProduct(this.id, formData).subscribe({

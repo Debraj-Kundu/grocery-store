@@ -65,8 +65,11 @@ namespace FinalTest.BuisnessLayer.ProductAppServices.Implementation
 
 
             var userReviews = Mapper.Map<IEnumerable<ReviewDomain>>(res.Data).ToList();
-
             result.Reviews = userReviews;
+
+            var category = await UnitOfWork.CategoryRepository.GetByIdAsync(result.CategoryId);
+            result.Category = Mapper.Map<CategoryDomain>(category.Data);
+
 
             Message message = new Message(string.Empty, "Return Successfully");
             return new OperationResult<ProductDomain>(result, true, message);

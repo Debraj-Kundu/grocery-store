@@ -21,6 +21,8 @@ import { Observable } from 'rxjs';
 import { Product } from 'src/app/Shared/Interface/Product.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { CategoryService } from 'src/app/Shared/Service/category.service';
+import { Category } from 'src/app/Shared/Interface/Category.interface';
+
 
 const matModules = [
   MatFormFieldModule,
@@ -54,7 +56,7 @@ export class AddProductComponent implements OnInit {
     price: 0,
     discount: 0,
     categoryId: 0,
-    category: '',
+    category: {name:'', id:0},
     availableQuantity: 0,
     productImage: '',
     imageFile: new File([], ''),
@@ -93,7 +95,6 @@ export class AddProductComponent implements OnInit {
     if (this.productForm.valid) {
       this.productForm.value.categoryId = this.selected.id;
       const formData: Product = Object.assign(this.productForm.value);
-      console.log(formData);
       formData.imageFile = this.imageFile;
       console.log(this.productForm.value);
       this.productService.postProduct(formData).subscribe({

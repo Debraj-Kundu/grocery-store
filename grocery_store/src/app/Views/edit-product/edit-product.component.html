@@ -1,10 +1,7 @@
+<div style="display: none;">
+  {{product$ | async | json}}
+</div>
 
-<!-- {{product$ | async | json}} -->
-
-{{productForm.value | json}}
-{{product$ | async | json}}
-
-<!-- {{productForm.value | json}} -->
 
 <div class="container d-flex justify-content-center">
   <form [formGroup]="productForm" (ngSubmit)="editProduct()">
@@ -80,18 +77,12 @@
         <div class="m-4">
           <div>
             <mat-form-field>
-              <mat-label>CategoryId</mat-label>
-              <input
-                matInput
-                type="number"
-                formControlName="categoryId"
-                autocomplete="autocomplete_off_randString"
-              />
-              <mat-error
-                *ngIf="productForm.get('categoryId')?.hasError('required')"
-              >
-                You must enter a category id
-              </mat-error>
+              <mat-label>Category</mat-label>
+              <mat-select [(value)]="selected" formControlName="categoryId" [placeholder]="selected?.name" >
+                <mat-option *ngFor="let food of categoryList$ | async" [value]="food.id">
+                  {{ food.name }}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div>
