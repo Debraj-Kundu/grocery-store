@@ -11,11 +11,30 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { UserStoreService } from 'src/app/Shared/Service/user-store.service';
 import { Review } from 'src/app/Shared/Interface/Review.interface';
+import { ToastService } from 'src/app/Shared/Service/toast.service';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { ReviewService } from 'src/app/Shared/Service/review.service';
+
+const matModules = [
+  MatFormFieldModule,
+  MatInputModule,
+  MatCardModule,
+  MatIconModule,
+  MatButtonModule,
+];
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatIconModule, MatButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, ...matModules],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.css'],
 })
@@ -26,7 +45,10 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private cartService: CartService,
     private router: Router,
-    private userStore: UserStoreService
+    private userStore: UserStoreService,
+    private toast: ToastService,
+    private fb: FormBuilder,
+    private reviewService: ReviewService
   ) {}
 
   id: string | null = '';
@@ -34,12 +56,23 @@ export class ProductComponent implements OnInit {
   product$!: Observable<Product>;
   reviews$!: Observable<Review[]>;
 
+  reviewForm!: FormGroup;
+  userReview: Review = {
+    comment: '',
+    productId: 0,
+    username: '',
+    customerId: 0,
+    createdOnDate: new Date(),
+    id: 0,
+  };
+
   imageBaseUrl = 'https://localhost:44333/resources/';
 
   isLoggedIn: boolean = false;
 
   ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.get('id');
+
     this.product$ = this.productService.getProductById(this.id);
     this.reviews$ = this.productService
       .getProductById(this.id)
@@ -47,6 +80,10 @@ export class ProductComponent implements OnInit {
 
     this.userStore.getfullnameFormStore().subscribe((val) => {
       this.isLoggedIn = this.loginService.isLoggedIn();
+    });
+
+    this.reviewForm = this.fb.group({
+      comment: new FormControl(''),
     });
   }
   increase() {
@@ -61,9 +98,32 @@ export class ProductComponent implements OnInit {
       productId = res;
       this.cartService
         .postCart({ productId, quantity: this.quantity })
-        .subscribe((res) => {
-          this.router.navigate(['/cart']);
+        .subscribe({
+          next: (res) => {
+            this.router.navigate(['/cart']);
+            this.toast.successToast('Added to cart');
+          },
+          error: (err) => {
+            this.toast.errorToast('Error occured');
+          },
         });
     });
+  }
+  postReview() {
+    if (this.reviewForm.value.comment.length > 0) {
+      this.userReview.comment = this.reviewForm.value.comment;
+      this.userReview.productId = 0 + +(this.id ?? '');
+      this.reviewService.postReview(this.userReview).subscribe({
+        next: (res) => {
+          this.reviews$ = this.productService
+            .getProductById(this.id)
+            .pipe(map((list) => list.reviews));
+          this.toast.successToast('Review added successfully');
+        },
+        error: (err) => {
+          this.toast.errorToast('An error occured');
+        },
+      });
+    }
   }
 }

@@ -58,6 +58,18 @@
   <form></form>
 </mat-card>
 
+<form [formGroup]="reviewForm">
+  <mat-form-field>
+    <mat-label>Post your review</mat-label>
+    <input
+      matInput
+      type="text"
+      formControlName="comment"
+      autocomplete="autocomplete_off_randString"
+    />
+  </mat-form-field>
+  <button (click)="postReview()">Submit</button>
+</form>
 <mat-card>
   <!-- {{reviews$ | async | json}} -->
   <mat-card-content *ngFor="let item of reviews$ | async">

@@ -17,11 +17,9 @@ import {
 import { ProductService } from 'src/app/Shared/Service/product.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/Shared/Service/toast.service';
-import { Observable } from 'rxjs';
 import { Product } from 'src/app/Shared/Interface/Product.interface';
 import { MatSelectModule } from '@angular/material/select';
 import { CategoryService } from 'src/app/Shared/Service/category.service';
-import { Category } from 'src/app/Shared/Interface/Category.interface';
 
 
 const matModules = [
