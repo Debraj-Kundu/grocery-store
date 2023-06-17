@@ -22,7 +22,6 @@
     autocomplete="autocomplete_off_randString"
     (input)="filterByName()"
   />
-  <button type="submit">find</button>
 </form>
 <div class="container mat-elevation-z8">
   <table mat-table matSort [dataSource]="tableData$ | async">

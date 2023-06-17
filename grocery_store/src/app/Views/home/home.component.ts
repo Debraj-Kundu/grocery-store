@@ -34,7 +34,7 @@ const matModules = [
   MatDialogModule,
   MatSelectModule,
   MatFormFieldModule,
-  MatSortModule
+  MatSortModule,
 ];
 
 @Component({
@@ -60,7 +60,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     private fb: FormBuilder
   ) {}
 
-  imageBaseUrl = "https://localhost:44333/resources/";
+  imageBaseUrl = 'https://localhost:44333/resources/';
 
   productsList$: Observable<Product[]> = this.productService.getAllProducts();
   categoryList$ = this.categoryService.getAllCategories();
@@ -132,16 +132,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
   deleteProduct(id: string) {
-    this.productService.deleteProduct(id).subscribe((res) => {
-      this.tableData$ = this.productsList$.pipe(
-        map((item) => {
-          const dataSource = this.dataSource;
-          dataSource.data = item;
-          dataSource.paginator = this.paginator;
-          dataSource.sort = this.sort;
-          return dataSource;
-        })
-      );
+    this.productService.deleteProduct(id).subscribe({
+      next: (res) => {
+        this.tableData$ = this.productsList$.pipe(
+          map((item) => {
+            const dataSource = this.dataSource;
+            dataSource.data = item;
+            dataSource.paginator = this.paginator;
+            dataSource.sort = this.sort;
+            return dataSource;
+          })
+        );
+        this.toast.successToast('Product deleted successfully');
+      },
+      error: (err) => {
+        this.toast.successToast('Something went wrong');
+      },
     });
   }
   ngOnDestroy(): void {}

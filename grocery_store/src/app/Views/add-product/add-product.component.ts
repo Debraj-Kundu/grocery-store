@@ -15,10 +15,12 @@ import {
   Validators,
 } from '@angular/forms';
 import { ProductService } from 'src/app/Shared/Service/product.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastService } from 'src/app/Shared/Service/toast.service';
 import { Observable } from 'rxjs';
 import { Product } from 'src/app/Shared/Interface/Product.interface';
+import { MatSelectModule } from '@angular/material/select';
+import { CategoryService } from 'src/app/Shared/Service/category.service';
 
 const matModules = [
   MatFormFieldModule,
@@ -27,6 +29,7 @@ const matModules = [
   MatInputModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatSelectModule
 ];
 @Component({
   selector: 'app-add-product',
@@ -38,9 +41,10 @@ const matModules = [
 export class AddProductComponent implements OnInit {
   constructor(
     private productService: ProductService,
-    private route: ActivatedRoute,
+    private router: Router,
     private toast: ToastService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private categoryService:CategoryService
   ) {}
 
   id: string | null = '';
@@ -64,6 +68,10 @@ export class AddProductComponent implements OnInit {
   imageFile!: File;
   productForm!: FormGroup;
 
+  categoryList$ = this.categoryService.getAllCategories();
+
+  selected!: any;
+
   ngOnInit(): void {
     this.productForm = this.fb.group({
       name: new FormControl('', { validators: [Validators.required] }),
@@ -80,14 +88,18 @@ export class AddProductComponent implements OnInit {
     });
   }
 
+
   addProduct() {
     if (this.productForm.valid) {
+      this.productForm.value.categoryId = this.selected.id;
       const formData: Product = Object.assign(this.productForm.value);
+      console.log(formData);
       formData.imageFile = this.imageFile;
       console.log(this.productForm.value);
       this.productService.postProduct(formData).subscribe({
         next: (res) => {
           this.toast.successToast('Product added successfully!');
+          this.router.navigate(['/home']);
         },
         error: (res) => {
           this.toast.errorToast('Error occured retry!');

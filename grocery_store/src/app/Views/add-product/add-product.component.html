@@ -76,6 +76,14 @@
         <div class="m-4">
           <div>
             <mat-form-field>
+              <mat-label>Category</mat-label>
+              <mat-select [(value)]="selected" formControlName="categoryId" >
+                <mat-option *ngFor="let food of categoryList$ | async" [value]="food">
+                  {{ food.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <!-- <mat-form-field>
               <mat-label>CategoryId</mat-label>
               <input
                 matInput
@@ -88,7 +96,7 @@
               >
                 You must enter a category id
               </mat-error>
-            </mat-form-field>
+            </mat-form-field> -->
           </div>
           <div>
             <mat-form-field>
