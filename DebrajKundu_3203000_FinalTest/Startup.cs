@@ -13,6 +13,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
@@ -75,9 +76,19 @@ namespace DebrajKundu_3203000_FinalTest
                 };
             });
 
-            services.AddControllers().AddNewtonsoftJson(s =>
+            services.AddMvc().AddNewtonsoftJson(s =>
             {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo
+                {
+                    Version = "v1",
+                    Title = "MyAPI",
+                    Description = "ASP.NET Core API"
+                });
             });
         }
 
@@ -94,7 +105,15 @@ namespace DebrajKundu_3203000_FinalTest
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Uploads")),
                 RequestPath = "/Resources"
             });
+            
+            app.UseSwagger();
 
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI");
+                c.RoutePrefix = string.Empty;
+            });
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
