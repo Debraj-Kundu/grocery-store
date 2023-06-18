@@ -97,7 +97,6 @@ namespace FinalTest.WebAPI.Controllers
                 if(result.IsSuccess)
                     return Created(nameof(Post), product);
             
-            Logger.LogError(result.MainMessage.Text);
             return BadRequest(result.MainMessage.Text);
         }
 

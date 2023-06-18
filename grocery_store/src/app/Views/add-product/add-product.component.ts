@@ -94,7 +94,6 @@ export class AddProductComponent implements OnInit {
       this.productForm.value.categoryId = this.selected.id;
       const formData: Product = Object.assign(this.productForm.value);
       formData.imageFile = this.imageFile;
-      console.log(this.productForm.value);
       this.productService.postProduct(formData).subscribe({
         next: (res) => {
           this.toast.successToast('Product added successfully!');
@@ -109,7 +108,6 @@ export class AddProductComponent implements OnInit {
 
   onChange(event: any) {
     this.imageFile = event.target.files[0];
-    console.log(event.target.files[0]);
   }
 
   clearForm() {

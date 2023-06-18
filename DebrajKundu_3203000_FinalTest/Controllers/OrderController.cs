@@ -53,7 +53,7 @@ namespace FinalTest.WebAPI.Controllers
             var result = await OrderService.AddOrder(corderProduct);
             if (result.IsSuccess)
                 return Created(nameof(Post), product);
-            return BadRequest();
+            return BadRequest(result.MainMessage.Text);
         }
 
         // PUT api/<OrderController>/5

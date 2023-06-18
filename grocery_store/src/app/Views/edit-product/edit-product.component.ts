@@ -91,15 +91,12 @@ export class EditProductComponent implements OnInit {
     if (this.productForm.valid) {
       this.productForm.value.categoryId = this.selected;
       const formData: Product = Object.assign(this.productForm.value);
-      console.log(formData);
       if (this.imageFile != undefined) formData.imageFile = this.imageFile;
-      console.log(formData);
       this.productService.updateProduct(this.id, formData).subscribe({
         next: (res) => {
           this.toast.successToast('Product updated successfully!');
         },
         error: (err) => {
-          console.log(err);
           this.toast.errorToast('Error occured retry!');
         },
       });
@@ -108,7 +105,6 @@ export class EditProductComponent implements OnInit {
 
   onChange(event: any) {
     this.imageFile = event.target.files[0];
-    console.log(event.target.files[0]);
   }
 
   clearForm() {
