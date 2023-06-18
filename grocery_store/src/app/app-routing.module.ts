@@ -30,14 +30,12 @@ const routes: Routes = [
     loadComponent: () =>
       import('./Views/cart/cart.component').then((c) => c.CartComponent),
     canActivate: [AuthGuard],
-
   },
   {
     path: 'order',
     loadComponent: () =>
       import('./Views/order/order.component').then((c) => c.OrderComponent),
     canActivate: [AuthGuard],
-
   },
   {
     path: 'product/:id',
@@ -53,7 +51,6 @@ const routes: Routes = [
         (c) => c.EditProductComponent
       ),
     canActivate: [AuthGuard],
-
   },
   {
     path: 'add',
@@ -70,6 +67,13 @@ const routes: Routes = [
         (c) => c.TopOrdersComponent
       ),
     canActivate: [AuthGuard],
+  },
+  {
+    path: '**',
+    loadComponent: () =>
+      import('./Core/error-page/error-page.component').then(
+        (c) => c.ErrorPageComponent
+      ),
   },
 ];
 

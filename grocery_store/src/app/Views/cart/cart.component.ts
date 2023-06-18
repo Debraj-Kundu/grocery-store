@@ -57,15 +57,16 @@ export class CartComponent {
   }
 
   deleteCart(id: number) {
-    confirm('You are about to delete the product');
-    this.cartService.deleteCartItem(id).subscribe({
-      next: (res) => {
-        this.cartList$ = this.cartService.getCart();
-        this.toast.successToast('Product deleted successfully!');
-      },
-      error: (err) => {
-        this.toast.errorToast('Unexpected error occured');
-      },
-    });
+    if (confirm('You are about to delete the product')) {
+      this.cartService.deleteCartItem(id).subscribe({
+        next: (res) => {
+          this.cartList$ = this.cartService.getCart();
+          this.toast.successToast('Product deleted successfully!');
+        },
+        error: (err) => {
+          this.toast.errorToast('Unexpected error occured');
+        },
+      });
+    }
   }
 }

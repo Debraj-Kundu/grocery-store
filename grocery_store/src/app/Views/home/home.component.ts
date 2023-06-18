@@ -106,7 +106,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.tableData$ = this.productService.getAllProducts().pipe(
         map((item) => {
           const dataSource = this.dataSource;
-          dataSource.data = item
+          dataSource.data = item;
           dataSource.paginator = this.paginator;
           dataSource.sort = this.sort;
           return dataSource;
@@ -147,23 +147,25 @@ export class HomeComponent implements OnInit, OnDestroy {
     );
   }
   deleteProduct(id: string) {
-    this.productService.deleteProduct(id).subscribe({
-      next: (res) => {
-        this.tableData$ = this.productsList$.pipe(
-          map((item) => {
-            const dataSource = this.dataSource;
-            dataSource.data = item;
-            dataSource.paginator = this.paginator;
-            dataSource.sort = this.sort;
-            return dataSource;
-          })
-        );
-        this.toast.successToast('Product deleted successfully');
-      },
-      error: (err) => {
-        this.toast.successToast('Something went wrong');
-      },
-    });
+    if (confirm('You are about to delete the product')) {
+      this.productService.deleteProduct(id).subscribe({
+        next: (res) => {
+          this.tableData$ = this.productsList$.pipe(
+            map((item) => {
+              const dataSource = this.dataSource;
+              dataSource.data = item;
+              dataSource.paginator = this.paginator;
+              dataSource.sort = this.sort;
+              return dataSource;
+            })
+          );
+          this.toast.successToast('Product deleted successfully');
+        },
+        error: (err) => {
+          this.toast.successToast('Something went wrong');
+        },
+      });
+    }
   }
   ngOnDestroy(): void {}
 }
