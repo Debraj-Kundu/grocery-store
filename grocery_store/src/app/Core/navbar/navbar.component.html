@@ -13,7 +13,7 @@
         <mat-icon>menu</mat-icon>
       </button>
     </div>
-    <div class="logo" [routerLink]="['/home']">Grocery Store</div>
+    <div class="ms-md-5 logo" [routerLink]="['/home']">Grocery Store</div>
     <div class="d-none d-md-block">
       <ng-container *ngIf="isLoggedIn == true">
         <button mat-button [routerLink]="['/cart']">View Cart</button>
@@ -32,10 +32,10 @@
       <button mat-raised-button color="warn" (click)="logout()">Logout</button>
     </ng-container>
     <ng-container *ngIf="isLoggedIn == false">
-      <button mat-raised-button color="accent" [routerLink]="['/login']">
+      <button class="me-2" mat-raised-button color="accent" [routerLink]="['/login']">
         SignIn
       </button>
-      <button mat-raised-button color="accent" [routerLink]="['/register']">
+      <button class="ms-2 me-md-5" mat-raised-button color="accent" [routerLink]="['/register']">
         SignUp
       </button>
     </ng-container>
