@@ -1,13 +1,28 @@
-<p>order works!</p>
-
-<div *ngFor="let item of orderList$ | async" class="container">
-  {{ item | json }}
-  <mat-card>
-    <mat-card-content>
-      {{ item.product.name }}
-      Quantity: {{ item.quantity }} Bill:
-      {{ item.product.price * item.quantity | currency : "INR" }}
-      {{item.orderDate | date}}
+<!-- {{ item | json }} -->
+<div *ngFor="let item of orderList$ | async" class="container mt-3 d-flex justify-content-center">
+  <mat-card class="order-card p-2 mb-4">
+    <mat-card-content class="d-flex flex-row justify-content-between">
+      <img
+        [src]="imageBaseUrl + item.product.productImage"
+        height="150"
+        width="150"
+      />
+      <div class="d-flex flex-column">
+        <div>
+          <h2>{{ item.product.name }}</h2>
+        </div>
+        <div>
+          <h3>Quantity: {{ item.quantity }}</h3>
+        </div>
+        <div>
+          <h3>
+            Bill: {{ item.product.price * item.quantity | currency : "INR" }}
+          </h3>
+        </div>
+      </div>
+      <div>
+        {{ item.orderDate | date }}
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

@@ -1,11 +1,7 @@
-<p>top-orders works!</p>
-<div *ngFor="let order of topOrders$ | async">
-  <h2>{{ order.product.name }}</h2>
-  <h4>{{ order.quantity }}</h4>
-</div>
-
-<form [formGroup]="number">
-    <mat-form-field>
+<div class="d-flex justify-content-evenly align-items-center mt-4">
+  <div>
+    <form [formGroup]="number">
+      <mat-form-field>
         <mat-label>Number</mat-label>
         <input
           matInput
@@ -14,20 +10,51 @@
           autocomplete="autocomplete_off_randString"
         />
       </mat-form-field>
-</form>
+    </form>
 
+    <mat-form-field>
+      <mat-label>Month and Year</mat-label>
+      <input matInput [matDatepicker]="dp" [formControl]="date" />
+      <mat-hint>MM/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
+      <mat-datepicker
+        #dp
+        startView="multi-year"
+        (monthSelected)="setMonthAndYear($event, dp)"
+        panelClass="example-month-picker"
+      >
+      </mat-datepicker>
+    </mat-form-field>
+  </div>
 
-<mat-form-field>
-  <mat-label>Month and Year</mat-label>
-  <input matInput [matDatepicker]="dp" [formControl]="date" />
-  <mat-hint>MM/YYYY</mat-hint>
-  <mat-datepicker-toggle matIconSuffix [for]="dp"></mat-datepicker-toggle>
-  <mat-datepicker
-    #dp
-    startView="multi-year"
-    (monthSelected)="setMonthAndYear($event, dp)"
-    panelClass="example-month-picker"
+  <div
+    style="
+      overflow-y: auto;
+      position: relative;
+      height: 80vh;
+    "
   >
-  </mat-datepicker>
-</mat-form-field>
-
+    <div
+      *ngFor="let order of topOrders$ | async"
+      class="container mt-3 d-flex justify-content-center"
+    >
+      <mat-card class="order-card p-2 mb-4">
+        <mat-card-content class="d-flex flex-row justify-content-between">
+          <img
+            [src]="imageBaseUrl + order.product.productImage"
+            height="150"
+            width="150"
+          />
+          <div class="d-flex flex-column">
+            <div>
+              <h2>{{ order.product.name }}</h2>
+            </div>
+            <div>
+              <h3>Quantity: {{ order.quantity }}</h3>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

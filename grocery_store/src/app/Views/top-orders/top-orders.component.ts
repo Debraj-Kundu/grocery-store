@@ -5,12 +5,21 @@ import { TopOrderService } from 'src/app/Shared/Service/topOrder.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDatepickerModule, MatDatepicker } from '@angular/material/datepicker';
+import {
+  MatDatepickerModule,
+  MatDatepicker,
+} from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 
-import { FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+} from '@angular/forms';
 import {
   MomentDateAdapter,
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
@@ -45,6 +54,7 @@ const matModules = [
   MatInputModule,
   MatDatepickerModule,
   MatNativeDateModule,
+  MatIconModule,
 ];
 
 @Component({
@@ -64,19 +74,24 @@ const matModules = [
   encapsulation: ViewEncapsulation.None,
 })
 export class TopOrdersComponent implements OnInit {
-  constructor(private topOrderService: TopOrderService, private fb: FormBuilder) {}
-  
+  constructor(
+    private topOrderService: TopOrderService,
+    private fb: FormBuilder
+  ) {}
+
+  imageBaseUrl = 'https://localhost:44333/resources/';
+
   ngOnInit(): void {
     this.number = this.fb.group({
-      number: new FormControl(5)
-    })
+      number: new FormControl(5),
+    });
   }
 
   topOrders$ = this.topOrderService.getTopOrderedProducts();
 
   date = new FormControl(moment());
   number!: FormGroup;
-  
+
   setMonthAndYear(
     normalizedMonthAndYear: Moment,
     datepicker: MatDatepicker<Moment>
@@ -86,11 +101,15 @@ export class TopOrdersComponent implements OnInit {
     ctrlValue.year(normalizedMonthAndYear.year());
     this.date.setValue(ctrlValue);
     datepicker.close();
-    
-    let month:number = this.date.value?.month()??0;
-    let year:number = this.date.value?.year()??0;
-    month = month+1;
-    this.topOrders$ = this.topOrderService.getTopOrderedProducts(this.number.value.number, month, year);
+
+    let month: number = this.date.value?.month() ?? 0;
+    let year: number = this.date.value?.year() ?? 0;
+    month = month + 1;
+    this.topOrders$ = this.topOrderService.getTopOrderedProducts(
+      this.number.value.number,
+      month,
+      year
+    );
   }
 
 }

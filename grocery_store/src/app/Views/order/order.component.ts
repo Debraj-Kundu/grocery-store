@@ -13,6 +13,7 @@ import { MatCardModule } from '@angular/material/card';
   styleUrls: ['./order.component.css'],
 })
 export class OrderComponent {
+  imageBaseUrl = 'https://localhost:44333/resources/';
   constructor(private orderService: OrderService) {}
   orderList$: Observable<Order[]> = this.orderService.getOrder();
 }
