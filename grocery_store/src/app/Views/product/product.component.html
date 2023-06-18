@@ -1,58 +1,5 @@
-<!-- {{ product$ | async | json }} -->
+{{ product$ | async | json }}
 
-<!-- <mat-card class="container mat-elevation-z8">
-  <mat-card-content>
-    <div class="d-flex">
-      <img
-        [src]="imageBaseUrl + (product$ | async)?.productImage"
-        width="300"
-        height="300"
-      />
-
-      <div
-        style="border: 2px solid black"
-        class="d-flex flex-column justify-content-evenly"
-      >
-        <h1>{{ (product$ | async)?.name }}</h1>
-
-        <p>
-          {{ (product$ | async)?.description }}
-        </p>
-
-        <div>
-          <span>{{ (product$ | async)?.price | currency : "INR" }}</span>
-
-          <span
-            >| {{ (product$ | async)?.discount ?? 0 / 100 | number }}% |
-          </span>
-
-          <del>{{ (product$ | async)?.price | currency : "INR" }}</del>
-        </div>
-
-        <div *ngIf="isLoggedIn == true">
-          <span>
-            <div class="btn-wrapper">
-              <button mat-button class="plusminus" (click)="increase()">
-                <mat-icon>add</mat-icon>
-              </button>
-
-              <span class="num">{{ quantity }}</span>
-
-              <button mat-button class="plusminus" (click)="decrease()">
-                <mat-icon>remove</mat-icon>
-              </button>
-            </div>
-          </span>
-          <span>
-            <button mat-fab color="primary" type="submit" (click)="addToCart()">
-              <mat-icon>shopping_cart</mat-icon>
-            </button>
-          </span>
-        </div>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card> -->
 <div class="d-flex justify-content-evenly mt-4">
   <div class="wrapper">
     <div class="card radius shadowDepth1">
@@ -79,7 +26,6 @@
             <mat-icon>shopping_cart</mat-icon>
           </button>
         </div>
-
         <div class="d-flex">
           <div>
             <h1>{{ (product$ | async)?.name }}</h1>
@@ -87,7 +33,9 @@
               {{ (product$ | async)?.description }}
             </p>
             <div class="d-flex flex-column justify-content-between">
-              <div class="curr-price">{{ (product$ | async)?.price | currency : "INR" }}</div>
+              <div class="curr-price">
+                {{ (product$ | async)?.price | currency : "INR" }}
+              </div>
 
               <div class="d-flex justify-content-between">
                 <div>{{ (product$ | async)?.discount ?? 0 }}% off</div>
@@ -99,18 +47,27 @@
             </div>
           </div>
         </div>
+        <div *ngIf="product$ | async as product">
+          <div
+            *ngIf="isLoggedIn == true && product.availableQuantity > 0"
+            class="d-flex justify-content-evenly"
+          >
+            <div class="btn-wrapper">
+              <button mat-button class="plusminus" (click)="increase()">
+                <mat-icon>add</mat-icon>
+              </button>
 
-        <div *ngIf="isLoggedIn == true" class="d-flex justify-content-evenly">
-          <div class="btn-wrapper">
-            <button mat-button class="plusminus" (click)="increase()">
-              <mat-icon>add</mat-icon>
-            </button>
+              <span class="num">{{ quantity }}</span>
 
-            <span class="num">{{ quantity }}</span>
-
-            <button mat-button class="plusminus" (click)="decrease()">
-              <mat-icon>remove</mat-icon>
-            </button>
+              <button mat-button class="plusminus" (click)="decrease()">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="product$ | async as product">
+          <div *ngIf="isLoggedIn == true && product.availableQuantity == 0">
+            <h2>Out of stock</h2>
           </div>
         </div>
       </div>
@@ -129,7 +86,9 @@
             autocomplete="autocomplete_off_randString"
           />
         </mat-form-field>
-        <button mat-mini-fab color="primary" (click)="postReview()"><mat-icon>send</mat-icon></button>
+        <button mat-mini-fab color="primary" (click)="postReview()">
+          <mat-icon>send</mat-icon>
+        </button>
       </form>
     </div>
     <div *ngFor="let item of reviews$ | async">

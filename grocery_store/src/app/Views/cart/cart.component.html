@@ -1,6 +1,6 @@
 
 <div style="overflow-y: auto; position: relative; height: 80vh" >
-  <h2 class="cart-msg" *ngIf="(cartList$ | async)?.length === 0">No items in cart</h2>
+  <h2 class="cart-msg" *ngIf="(cartList$ | async)?.length === 0">No Items in Cart</h2>
   <div
     *ngFor="let item of cartList$ | async"
     class="container mt-3 d-flex justify-content-center"
