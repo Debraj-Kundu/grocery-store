@@ -4,30 +4,30 @@
 </div> -->
 <div class="container d-flex justify-content-center">
   <form [formGroup]="loginForm" (ngSubmit)="Login()">
-    <mat-card>
-      <mat-card-header>
+    <mat-card class="pb-4">
+      <mat-card-header class="d-flex justify-content-center">
         <h2>Login</h2>
       </mat-card-header>
       <mat-card-content>
         <div>
-          <mat-form-field>
+          <mat-form-field class="form-field" appearance="outline">
             <mat-label>Email</mat-label>
             <input
               matInput
               type="text"
               formControlName="Email"
               autocomplete="autocomplete_off_randString"
-            />
+            />  
             <mat-error *ngIf="loginForm.get('Email')?.hasError('required')">
               You must enter a email
             </mat-error>
             <mat-error *ngIf="loginForm.get('Email')?.hasError('pattern')">
-              You must enter a valid email
+              You must enter an valid email
             </mat-error>
           </mat-form-field>
         </div>
         <div>
-          <mat-form-field>
+          <mat-form-field class="form-field" appearance="outline">
             <mat-label>Password</mat-label>
             <input
               matInput

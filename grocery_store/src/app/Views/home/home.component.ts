@@ -25,6 +25,7 @@ import {
 } from '@angular/forms';
 import { ToastService } from 'src/app/Shared/Service/toast.service';
 import { CategoryService } from 'src/app/Shared/Service/category.service';
+import { MatInputModule } from '@angular/material/input';
 
 const matModules = [
   MatButtonModule,
@@ -35,6 +36,8 @@ const matModules = [
   MatSelectModule,
   MatFormFieldModule,
   MatSortModule,
+  MatInputModule,
+  MatFormFieldModule
 ];
 
 @Component({

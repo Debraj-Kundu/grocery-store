@@ -52,27 +52,42 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private toast:ToastService,
+    private toast: ToastService,
     private registerService: RegisterService
-  ) {}
+  ) {
+    this.registerForm = this.fb.group(
+      {
+        Name: new FormControl('', { validators: [Validators.required] }),
+        Email: new FormControl('', {
+          validators: [
+            Validators.required,
+            Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$'),
+          ],
+        }),
+        PhoneNumber: new FormControl('', { validators: [Validators.required, Validators.pattern('[0-9]{10}')] }),
+        Password: new FormControl('', { validators: [Validators.required] }),
+        ConfirmPassword: new FormControl('', {
+          validators: [Validators.required],
+        }),
+      },
+      { validator: this.checkPasswords }
+    );
+  }
 
-  ngOnInit(): void {
-    this.registerForm = this.fb.group({
-      Name: new FormControl('', { validators: [Validators.required] }),
-      Email: new FormControl('', { validators: [Validators.required] }),
-      PhoneNumber: new FormControl('', { validators: [Validators.required] }),
-      Password: new FormControl('', { validators: [Validators.required] }),
-      ConfirmPassword: new FormControl('', {
-        validators: [Validators.required],
-      }),
-    });
+  ngOnInit(): void {}
+
+  checkPasswords(group: FormGroup) {
+    const pass = group.controls['Password'].value;
+    const confirmPass = group.controls['ConfirmPassword'].value;
+
+    return pass == confirmPass ? { notSame: false } : { notSame: true };
   }
 
   register() {
     if (this.registerForm.valid) {
       this.userInfo.Name = this.registerForm.value.Name;
       this.userInfo.Email = this.registerForm.value.Email;
-      this.userInfo.PhoneNumber = ''+this.registerForm.value.PhoneNumber;
+      this.userInfo.PhoneNumber = '' + this.registerForm.value.PhoneNumber;
       this.userInfo.Password = this.registerForm.value.Password;
       this.userInfo.ConfirmPassword = this.registerForm.value.ConfirmPassword;
 
@@ -89,5 +104,9 @@ export class RegisterComponent implements OnInit {
         },
       });
     }
+  }
+
+  ClearForm() {
+    this.registerForm.reset();
   }
 }
