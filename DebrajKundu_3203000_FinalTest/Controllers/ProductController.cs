@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FinalTest.SharedLayer.Core.Logging;
 
 
 namespace FinalTest.WebAPI.Controllers
@@ -24,13 +25,15 @@ namespace FinalTest.WebAPI.Controllers
         public ICategoryService CategoryService { get; }
         public IMapper Mapper { get; }
         public IFileService FileService { get; }
+        public ILogger Logger { get; }
 
-        public ProductController(IProductService productService, ICategoryService categoryService, IMapper mapper, IFileService fileService)
+        public ProductController(IProductService productService, ICategoryService categoryService, IMapper mapper, IFileService fileService, ILogger logger)
         {
             ProductService = productService;
             CategoryService = categoryService;
             Mapper = mapper;
             FileService = fileService;
+            Logger = logger;
         }
         // GET: api/<ProductController>
         [HttpGet]
@@ -80,8 +83,7 @@ namespace FinalTest.WebAPI.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductDto>> Post([FromForm]ProductDto product)
         {
-            if(ModelState.IsValid)
-            { 
+            
                 if(product.ImageFile != null)
                 {
                     var fileResult = FileService.SaveImage(product.ImageFile);
@@ -94,8 +96,9 @@ namespace FinalTest.WebAPI.Controllers
                 var result = await ProductService.CreateProduct(productToCreate);
                 if(result.IsSuccess)
                     return Created(nameof(Post), product);
-            }
-            return BadRequest();
+            
+            Logger.LogError(result.MainMessage.Text);
+            return BadRequest(result.MainMessage.Text);
         }
 
         // PUT api/<ProductController>/5

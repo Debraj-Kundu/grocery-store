@@ -1,6 +1,7 @@
 using AutoMapper;
 using FinalTest.BuisnessLayer.Configuration;
 using FinalTest.BuisnessLayer.Mapper;
+using FinalTest.SharedLayer.Core.ExceptionManagement;
 using FinalTest.WebAPI.DTO;
 using FinalTest.WebAPI.Mapper;
 using FinalTest.WebAPI.Service;
@@ -27,7 +28,7 @@ namespace DebrajKundu_3203000_FinalTest
     public class Startup
     {
         private MapperConfiguration MapperConfiguration { get; set; }
-
+        private IExceptionManager exceptionManager;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -81,6 +82,13 @@ namespace DebrajKundu_3203000_FinalTest
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
+            FinalTest.SharedLayer.Core.Logging.ILogger logger = new FinalTest.SharedLayer.Core.Logging.Logger();
+            exceptionManager = new ExceptionManager(logger);
+
+            services.AddScoped<FinalTest.SharedLayer.Core.Logging.ILogger, FinalTest.SharedLayer.Core.Logging.Logger>();
+            services.AddScoped<IExceptionManager, ExceptionManager>();
+
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -105,7 +113,7 @@ namespace DebrajKundu_3203000_FinalTest
                 FileProvider = new PhysicalFileProvider(Path.Combine(env.ContentRootPath, "Uploads")),
                 RequestPath = "/Resources"
             });
-            
+
             app.UseSwagger();
 
             app.UseSwaggerUI(c =>
@@ -113,7 +121,7 @@ namespace DebrajKundu_3203000_FinalTest
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "MyAPI");
                 c.RoutePrefix = string.Empty;
             });
-            
+
             app.UseHttpsRedirection();
 
             app.UseRouting();

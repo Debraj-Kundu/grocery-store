@@ -13,7 +13,7 @@ namespace FinalTest.DataLayer.UoW
     {
 
 
-        public ProductUnitOfWork(ProductDomainDbContext context, IOrderRepository orderRepository, IProductRepository productRepository, ICustomerCartRepository customerCartRepository, ICategoryRepository categoryRepository, ICustomerRepository customerRepository, IReviewRepository reviewRepository) : base(context)
+        public ProductUnitOfWork(ProductDomainDbContext context, IOrderRepository orderRepository, IProductRepository productRepository, ICustomerCartRepository customerCartRepository, ICategoryRepository categoryRepository, ICustomerRepository customerRepository, IReviewRepository reviewRepository, IExceptionManager exceptionManager) : base(context, exceptionManager)
         {
             OrderRepository = orderRepository;
             ProductRepository = productRepository;
