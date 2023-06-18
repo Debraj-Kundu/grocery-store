@@ -61,6 +61,8 @@
           [src]="imageBaseUrl + (product$ | async)?.productImage"
           alt="image"
           class="border-tlr-radius"
+          height="300"
+          width="300"
         />
       </div>
 
@@ -85,12 +87,12 @@
               {{ (product$ | async)?.description }}
             </p>
             <div class="d-flex flex-column justify-content-between">
-              <div>{{ (product$ | async)?.price | currency : "INR" }}</div>
+              <div class="curr-price">{{ (product$ | async)?.price | currency : "INR" }}</div>
 
               <div class="d-flex justify-content-between">
-                <div>{{ (product$ | async)?.discount ?? 0 | percent }}</div>
+                <div>{{ (product$ | async)?.discount ?? 0 }}% off</div>
 
-                <div>
+                <div class="cut">
                   <del>{{ (product$ | async)?.price | currency : "INR" }}</del>
                 </div>
               </div>
