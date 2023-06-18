@@ -37,7 +37,7 @@ const matModules = [
   MatFormFieldModule,
   MatSortModule,
   MatInputModule,
-  MatFormFieldModule
+  MatFormFieldModule,
 ];
 
 @Component({
@@ -102,6 +102,18 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   valueChange(value: any) {
+    if (value == null) {
+      this.tableData$ = this.productService.getAllProducts().pipe(
+        map((item) => {
+          const dataSource = this.dataSource;
+          dataSource.data = item
+          dataSource.paginator = this.paginator;
+          dataSource.sort = this.sort;
+          return dataSource;
+        })
+      );
+      return;
+    }
     this.toast.successToast(value.name);
     this.tableData$ = this.productsList$.pipe(
       map((item) => {
