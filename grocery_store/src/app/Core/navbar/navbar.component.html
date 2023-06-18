@@ -19,7 +19,7 @@
         <button mat-button [routerLink]="['/cart']">View Cart</button>
         <button mat-button [routerLink]="['/order']">My Orders</button>
       </ng-container>
-      <ng-container *ngIf="userRole == 'Admin'">
+      <ng-container *ngIf="isLoggedIn == true && userRole == 'Admin'">
         <button mat-button [routerLink]="['/add']">Add Product</button>
         <button mat-button [routerLink]="['/toporder']">Top Orders</button>
       </ng-container>
@@ -32,10 +32,20 @@
       <button mat-raised-button color="warn" (click)="logout()">Logout</button>
     </ng-container>
     <ng-container *ngIf="isLoggedIn == false">
-      <button class="me-2" mat-raised-button color="accent" [routerLink]="['/login']">
+      <button
+        class="me-2"
+        mat-raised-button
+        color="accent"
+        [routerLink]="['/login']"
+      >
         SignIn
       </button>
-      <button class="ms-2 me-md-5" mat-raised-button color="accent" [routerLink]="['/register']">
+      <button
+        class="ms-2 me-md-5"
+        mat-raised-button
+        color="accent"
+        [routerLink]="['/register']"
+      >
         SignUp
       </button>
     </ng-container>
@@ -51,6 +61,16 @@
         </mat-list-item>
         <mat-list-item>
           <button mat-button [routerLink]="['/order']">My Orders</button>
+        </mat-list-item>
+        <mat-list-item>
+          <ng-container *ngIf="isLoggedIn == true && userRole == 'Admin'">
+            <button mat-button [routerLink]="['/add']">Add Product</button>
+          </ng-container>
+        </mat-list-item>
+        <mat-list-item>
+          <ng-container *ngIf="isLoggedIn == true && userRole == 'Admin'">
+            <button mat-button [routerLink]="['/toporder']">Top Orders</button>
+          </ng-container>
         </mat-list-item>
         <mat-list-item>
           <div class="d-md-block">

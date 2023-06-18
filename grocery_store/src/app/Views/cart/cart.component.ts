@@ -51,8 +51,14 @@ export class CartComponent {
         quantity: this.quantity,
         CartId: this.selectedCartId,
       })
-      .subscribe((res) => {
-        this.cartList$ = this.cartService.getCart();
+      .subscribe({
+        next: (res) => {
+          this.cartList$ = this.cartService.getCart();
+          this.toast.successToast('Order made successfully!');
+        },
+        error: (err) => {
+          this.toast.errorToast('Unexpected error, order did not execute');
+        },
       });
   }
 
